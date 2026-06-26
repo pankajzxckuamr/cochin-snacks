@@ -2,26 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Smooth scrolling & Responsive Base Font ──────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base size for mobile/tablet */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (min-width: 1280px) {
+  html {
+    font-size: 17px; /* Slight scale up for standard laptops */
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@media (min-width: 1536px) {
+  html {
+    font-size: 18px; /* Scale up for 2K displays */
+  }
 }
 
+@media (min-width: 1920px) {
+  html {
+    font-size: 20px; /* Scale up for 4K/ultra-wide displays */
+  }
+}
+
+/* ─── Custom scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E6B2E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFD600;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE94D;
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .flame-text {
+    background: linear-gradient(135deg, #FF6B00, #FFD600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-yellow {
+    text-shadow: 0 0 30px rgba(255, 214, 0, 0.6);
+  }
+
+  .green-gradient {
+    background: linear-gradient(135deg, #1E6B2E, #3CC120);
+  }
+
+  .dark-gradient {
+    background: linear-gradient(135deg, #0F0F0F, #1E6B2E);
   }
 }
+
+/* ─── Accessibility: respect reduced motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── Global high-visibility yellow focus rings ──────────────────────────── */
+*:focus-visible {
+  outline: 2px solid #FFD600 !important;
+  outline-offset: 2px !important;
+}
+
+/* ─── Skip link extra safety positioning ─────────────────────────────────── */
+.sr-only:focus {
+  clip: auto !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  position: absolute !important;
+}
+
