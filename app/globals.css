@@ -10,19 +10,19 @@ html {
 
 @media (min-width: 1280px) {
   html {
-    font-size: 17px; /* Slight scale up for standard laptops */
+    font-size: 16px; /* Kept standard for laptops */
   }
 }
 
 @media (min-width: 1536px) {
   html {
-    font-size: 18px; /* Scale up for 2K displays */
+    font-size: 17px; /* Slight scale up for 2K displays */
   }
 }
 
 @media (min-width: 1920px) {
   html {
-    font-size: 20px; /* Scale up for 4K/ultra-wide displays */
+    font-size: 18px; /* Scale up for 4K/ultra-wide displays */
   }
 }
 
