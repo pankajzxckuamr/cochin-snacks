@@ -288,7 +288,7 @@ export default function ContactClient() {
           <div className="relative w-full h-[400px] rounded-3xl overflow-hidden shadow-md border border-dark/10">
             {/* Standard embedded map of Ponjassery P.O., Ernakulam, Kerala */}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.7656608556637!2d76.41078427503273!3d10.117182289994071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m3!1d15711.062643415392!2d76.41829029999999!3d10.117182299999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Pavithram%20Snacks,%20Ernakulam,%20Kerala,%20India&t=&z=14&ie=UTF8&iwloc=B&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
