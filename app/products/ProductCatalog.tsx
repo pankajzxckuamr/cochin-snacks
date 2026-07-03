@@ -189,7 +189,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               layout
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6"
             >
-              <AnimatePresence mode="popLayout">
+              <AnimatePresence>
                 {filteredProducts.map((p, idx) => (
                   <m.div
                     key={p._id}
