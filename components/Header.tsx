@@ -257,6 +257,7 @@ export default function Header() {
                                 <Link
                                   key={cat.slug}
                                   href={`/products?category=${cat.slug}`}
+                                  prefetch={false}
                                   onClick={() => setDropdownOpen(false)}
                                   className="group transition-colors duration-200 text-left px-2 py-1"
                                 >

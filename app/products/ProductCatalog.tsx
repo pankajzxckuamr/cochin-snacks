@@ -44,25 +44,31 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
   const [sortBy, setSortBy] = useState<string>('default')
   const [showFiltersMobile, setShowFiltersMobile] = useState(false)
 
-  // Read active category from URL (?category=[slug])
-  const activeCategory = searchParams.get('category') || 'all'
+  // Read active category from URL (?category=[slug]) initially, then manage locally for speed
+  const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all')
 
   // Update category slug in search parameters without full page reload
   const handleCategoryChange = (slug: string) => {
-    const params = new URLSearchParams(searchParams.toString())
+    setActiveCategory(slug)
+    
+    // Update URL silently without triggering Next.js server requests
+    const params = new URLSearchParams(window.location.search)
     if (slug === 'all') {
       params.delete('category')
     } else {
       params.set('category', slug)
     }
-    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+    
+    const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname
+    window.history.replaceState(null, '', newUrl)
   }
 
   // Reset all filters
   const resetFilters = () => {
     setSearch('')
     setSortBy('default')
-    router.push(pathname, { scroll: false })
+    setActiveCategory('all')
+    window.history.replaceState(null, '', pathname)
   }
 
   // Filtered and sorted products list
