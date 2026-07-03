@@ -5,7 +5,7 @@ export const sanityClient: SanityClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '',
   dataset:   process.env.NEXT_PUBLIC_SANITY_DATASET   ?? 'production',
   apiVersion: '2024-01-01',
-  useCdn:    process.env.NODE_ENV === 'production',
+  useCdn:    false, // Disable CDN during build to avoid cache/timeout issues
 })
 
 
@@ -32,7 +32,7 @@ export async function sanityFetch<T>(
 ): Promise<T> {
   try {
     return await sanityClient.fetch<T>(query, params, {
-      cache: 'no-store', // Disable cache temporarily to prevent hanging
+      next: { revalidate: 60 } // Use ISR instead of disabling cache
     })
   } catch (error) {
     console.error('Sanity fetch failed, returning fallback to prevent crash:', error)
