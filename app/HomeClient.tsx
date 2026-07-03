@@ -51,7 +51,7 @@ function ParticleField() {
     if (!ctx) return
 
     let animationFrameId: number
-    let width = (canvas.width = window.innerWidth)
+    let width = (canvas.width = document.documentElement.clientWidth)
     let height = (canvas.height = window.innerHeight)
 
     const particles: Array<{
@@ -84,7 +84,7 @@ function ParticleField() {
 
     const handleResize = () => {
       if (!canvas) return
-      width = canvas.width = window.innerWidth
+      width = canvas.width = document.documentElement.clientWidth
       height = canvas.height = window.innerHeight
     }
     window.addEventListener('resize', handleResize)
@@ -704,7 +704,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
 
             {/* BACK HALF OF ROTATING RING (Bottom half visible, z-index behind card) */}
             <div
-              className="absolute z-10 pointer-events-none flex items-center justify-center w-[400px] sm:w-[500px] lg:w-[600px] aspect-square"
+              className="absolute z-10 pointer-events-none flex items-center justify-center w-[320px] sm:w-[500px] lg:w-[600px] aspect-square"
               style={{
                 transform: 'rotateX(-60deg) translateY(5%) scale(1.05)',
                 clipPath: 'polygon(0 50%, 100% 50%, 100% 100%, 0 100%)'
@@ -724,7 +724,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
               />
 
               {/* Floating Element 1 */}
-              <div className="absolute top-[20%] -right-8 sm:-right-12 lg:-right-16 bg-white p-3 sm:p-4 rounded-2xl shadow-xl shadow-dark/5 z-30 animate-float" style={{ animationDuration: '4s' }}>
+              <div className="absolute top-[20%] -right-2 sm:-right-8 lg:-right-12 bg-white p-3 sm:p-4 rounded-2xl shadow-xl shadow-dark/5 z-30 animate-float" style={{ animationDuration: '4s' }}>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow/20 flex items-center justify-center text-yellow-dark">
                     <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -737,7 +737,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
               </div>
 
               {/* Floating Element 2 */}
-              <div className="absolute bottom-[20%] -left-8 sm:-left-12 lg:-left-16 bg-white p-3 sm:p-4 rounded-2xl shadow-xl shadow-dark/5 z-30 animate-float" style={{ animationDuration: '5s', animationDirection: 'reverse' }}>
+              <div className="absolute bottom-[20%] -left-2 sm:-left-8 lg:-left-12 bg-white p-3 sm:p-4 rounded-2xl shadow-xl shadow-dark/5 z-30 animate-float" style={{ animationDuration: '5s', animationDirection: 'reverse' }}>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-flame-orange/10 flex items-center justify-center">
                     <FlameIcon size="sm" color="orange" />
@@ -752,7 +752,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
 
             {/* FRONT HALF OF ROTATING RING (Top half visible, z-index in front of card) */}
             <div
-              className="absolute z-30 pointer-events-none flex items-center justify-center w-[400px] sm:w-[500px] lg:w-[600px] aspect-square"
+              className="absolute z-30 pointer-events-none flex items-center justify-center w-[320px] sm:w-[500px] lg:w-[600px] aspect-square"
               style={{
                 transform: 'rotateX(-60deg) translateY(5%) scale(1.05)',
                 clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)'
@@ -821,7 +821,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
             </div>
 
             {/* Right Col: Modern Image Collage */}
-            <div className="order-1 lg:order-2 relative w-full h-[450px] sm:h-[600px] flex items-center justify-center lg:justify-end">
+            <div className="hidden lg:flex order-1 lg:order-2 relative w-full h-[450px] sm:h-[600px] items-center justify-center lg:justify-end">
               <ScrollReveal direction="left" className="w-full h-full relative">
 
                 {/* Main Large Image */}
