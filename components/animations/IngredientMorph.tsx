@@ -209,7 +209,7 @@ export default function IngredientMorph() {
 
   const getParentTransition = () => {
     if (stage === 'fadeout') {
-      return { duration: 0.5, ease: 'easeInOut' }
+      return { duration: 0.5, ease: 'easeInOut' as const }
     }
     if (stage === 'idle') {
       return { duration: 0 }
@@ -238,7 +238,7 @@ export default function IngredientMorph() {
         return {
           delay: index * 0.1,
           duration: 0.5,
-          ease: 'easeOut',
+          ease: 'easeOut' as const,
         }
       case 'converging':
         return { duration: 0.8, ease: 'easeInOut' }
