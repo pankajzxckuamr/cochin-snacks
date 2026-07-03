@@ -23,6 +23,16 @@ const countries = [
   { name: 'Malta', flag: '🇲🇹' },
 ]
 
+const getCountryCode = (flagEmoji: string) => {
+  if (!flagEmoji || flagEmoji.length < 2) return 'in';
+  const code1 = flagEmoji.codePointAt(0);
+  const code2 = flagEmoji.codePointAt(2);
+  if (code1 && code2) {
+    return (String.fromCharCode(code1 - 127397) + String.fromCharCode(code2 - 127397)).toLowerCase();
+  }
+  return 'in';
+};
+
 export default function ExportMarquee() {
   // Duplicate array multiple times to create a seamless infinite loop
   const duplicatedCountries = [...countries, ...countries, ...countries, ...countries]
@@ -47,7 +57,14 @@ export default function ExportMarquee() {
             key={idx}
             className="flex items-center gap-3 px-8 sm:px-12 group hover:scale-110 transition-transform duration-300 cursor-default"
           >
-            <span className="text-4xl sm:text-6xl filter drop-shadow-md group-hover:drop-shadow-xl transition-all">{country.flag}</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center border border-gray-100 shadow-sm bg-white shrink-0 group-hover:border-green-brand/40 group-hover:shadow-md transition-all">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src={`https://flagcdn.com/w80/${getCountryCode(country.flag)}.png`} 
+                alt={`${country.name} flag`} 
+                className="w-full h-full object-cover" 
+              />
+            </div>
             <span className="text-xl sm:text-3xl font-bold text-dark/70 font-heading group-hover:text-dark transition-colors">
               {country.name}
             </span>

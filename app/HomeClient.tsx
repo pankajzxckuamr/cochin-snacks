@@ -205,39 +205,42 @@ function FallingChip({ chip, onLand }: { chip: ChipData; onLand: () => void }) {
       return { targetX, targetY, size }
     })
   }, [])
-
   useEffect(() => {
     let active = true
 
-    // 1. Fall animation with spring physics
-    controls.start({
-      y: chip.settledY,
-      rotate: chip.randomRotate,
-      transition: {
-        type: 'spring',
-        stiffness: 60,
-        damping: 12,
-        delay: chip.delay,
-      }
-    }).then(() => {
-      if (!active) return
+    const runAnimation = async () => {
+      try {
+        // 1. Fall animation with spring physics
+        await controls.start({
+          y: chip.settledY,
+          rotate: chip.randomRotate,
+          transition: {
+            type: 'spring',
+            stiffness: 60,
+            damping: 12,
+            delay: chip.delay,
+          }
+        })
+        
+        if (!active) return
 
-      // Emit particles
-      setShowParticles(true)
-      onLand()
+        // Emit particles
+        setShowParticles(true)
+        onLand()
 
-      // 2. Landing scale bounce
-      controls.start({
-        scale: [1, 1.08, 1],
-        transition: {
-          duration: 0.2,
-          ease: 'easeInOut',
-        }
-      }).then(() => {
+        // 2. Landing scale bounce
+        await controls.start({
+          scale: [1, 1.08, 1],
+          transition: {
+            duration: 0.2,
+            ease: 'easeInOut',
+          }
+        })
+        
         if (!active) return
 
         // 3. Ambient floating oscillation
-        controls.start({
+        await controls.start({
           y: [chip.settledY - 6, chip.settledY + 6],
           rotate: [chip.randomRotate - 3, chip.randomRotate + 3],
           transition: {
@@ -255,14 +258,23 @@ function FallingChip({ chip, onLand }: { chip: ChipData; onLand: () => void }) {
             }
           }
         })
-      })
-    })
+      } catch (err) {
+        // Silently ignore "controls.start() should only be called after a component has mounted"
+        // This can happen in React StrictMode or during fast unmounts.
+      }
+    }
+
+    // Small delay ensures Framer Motion has bound the element to the controls
+    const timeoutId = setTimeout(() => {
+      if (active) runAnimation()
+    }, 50)
 
     return () => {
       active = false
+      clearTimeout(timeoutId)
+      controls.stop()
     }
   }, [controls, chip, onLand])
-
   // Organic banana chip SVG paths
   const CHIP_PATHS = [
     "M 50,10 C 75,10 92,28 90,50 C 88,72 70,90 50,90 C 30,90 10,70 10,50 C 10,30 25,10 50,10 Z",
