@@ -5,6 +5,8 @@ import { ALL_PRODUCTS_QUERY, ALL_CATEGORIES_QUERY } from '@/lib/sanity/queries'
 import ProductCatalog from './ProductCatalog'
 import { generateSeoMetadata } from '@/lib/seo'
 
+import { Suspense } from 'react'
+
 interface Product {
   _id: string
   title: string
@@ -66,7 +68,9 @@ export default async function ProductsPage() {
         </section>
 
         {/* Dynamic Catalog */}
-        <ProductCatalog initialProducts={products} categories={categories} />
+        <Suspense fallback={<div className="py-20 text-center font-bold">Loading snacks...</div>}>
+          <ProductCatalog initialProducts={products} categories={categories} />
+        </Suspense>
       </main>
       <Footer />
     </>
