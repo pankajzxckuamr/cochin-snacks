@@ -241,7 +241,7 @@ export default function IngredientMorph() {
           ease: 'easeOut' as const,
         }
       case 'converging':
-        return { duration: 0.8, ease: 'easeInOut' }
+        return { duration: 0.8, ease: 'easeInOut' as const }
       default:
         return { duration: 0.2 }
     }
@@ -265,7 +265,7 @@ export default function IngredientMorph() {
       return {
         scale: { type: 'spring' as const, stiffness: 200, damping: 15 },
         opacity: { duration: 0.2 },
-        rotate: { duration: 0.6, ease: 'easeOut' }
+        rotate: { duration: 0.6, ease: 'easeOut' as const }
       }
     }
     return { duration: 0.2 }
@@ -290,7 +290,7 @@ export default function IngredientMorph() {
       return {
         duration: 1.0,
         times: [0, 0.5, 1],
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       }
     }
     return { duration: 0.2 }
@@ -311,7 +311,7 @@ export default function IngredientMorph() {
 
   const getTaglineTransition = () => {
     if (stage === 'snack') {
-      return { delay: 0.3, duration: 0.4, ease: 'easeOut' }
+      return { delay: 0.3, duration: 0.4, ease: 'easeOut' as const }
     }
     return { duration: 0.2 }
   }
