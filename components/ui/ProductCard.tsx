@@ -62,8 +62,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const stars = ratingData.score >= 4.5 ? '★★★★★' : '★★★★☆'
 
-  const hasPrice = typeof product.mrp === 'number' && product.mrp > 0
-  const originalPrice = hasPrice ? Math.round(product.mrp * 1.25) : 0
+  const mrp = product.mrp ?? 0
+  const hasPrice = mrp > 0
+  const originalPrice = hasPrice ? Math.round(mrp * 1.25) : 0
 
   const handleCardClick = () => {
     router.push(`/products/${slugStr}`)
