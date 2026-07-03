@@ -2,7 +2,7 @@
 
 interface FlameIconProps {
   size?: 'sm' | 'md' | 'lg'
-  color?: 'orange' | 'red' | 'yellow' | 'gray'
+  color?: 'orange' | 'red' | 'yellow' | 'gray' | 'white'
   delay?: number // delay in seconds
 }
 
@@ -25,6 +25,7 @@ export default function FlameIcon({
     red: 'fill-[#E8230A] drop-shadow-[0_2px_8px_rgba(232,35,10,0.5)]',
     yellow: 'fill-[#FFD600] drop-shadow-[0_2px_8px_rgba(255,214,0,0.6)]',
     gray: 'fill-[#9CA3AF] opacity-30',
+    white: 'fill-white drop-shadow-[0_2px_8px_rgba(255,255,255,0.5)]',
   }
 
   const fillClass = colorMap[color]
