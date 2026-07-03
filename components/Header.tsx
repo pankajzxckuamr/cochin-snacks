@@ -34,7 +34,7 @@ export default function Header() {
   const pathname = usePathname()
   const { scrollY } = useScroll()
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLAnchorElement>(null)
 
   const hasBg = isScrolled || pathname !== '/'
 
