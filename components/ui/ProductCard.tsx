@@ -10,6 +10,7 @@ import styles from './ProductCard.module.css'
 interface Product {
   _id: string
   title: string
+  description?: string
   slug: string | { current: string }
   category?: {
     title: string
