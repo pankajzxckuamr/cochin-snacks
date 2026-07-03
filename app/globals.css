@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Smooth scrolling & Responsive Base Font ──────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base size for mobile/tablet */
+}
+
+@media (min-width: 1280px) {
+  html {
+    font-size: 16px; /* Kept standard for laptops */
+  }
+}
+
+@media (min-width: 1536px) {
+  html {
+    font-size: 17px; /* Slight scale up for 2K displays */
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 18px; /* Scale up for 4K/ultra-wide displays */
+  }
+}
+
+/* ─── Custom scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F6F9F6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2DB82D;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1B851B;
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
+@layer utilities {
+  .flame-text {
+    background: linear-gradient(135deg, #FF6B00, #FFD600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-yellow {
+    text-shadow: 0 0 30px rgba(255, 214, 0, 0.6);
+  }
+
+  .green-gradient {
+    background: linear-gradient(135deg, #2DB82D, #49D049);
+  }
+
+  .dark-gradient {
+    background: linear-gradient(135deg, #229922, #1B851B);
+  }
+}
+
+/* ─── Accessibility: respect reduced motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── Global high-visibility yellow focus rings ──────────────────────────── */
+*:focus-visible {
+  outline: 2px solid #FFD600 !important;
+  outline-offset: 2px !important;
+}
+
+/* ─── Skip link extra safety positioning ─────────────────────────────────── */
+.sr-only:focus {
+  clip: auto !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  position: absolute !important;
+}
+
