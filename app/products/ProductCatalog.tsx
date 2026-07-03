@@ -72,12 +72,12 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
         // Search text matching
         const matchSearch =
           p.title.toLowerCase().includes(search.toLowerCase()) ||
-          p.description?.toLowerCase().includes(search.toLowerCase()) ||
-          p.category.title.toLowerCase().includes(search.toLowerCase())
+          (p.description?.toLowerCase().includes(search.toLowerCase()) ?? false) ||
+          (p.category?.title?.toLowerCase().includes(search.toLowerCase()) ?? false)
 
         // Category matching
         const matchCategory =
-          activeCategory === 'all' || p.category.slug === activeCategory
+          activeCategory === 'all' || p.category?.slug === activeCategory
 
         return matchSearch && matchCategory
       })
