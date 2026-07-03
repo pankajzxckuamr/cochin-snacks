@@ -7,12 +7,14 @@ interface ScrollRevealProps {
   children: ReactNode
   delay?: number // in seconds
   direction?: 'up' | 'left' | 'right' | 'fade'
+  className?: string
 }
 
 export default function ScrollReveal({
   children,
   delay = 0,
   direction = 'up',
+  className = '',
 }: ScrollRevealProps) {
   // Animation presets mapping
   const presets = {
@@ -38,6 +40,7 @@ export default function ScrollReveal({
 
   return (
     <m.div
+      className={className}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}

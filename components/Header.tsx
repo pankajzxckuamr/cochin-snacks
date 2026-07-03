@@ -181,11 +181,10 @@ export default function Header() {
 
             <button
               onClick={() => setIsOpen(true)}
-              className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 rounded-lg ${
-                hasBg 
-                  ? 'text-[#FFD600] hover:text-white focus-visible:ring-yellow' 
-                  : 'text-green-brand hover:text-green-dark focus-visible:ring-green-brand'
-              }`}
+              className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 rounded-lg ${hasBg
+                ? 'text-[#FFD600] hover:text-white focus-visible:ring-yellow'
+                : 'text-green-brand hover:text-green-dark focus-visible:ring-green-brand'
+                }`}
               aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
@@ -226,13 +225,12 @@ export default function Header() {
                         onMouseEnter={() => setDropdownOpen(true)}
                         aria-expanded={dropdownOpen}
                         aria-controls="products-mega-dropdown"
-                        className={`text-sm font-semibold tracking-wide uppercase transition-all duration-200 px-4 py-2 rounded-full focus:outline-none focus-visible:ring-2 flex items-center gap-1.5 ${
-                          dropdownOpen 
-                            ? 'bg-[#F2E6DF] text-[#A65B32] font-bold shadow-sm' 
-                            : hasBg
-                              ? `focus-visible:ring-[#FFD600] ${isActive ? 'text-[#FFD600] font-bold' : 'text-white hover:text-[#FFD600]'}`
-                              : `focus-visible:ring-green-brand ${isActive ? 'text-green-brand font-bold' : 'text-dark hover:text-green-brand'}`
-                        }`}
+                        className={`text-sm font-semibold tracking-wide uppercase transition-all duration-200 px-4 py-2 rounded-full focus:outline-none focus-visible:ring-2 flex items-center gap-1.5 ${dropdownOpen
+                          ? 'bg-[#F2E6DF] text-[#A65B32] font-bold shadow-sm'
+                          : hasBg
+                            ? `focus-visible:ring-[#FFD600] ${isActive ? 'text-[#FFD600] font-bold' : 'text-white hover:text-[#FFD600]'}`
+                            : `focus-visible:ring-green-brand ${isActive ? 'text-green-brand font-bold' : 'text-dark hover:text-green-brand'}`
+                          }`}
                       >
                         <span>{link.name}</span>
                         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180 text-[#A65B32]' : 'text-current'}`} />
@@ -253,7 +251,7 @@ export default function Header() {
                           >
                             {/* Pointing triangle pointer */}
                             <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rotate-45 border-t border-l border-gray-100" />
-                            
+
                             <div className="flex items-center gap-6">
                               {categories.map((cat) => (
                                 <Link
