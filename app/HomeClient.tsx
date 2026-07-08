@@ -876,7 +876,7 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
 
         {/* One-row modern listing with patterned green cards */}
         <div
-          className="relative z-10 flex gap-4 sm:gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-none px-4 sm:px-6 lg:px-8"
+          className="relative z-10 flex gap-4 sm:gap-5 justify-start sm:justify-center overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-none px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
             {[
