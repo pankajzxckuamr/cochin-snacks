@@ -37,9 +37,9 @@ export default function Header() {
     )
     if (sections.length === 0) return
 
-    // Home has sticky/interactive sections that don't play well with
-    // transform-based auto-reveal wrappers.
-    if (pathname === '/') {
+    // Home + Products: avoid opacity/transform reveals so content is visible
+    // immediately (Products catalogue must show without scrolling).
+    if (pathname === '/' || pathname === '/products' || pathname.startsWith('/products/')) {
       sections.forEach((section) => {
         section.classList.remove('auto-reveal-section', 'is-visible')
       })

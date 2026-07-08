@@ -25,13 +25,13 @@ interface Product {
 
 interface ProductCardProps {
   product: Product
-  /** Stagger delay index for CSS reveal (default 0). */
+  /** Kept for call-site compatibility; no longer used for animation. */
   index?: number
   /** Eager-load image for above-the-fold cards. */
   priority?: boolean
 }
 
-function ProductCard({ product, index = 0, priority = false }: ProductCardProps) {
+function ProductCard({ product, priority = false }: ProductCardProps) {
   const slugStr =
     typeof product.slug === 'string'
       ? product.slug
@@ -45,7 +45,6 @@ function ProductCard({ product, index = 0, priority = false }: ProductCardProps)
       ? urlFor(mainImage).width(360).height(360).format('webp').quality(75).url() || fallbackUrl
       : fallbackUrl
 
-  // Stable mock rating from product id (no recompute on parent re-renders via memo)
   let hash = 0
   const str = product._id || ''
   for (let i = 0; i < str.length; i++) {
@@ -57,18 +56,12 @@ function ProductCard({ product, index = 0, priority = false }: ProductCardProps)
   const stars = score >= 4.5 ? '★★★★★' : '★★★★☆'
 
   const subtitle =
-    product.packSize ||
-    product.description ||
-    'Authentic Kerala snack'
-
-  // Cap stagger so late cards still appear quickly
-  const delayMs = Math.min(index, 12) * 45
+    product.description || product.packSize || 'Authentic Kerala snack'
 
   return (
     <Link
       href={`/products/${slugStr}`}
-      className={`${styles.productCard} ${styles.reveal}`}
-      style={{ animationDelay: `${delayMs}ms` }}
+      className={styles.productCard}
       aria-label={`View ${product.title}`}
     >
       {product.isBestseller && (
@@ -112,7 +105,7 @@ function ProductCard({ product, index = 0, priority = false }: ProductCardProps)
         <p className={styles.description}>{subtitle}</p>
 
         <div className={styles.cardFooter}>
-          <span className={styles.actionBtn}>Enquire</span>
+          <span className={styles.actionBtn}>Enquiry Price</span>
         </div>
       </div>
     </Link>

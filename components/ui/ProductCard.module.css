@@ -1,7 +1,9 @@
-/* ── Product Card ── */
+/* ── Product Card — compact standard height ── */
 .productCard {
     width: 100%;
     height: 100%;
+    min-height: 360px;
+    max-height: 360px;
     background: #ffffff;
     border-radius: 20px;
     overflow: hidden;
@@ -25,7 +27,6 @@
     border-color: rgba(61, 139, 61, 0.45);
 }
 
-/* Soft inset green rim on hover */
 .productCard::after {
     content: '';
     position: absolute;
@@ -39,22 +40,6 @@
 
 .productCard:hover::after {
     box-shadow: inset 0 0 0 2px rgba(61, 139, 61, 0.3);
-}
-
-/* ── Entrance animation (CSS — no Framer per card) ── */
-@keyframes cardReveal {
-    from {
-        opacity: 0;
-        transform: translateY(22px) scale(0.97);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.reveal {
-    animation: cardReveal 0.48s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 /* ── Badge ── */
@@ -83,14 +68,14 @@
     background: rgba(61, 139, 61, 0.95);
 }
 
-/* ── Image ── */
+/* ── Image — fixed height ── */
 .cardImage {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 150px;
+    flex-shrink: 0;
     overflow: hidden;
     background: #f2efe8;
     position: relative;
-    flex-shrink: 0;
 }
 
 .image {
@@ -105,30 +90,12 @@
     transform: scale(1.06);
 }
 
-/* Soft bottom fade so text sits cleanly */
-.cardImage::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 28%;
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.55), transparent);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.productCard:hover .cardImage::after {
-    opacity: 1;
-}
-
-/* ── Content ── */
+/* ── Content — even spacing between text rows ── */
 .cardContent {
-    padding: 0.85rem 0.95rem 1rem;
+    padding: 12px 14px 14px;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 8px;
     flex: 1;
     min-height: 0;
 }
@@ -138,7 +105,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.4rem;
-    min-height: 1.35rem;
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .categoryTag {
@@ -167,13 +135,15 @@
     font-size: 0.95rem;
     font-weight: 700;
     color: #111111;
-    line-height: 1.3;
+    line-height: 1.35;
+    height: 2.7rem;
+    margin: 0;
     transition: color 0.25s ease;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.5rem;
+    flex-shrink: 0;
 }
 
 .productCard:hover .title {
@@ -184,12 +154,14 @@
     font-size: 0.75rem;
     font-weight: 500;
     color: #6b6b6b;
-    line-height: 1.4;
+    line-height: 1.45;
+    height: 2.15rem;
+    margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.1rem;
+    flex-shrink: 0;
 }
 
 /* ── Rating ── */
@@ -215,8 +187,8 @@
 
 /* ── Footer / CTA ── */
 .cardFooter {
+    flex-shrink: 0;
     margin-top: auto;
-    padding-top: 0.55rem;
 }
 
 .actionBtn {
@@ -224,22 +196,23 @@
     color: #fff;
     border: none;
     width: 100%;
+    height: 36px;
     justify-content: center;
-    padding: 0.55rem 0.9rem;
+    padding: 0 0.75rem;
     border-radius: 100px;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
     transition:
         background 0.25s ease,
-        transform 0.25s ease,
         box-shadow 0.25s ease;
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    pointer-events: none; /* whole card is the link */
+    pointer-events: none;
+    white-space: nowrap;
 }
 
 .productCard:hover .actionBtn {
@@ -251,11 +224,17 @@
 @media (max-width: 640px) {
     .productCard {
         border-radius: 16px;
+        min-height: 330px;
+        max-height: 330px;
+    }
+
+    .cardImage {
+        height: 130px;
     }
 
     .cardContent {
-        padding: 0.7rem 0.75rem 0.85rem;
-        gap: 0.3rem;
+        padding: 10px 12px 12px;
+        gap: 6px;
     }
 
     .badge {
@@ -271,27 +250,21 @@
 
     .title {
         font-size: 0.85rem;
-        min-height: 2.25rem;
+        height: 2.3rem;
     }
 
     .description {
         font-size: 0.68rem;
-        min-height: 1.9rem;
-        -webkit-line-clamp: 2;
+        height: 1.95rem;
     }
 
     .actionBtn {
-        padding: 0.48rem 0.7rem;
-        font-size: 0.65rem;
+        height: 32px;
+        font-size: 0.6rem;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .reveal {
-        animation: none;
-        opacity: 1;
-    }
-
     .productCard:hover {
         transform: none;
     }

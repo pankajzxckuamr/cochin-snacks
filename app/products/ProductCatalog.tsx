@@ -177,9 +177,8 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 items-stretch">
               {filteredProducts.map((p, idx) => (
                 <ProductCard
-                  key={`${activeCategory}-${sortBy}-${p._id}`}
+                  key={p._id}
                   product={p}
-                  index={idx}
                   priority={idx < 5}
                 />
               ))}
