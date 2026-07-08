@@ -21,6 +21,8 @@ interface Product {
   isHot?: boolean
   isBestseller?: boolean
   images?: any[]
+  /** Direct image path used by the local fallback catalogue. */
+  img?: string
   purchaseLinks?: { platformName: string; url: string }[]
 }
 
@@ -46,7 +48,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   
   const fallbackUrl = '/default-snack.svg'
   const mainImage = product.images?.[0]
-  const imageUrl = mainImage ? urlFor(mainImage).width(400).format('webp').url() || fallbackUrl : fallbackUrl
+  const imageUrl = product.img
+    ? product.img
+    : mainImage
+      ? urlFor(mainImage).width(400).format('webp').url() || fallbackUrl
+      : fallbackUrl
 
   // Stable mock rating based on product ID
   const ratingData = React.useMemo(() => {

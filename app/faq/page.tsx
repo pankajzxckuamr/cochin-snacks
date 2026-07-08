@@ -43,7 +43,7 @@ export default async function FAQPage() {
     <>
       <Header />
       <PageTransition>
-        <main className="min-h-screen bg-off-white text-dark pt-32 pb-20">
+        <main className="flex-1 bg-off-white text-dark pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
             {/* Heading & Intro */}

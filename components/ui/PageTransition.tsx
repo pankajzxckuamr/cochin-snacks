@@ -14,6 +14,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
+      className="flex min-h-screen flex-col"
     >
       {children}
     </m.div>

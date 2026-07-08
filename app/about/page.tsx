@@ -4,11 +4,10 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
-import FlameIcon from '@/components/ui/FlameIcon'
-import AnimatedCounter from '@/components/ui/AnimatedCounter'
-import { ArrowRight, Award, ShieldCheck, Heart, Leaf } from 'lucide-react'
-import ExportMarquee from '@/components/animations/ExportMarquee'
-import AnimatedHeroBackground from '@/components/animations/AnimatedHeroBackground'
+import SectionHeading from '@/components/ui/SectionHeading'
+import DotPattern from '@/components/ui/DotPattern'
+import { ArrowRight, Award, Leaf, Sprout, Droplets, Flame, Sparkles, Package, Truck } from 'lucide-react'
+import GlobalReachSection from '@/components/animations/GlobalReachSection'
 
 import { generateSeoMetadata } from '@/lib/seo'
 
@@ -21,7 +20,6 @@ export async function generateMetadata() {
 }
 
 export default function AboutPage() {
-  const heroWords = 'Born in Kerala. Loved Worldwide.'.split(' ')
   const timelineItems = [
     { year: '1950s', title: 'Pavithram Foods Established', desc: 'Decades of Kerala food expertise and local culinary excellence.' },
     { year: '75 Years', title: 'Legacy of Trust', desc: 'A trusted household name in Kerala food, agriculture, and quality standards.' },
@@ -30,200 +28,163 @@ export default function AboutPage() {
   ]
 
   const processSteps = [
-    { name: 'Sourcing', desc: 'Raw materials from South Indian farms' },
-    { name: 'Preparation', desc: 'Sorted and washed raw ingredients' },
-    { name: 'Frying', desc: 'Fried in 100% pure coconut oil' },
-    { name: 'Seasoning', desc: 'Infused with organic spice blends' },
-    { name: 'Packing', desc: 'Airtight nitrogen-flushed packages' },
-    { name: 'Distribution', desc: 'Shipped fresh worldwide' }
-  ]
-
-  const countryPills = [
-    'USA', 'UK', 'Germany', 'Netherlands', 'Norway', 'Sweden', 'Canada',
-    'Ireland', 'Australia', 'UAE', 'Oman', 'Qatar', 'Kuwait', 'Bahrain',
-    'Saudi Arabia', 'France', 'South Africa', 'Malta'
+    { name: 'Sourcing', desc: 'Raw materials from South Indian farms', icon: <Sprout className="w-6 h-6" /> },
+    { name: 'Preparation', desc: 'Sorted and washed raw ingredients', icon: <Droplets className="w-6 h-6" /> },
+    { name: 'Frying', desc: 'Fried in 100% pure coconut oil', icon: <Flame className="w-6 h-6" /> },
+    { name: 'Seasoning', desc: 'Infused with organic spice blends', icon: <Sparkles className="w-6 h-6" /> },
+    { name: 'Packing', desc: 'Airtight nitrogen-flushed packages', icon: <Package className="w-6 h-6" /> },
+    { name: 'Distribution', desc: 'Shipped fresh worldwide', icon: <Truck className="w-6 h-6" /> }
   ]
 
   return (
     <PageTransition>
       <Header />
 
-      <main id="main-content" className="min-h-screen bg-white text-dark overflow-hidden">
-        
-        {/* 1. HERO SECTION (100vh) */}
-        <section className="relative min-h-[85vh] sm:min-h-screen flex flex-col justify-center items-center bg-[#0F0F0F] text-white px-4 text-center select-none overflow-hidden pt-16">
-          <AnimatedHeroBackground />
-          
-          {/* Floating Flame Icons */}
-          <div className="absolute inset-x-0 top-20 flex justify-center gap-16 pointer-events-none">
-            <FlameIcon size="lg" color="red" delay={0.1} />
-            <FlameIcon size="lg" color="orange" delay={0.4} />
-            <FlameIcon size="lg" color="yellow" delay={0.7} />
-          </div>
+      <main id="main-content" className="flex-1 bg-cream text-dark overflow-hidden">
 
-          <h1 className="relative z-10 font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none max-w-4xl mx-auto flex flex-wrap justify-center gap-x-4 gap-y-2 select-text">
-            <span className="text-white">Born in Kerala.</span>
-            <span className="text-[#FFD600] drop-shadow-[0_2px_12px_rgba(255,214,0,0.35)]">Loved Worldwide.</span>
-          </h1>
-          
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-            <ArrowRight className="w-6 h-6 text-[#FFD600] rotate-90" />
-          </div>
-        </section>
+        {/* 1. HERO — modern light banner */}
+        <section className="relative bg-cream overflow-hidden py-16 sm:py-24">
+          <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
+          <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
+          <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
 
-        {/* 2. COMPANY OVERVIEW SECTION (2-col desktop, image right) */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Column: Text */}
-            <div className="lg:col-span-6 flex flex-col gap-6">
-              <ScrollReveal direction="left">
-                <span className="text-xs uppercase font-extrabold tracking-widest text-[#1B851B] block mb-2 font-mono">
-                  OVERVIEW
-                </span>
-                <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-[#1B851B] leading-tight">
-                  Cochin Snacks — Sharing the Real Taste of Kerala
-                </h2>
-                <div className="text-dark/80 text-sm sm:text-base leading-relaxed flex flex-col gap-4 font-body">
-                  <p>
-                    Cochin Snacks is all about sharing the real taste of Kerala with everyone, not just in India, but everywhere. As part of the Pavithram Group, which has been a big name in food for 75 years, Cochin Snacks focuses on making traditional Kerala snacks that people love — banana chips, tapioca chips, murukku, and pakkavada.
-                  </p>
-                  <p>
-                    By using old recipes and methods, Cochin Snacks brings a piece of Kerala to your home, so you can enjoy the unique flavors of this amazing state.
-                  </p>
-                  <p>
-                    Cochin Snacks brings together old recipes and new ways of making things to create products that are real, clean, and always taste good.
-                  </p>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            {/* Right Column: Image */}
-            <div className="lg:col-span-6 flex justify-center">
-              <ScrollReveal direction="right">
-                <div className="relative aspect-[6/5] w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-off-white">
-                  <Image
-                    src="/placeholder-product.svg"
-                    alt="Cochin Snacks Product Family"
-                    width={600}
-                    height={500}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              </ScrollReveal>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-green-brand/10 mb-6">
+              <span className="flex h-2 w-2 rounded-full bg-flame-orange" />
+              <span className="text-xs font-bold text-green-dark tracking-widest uppercase font-mono">Our Story</span>
+            </span>
+            <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] max-w-4xl">
+              Born in Kerala.{' '}
+              <span className="text-green-brand">Loved Worldwide.</span>
+            </h1>
+            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed">
+              Preserving the authentic crunch of Kerala — from our home in Ernakulam to snack lovers in 20+ countries.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
+              <Link href="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-green-brand hover:bg-green-dark text-white font-bold text-sm rounded-full shadow-lg shadow-green-brand/25 transition-all hover:-translate-y-0.5">
+                Explore Snacks <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="/contact" className="inline-flex items-center px-8 py-4 bg-white border-2 border-gray-100 hover:border-green-brand hover:text-green-brand text-dark font-bold text-sm rounded-full shadow-sm transition-all">
+                Get in Touch
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* 3. HISTORY TIMELINE SECTION (light green bg) */}
-        <section className="bg-[#E8F5E9] text-dark py-16 sm:py-24 relative">
+        {/* 2. COMPANY OVERVIEW — white */}
+        <section className="bg-white py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-center text-[#1B851B] mb-16">
-              Our History
-            </h2>
-            
-            {/* Timeline container */}
-            <div className="relative">
-              {/* Vertical line - hidden on mobile, visible on desktop */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-[#1B851B]/20 hidden md:block" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              <div className="flex flex-col items-start">
+                <ScrollReveal direction="right">
+                  <SectionHeading
+                    align="left"
+                    eyebrow="Overview"
+                    title={<>Sharing the Real <span className="text-green-brand">Taste of Kerala</span></>}
+                    className="mb-6"
+                  />
+                  <div className="text-dark/70 text-base lg:text-lg leading-relaxed flex flex-col gap-5 mb-8">
+                    <p className="font-medium text-dark bg-cream border-l-4 border-green-brand rounded-r-2xl pl-5 pr-6 py-4">
+                      Cochin Snacks is all about sharing the real taste of Kerala with everyone — not just in India, but everywhere.
+                    </p>
+                    <p>
+                      As part of the Pavithram Group, a big name in food for 75 years, we focus on traditional Kerala snacks people love — banana chips, tapioca chips, murukku, and pakkavada.
+                    </p>
+                    <p>
+                      We bring together old recipes and new ways of making things to create products that are real, clean, and always taste good.
+                    </p>
+                  </div>
+                </ScrollReveal>
+              </div>
 
-              <div className="flex flex-col gap-12 md:gap-16">
-                {timelineItems.map((item, idx) => {
-                  const isEven = idx % 2 === 0
-                  return (
-                    <ScrollReveal key={idx} direction={isEven ? 'right' : 'left'}>
-                      <div className={`relative flex flex-col md:flex-row items-center justify-between w-full ${isEven ? 'md:flex-row-reverse' : ''}`}>
-                        {/* Dot selector */}
-                        <div className="absolute left-1/2 -translate-x-1/2 top-[10px] w-4 h-4 bg-[#FFD600] border-2 border-[#1B851B] rounded-full z-10 hidden md:block" />
-
-                        {/* Card Column */}
-                        <div className="w-full md:w-[45%] bg-white border border-green-900/5 rounded-2xl p-6 shadow-xl shadow-green-900/5 hover:-translate-y-1 transition-transform duration-300">
-                          <span className="text-2xl font-black text-[#1B851B] block mb-2 font-mono">
-                            {item.year}
-                          </span>
-                          <h4 className="font-heading text-lg font-bold text-dark mb-2">
-                            {item.title}
-                          </h4>
-                          <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-
-                        {/* Empty spacing column to balance grid */}
-                        <div className="w-full md:w-[45%] hidden md:block" />
-                      </div>
-                    </ScrollReveal>
-                  )
-                })}
+              <div className="relative h-[340px] sm:h-[440px] lg:h-[520px]">
+                <ScrollReveal direction="left" className="w-full h-full relative">
+                  <div className="absolute top-0 right-0 w-[82%] h-[78%] rounded-[2.5rem] overflow-hidden shadow-2xl z-10 border-4 border-white bg-white">
+                    <Image src="/products/mixture.png" alt="Kerala mixture snack" fill sizes="(max-width: 1024px) 90vw, 45vw" className="object-cover hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <div className="absolute bottom-[4%] left-0 w-[48%] h-[44%] rounded-3xl overflow-hidden shadow-2xl z-20 border-[6px] border-white bg-white">
+                    <Image src="/products/pakkavada.png" alt="Kerala pakkavada" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover hover:scale-110 transition-transform duration-700" />
+                  </div>
+                </ScrollReveal>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4. VISION & MISSION SECTION */}
-        <section className="bg-white py-16 sm:py-24 relative z-10">
+        {/* 3. HISTORY TIMELINE — cream */}
+        <section className="bg-cream py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
-              {/* Vision Card */}
-              <ScrollReveal direction="up" delay={0.05}>
-                <div className="group bg-white rounded-3xl p-10 border border-gray-100 shadow-lg hover:shadow-2xl hover:border-[#1B851B]/30 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col gap-5 relative overflow-hidden">
-                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-[#1B851B]/5 to-transparent rounded-full group-hover:scale-150 transition-transform duration-700 ease-out" />
-                  <div className="w-16 h-16 rounded-2xl bg-[#1B851B]/10 text-[#1B851B] flex items-center justify-center mb-2 group-hover:bg-[#1B851B] group-hover:text-white transition-colors duration-300 relative z-10">
-                    <Leaf className="w-8 h-8" />
-                  </div>
-                  <h3 className="font-heading text-3xl font-black text-[#1B851B] relative z-10">Our Vision</h3>
-                  <p className="text-dark/70 text-base leading-relaxed relative z-10 font-medium">
-                    To make people all over the world love and trust us as the best Kerala snack brand. We want to bring Kerala's special taste and traditions into every home.
-                  </p>
-                </div>
-              </ScrollReveal>
+            <SectionHeading
+              eyebrow="Our Journey"
+              title={<>75 Years in <span className="text-green-brand">the Making</span></>}
+              subtitle="From a trusted Kerala food house to a global snack brand."
+            />
 
-              {/* Mission Card */}
-              <ScrollReveal direction="up" delay={0.15}>
-                <div className="group bg-white rounded-3xl p-10 border border-gray-100 shadow-lg hover:shadow-2xl hover:border-[#FFD600]/50 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col gap-5 relative overflow-hidden">
-                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-[#FFD600]/10 to-transparent rounded-full group-hover:scale-150 transition-transform duration-700 ease-out" />
-                  <div className="w-16 h-16 rounded-2xl bg-[#FFD600]/20 text-[#1B851B] flex items-center justify-center mb-2 group-hover:bg-[#FFD600] group-hover:text-dark transition-colors duration-300 relative z-10">
-                    <Award className="w-8 h-8" />
-                  </div>
-                  <h3 className="font-heading text-3xl font-black text-[#1B851B] relative z-10">Our Mission</h3>
-                  <p className="text-dark/70 text-base leading-relaxed relative z-10 font-medium">
-                    To deliver fresh, authentic, and high-quality Kerala snacks made using traditional recipes, premium ingredients, and world-class manufacturing standards while ensuring exceptional customer satisfaction and preserving Kerala's culinary heritage.
-                  </p>
-                </div>
-              </ScrollReveal>
+            <div className="relative">
+              {/* Horizontal connector line (desktop) */}
+              <div className="hidden lg:block absolute top-[21px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-green-brand/15 via-green-brand/40 to-green-brand/15" />
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
+                {timelineItems.map((item, idx) => (
+                  <ScrollReveal key={idx} direction="up" delay={idx * 0.12}>
+                    <div className="flex flex-col items-center h-full">
+                      {/* Node dot on the line */}
+                      <div className="hidden lg:flex mb-8 w-11 h-11 rounded-full bg-white border-2 border-green-brand items-center justify-center shadow-[0_4px_14px_-4px_rgba(45,184,45,0.5)] relative z-10">
+                        <span className="w-3.5 h-3.5 rounded-full bg-green-brand" />
+                      </div>
+
+                      {/* Card */}
+                      <div className="group relative w-full h-full bg-gradient-to-br from-green-brand to-green-dark border border-green-dark/20 rounded-2xl p-6 shadow-[0_14px_34px_-16px_rgba(30,107,46,0.55)] overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_22px_46px_-16px_rgba(30,107,46,0.65)] transition-all duration-300">
+                        <span className="absolute -bottom-3 right-3 font-heading text-6xl font-black text-white/10 group-hover:text-white/20 transition-colors duration-300 select-none pointer-events-none">
+                          0{idx + 1}
+                        </span>
+                        <span className="relative inline-flex items-center rounded-full bg-white/15 text-white text-xs font-black uppercase tracking-wider px-3 py-1.5 mb-3 font-mono">
+                          {item.year}
+                        </span>
+                        <h4 className="relative font-heading text-lg font-bold text-white mb-2">{item.title}</h4>
+                        <p className="relative text-white/75 text-sm leading-relaxed">{item.desc}</p>
+                        <span className="absolute left-0 bottom-0 h-1 w-0 bg-yellow group-hover:w-full transition-all duration-500 rounded-full" />
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* 5. MANUFACTURING SECTION (dark bg) */}
-        <section className="bg-[#0F0F0F] text-white py-16 sm:py-24 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-[#FFD600] mb-4">
-                World-Class Manufacturing in Kerala
-              </h2>
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                Cochin Snacks has its base in Ernakulam, Kerala, where it uses modern facilities to make its products. It's careful about keeping everything clean and making sure products are good quality — checking every step of the way.
-              </p>
-            </div>
-
-            {/* Process steps horizontal */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-6 justify-center">
-              {processSteps.map((step, idx) => (
-                <ScrollReveal key={idx} direction="up" delay={idx * 0.08}>
-                  <div className="bg-white/5 border border-white/10 p-5 rounded-2xl shadow-md text-center flex flex-col justify-between h-full relative group hover:border-[#FFD600] transition-colors">
-                    <div>
-                      <span className="text-[10px] font-mono text-[#FFD600] block mb-2 font-bold uppercase tracking-wider">
-                        Step 0{idx + 1}
-                      </span>
-                      <h4 className="font-heading text-sm font-bold text-white mb-2">
-                        {step.name}
-                      </h4>
-                      <p className="text-white/60 text-[10px] sm:text-xs leading-relaxed">
-                        {step.desc}
-                      </p>
+        {/* 4. VISION & MISSION — white */}
+        <section className="bg-white py-16 sm:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="What Drives Us"
+              title={<>Our Vision & <span className="text-green-brand">Mission</span></>}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              {[
+                {
+                  icon: <Leaf className="w-7 h-7" />,
+                  title: 'Our Vision',
+                  text: "To make people all over the world love and trust us as the best Kerala snack brand. We want to bring Kerala's special taste and traditions into every home.",
+                },
+                {
+                  icon: <Award className="w-7 h-7" />,
+                  title: 'Our Mission',
+                  text: "To deliver fresh, authentic, and high-quality Kerala snacks made using traditional recipes, premium ingredients, and world-class manufacturing standards while ensuring exceptional customer satisfaction and preserving Kerala's culinary heritage.",
+                },
+              ].map((card, idx) => (
+                <ScrollReveal key={card.title} direction="up" delay={idx * 0.1}>
+                  <div className="group relative h-full bg-cream rounded-3xl border border-black/[0.06] p-8 sm:p-10 overflow-hidden hover:border-green-brand/40 hover:shadow-[0_16px_40px_-16px_rgba(45,184,45,0.3)] hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4">
+                    <span className="absolute -top-3 right-5 font-mono text-6xl font-black text-black/[0.035] group-hover:text-green-brand/10 transition-colors duration-300 select-none pointer-events-none">
+                      0{idx + 1}
+                    </span>
+                    <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-green-brand to-green-dark text-white flex items-center justify-center shadow-lg shadow-green-brand/25 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+                      {card.icon}
                     </div>
+                    <h3 className="relative font-heading text-2xl font-black text-dark group-hover:text-green-brand transition-colors">{card.title}</h3>
+                    <p className="relative text-dark/65 text-base leading-relaxed">{card.text}</p>
+                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
                   </div>
                 </ScrollReveal>
               ))}
@@ -231,51 +192,67 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 6. FOUNDER'S MESSAGE (#FAFAF0) */}
-        <section className="bg-[#FAFAF0] py-16 sm:py-24 relative overflow-hidden">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <span className="font-serif text-[#1B851B]/10 text-9xl absolute -top-10 left-4 font-black pointer-events-none">
-              “
-            </span>
-            <span className="font-serif text-[#1B851B]/10 text-9xl absolute bottom-0 right-4 font-black pointer-events-none">
-              ”
-            </span>
+        {/* 5. MANUFACTURING — light band */}
+        <section className="bg-cream py-16 sm:py-20 relative overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-[32rem] h-[32rem] bg-green-brand/[0.07] rounded-full blur-[110px] pointer-events-none" />
+          <div className="absolute -bottom-28 -right-24 w-[32rem] h-[32rem] bg-yellow/10 rounded-full blur-[110px] pointer-events-none" />
+          <DotPattern className="top-0 left-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="left" />
+          <DotPattern className="top-0 right-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="right" />
 
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <SectionHeading
+              eyebrow="How We Make It"
+              title={<>World-Class Manufacturing <span className="text-green-brand">in Kerala</span></>}
+              subtitle="Based in Ernakulam, our modern facility keeps everything clean and quality-checked — at every step of the way."
+            />
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
+              {processSteps.map((step, idx) => (
+                <ScrollReveal key={idx} direction="up" delay={idx * 0.08}>
+                  <div className="group relative h-full bg-white border border-black/[0.06] rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center overflow-hidden hover:border-green-brand/40 hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-18px_rgba(45,184,45,0.35)] transition-all duration-300">
+                    <span className="absolute top-3 right-3.5 font-mono text-xs font-black text-black/[0.06] group-hover:text-green-brand/40 transition-colors select-none pointer-events-none">
+                      0{idx + 1}
+                    </span>
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-brand to-green-dark text-white flex items-center justify-center shadow-lg shadow-green-brand/25 mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+                      {step.icon}
+                    </div>
+                    <h4 className="font-heading text-sm font-bold text-dark mb-1.5 group-hover:text-green-brand transition-colors">{step.name}</h4>
+                    <p className="text-dark/55 text-xs leading-relaxed">{step.desc}</p>
+                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-green-dark group-hover:w-full transition-all duration-500 rounded-full" />
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. FOUNDER'S MESSAGE — white */}
+        <section className="bg-white py-16 sm:py-20 relative overflow-hidden">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <ScrollReveal direction="fade">
-              <div className="text-dark/85 text-base sm:text-lg italic leading-relaxed flex flex-col gap-6 font-medium">
+              <span className="block font-heading text-green-brand text-6xl font-black leading-none mb-4">“</span>
+              <div className="text-dark/75 text-base sm:text-lg italic leading-relaxed flex flex-col gap-5 font-medium">
                 <p>
-                  "Cochin Snacks started with a simple idea: to bring the real taste of Kerala to everyone. We're part of the Pavithram family, and we've always thought that food is about more than just eating — it's about connecting with our culture, memories, and the way we've always done things.
+                  Cochin Snacks started with a simple idea: to bring the real taste of Kerala to everyone. We're part of the Pavithram family, and we've always thought that food is about more than just eating — it's about connecting with our culture, memories, and the way we've always done things.
                 </p>
                 <p>
                   We take old recipes and mix them with new ways of making things to ensure that every time you eat our Cochin Snacks, it tastes the same and feels the same as it has for a long time.
                 </p>
                 <p>
-                  We're grateful to everyone who's been with us on this journey — our amazing customers, distributors, partners, and team members. Now, we're excited to share the delicious snacks of Kerala with even more people all around the world."
+                  We're grateful to everyone who's been with us on this journey — our amazing customers, distributors, partners, and team members. Now, we're excited to share the delicious snacks of Kerala with even more people all around the world.
                 </p>
               </div>
-
-              <div className="mt-8">
-                <span className="block text-base font-bold text-[#1B851B] italic">
-                  — Founder, Cochin Snacks
-                </span>
+              <div className="mt-8 inline-flex flex-col items-center">
+                <span className="w-10 h-0.5 rounded-full bg-green-brand mb-3" />
+                <span className="text-sm font-bold text-dark">Founder, Cochin Snacks</span>
+                <span className="text-xs text-dark/50 mt-0.5">A Pavithram Group Brand</span>
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        {/* 7. EXPORT MARKETS SECTION (Marquee) */}
-        <section className="bg-white py-16 sm:py-24 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-[#FFD600] block mb-2 font-mono bg-dark inline-block px-4 py-1.5 rounded-full">
-              Global Presence
-            </span>
-            <h2 className="font-heading text-4xl sm:text-5xl font-black text-[#1B851B]">
-              Loved in 20+ Countries
-            </h2>
-          </div>
-          
-          <ExportMarquee />
-        </section>
+        {/* 7. GLOBAL REACH — cream (counter + flag marquee) */}
+        <GlobalReachSection bg="cream" />
 
       </main>
 

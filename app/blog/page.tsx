@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import DotPattern from '@/components/ui/DotPattern'
 import { generateSeoMetadata } from '@/lib/seo'
 
 interface BlogPost {
@@ -40,22 +41,30 @@ export default async function BlogPage() {
     <PageTransition>
       <Header />
 
-      <main id="main-content" className="min-h-screen bg-[#FAFAF0] text-dark pb-24">
-        {/* Compact Hero Banner */}
-        <section className="relative py-16 bg-gradient-to-b from-[#0F0F0F] to-[#1E6B2E] text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,214,0,0.12),transparent)] pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h1 className="font-heading text-4xl sm:text-5xl font-black mb-3">
-              Cochin Food &amp; Spice Blog
+      <main id="main-content" className="flex-1 bg-white text-dark">
+        {/* Hero — modern cream banner (matches About/Products) */}
+        <section className="relative bg-cream overflow-hidden py-14 sm:py-20">
+          <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
+          <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
+          <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-green-brand/10 mb-6">
+              <span className="flex h-2 w-2 rounded-full bg-flame-orange" />
+              <span className="text-xs font-bold text-green-dark tracking-widest uppercase font-mono">The Journal</span>
+            </span>
+            <h1 className="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-[1.05] max-w-3xl">
+              Cochin Food &amp; <span className="text-green-brand">Spice Blog</span>
             </h1>
-            <p className="text-[#FFD600] text-sm sm:text-base font-semibold uppercase tracking-wider">
-              Traditional recipes, spice guides, and stories behind South Indian flavours
+            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed">
+              Traditional recipes, spice guides, and the stories behind South Indian flavours — straight from our kitchen in Kerala.
             </p>
           </div>
         </section>
 
         {/* Blog Posts Grid */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           {posts && posts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post, idx) => {
@@ -81,20 +90,20 @@ export default async function BlogPage() {
                 return (
                   <ScrollReveal key={post._id} direction="up" delay={idx * 0.05}>
                     <article
-                      className="bg-white rounded-3xl overflow-hidden border border-green-dark/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col group h-full"
+                      className="bg-white rounded-3xl overflow-hidden border border-black/[0.06] shadow-sm hover:shadow-[0_20px_44px_-18px_rgba(45,139,45,0.35)] hover:border-green-brand/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col group h-full"
                     >
                       {/* Image */}
-                      <Link href={`/blog/${post.slug}`} className="relative aspect-[15/9] block overflow-hidden bg-dark/5">
+                      <Link href={`/blog/${post.slug}`} className="relative aspect-[15/9] block overflow-hidden bg-cream">
                         <Image
                           src={imageUrl}
                           alt={post.featuredImage?.alt || post.title}
                           width={600}
                           height={360}
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                         />
                         {post.tags && post.tags[0] && (
-                          <span className="absolute top-4 left-4 bg-[#FFD600] text-[#0F0F0F] font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+                          <span className="absolute top-4 left-4 bg-green-brand text-white font-black text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md shadow-green-brand/25">
                             {post.tags[0]}
                           </span>
                         )}
@@ -117,20 +126,20 @@ export default async function BlogPage() {
                         </div>
 
                         {/* Title */}
-                        <h2 className="font-heading text-lg sm:text-xl font-bold text-[#1E6B2E] group-hover:text-green-brand transition-colors leading-snug">
+                        <h2 className="font-heading text-lg sm:text-xl font-bold text-dark group-hover:text-green-brand transition-colors leading-snug">
                           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h2>
 
                         {/* Excerpt */}
-                        <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-dark/60 text-xs sm:text-sm leading-relaxed">
                           {excerpt}
                         </p>
 
                         {/* Footer Link */}
-                        <div className="mt-auto pt-4 border-t border-off-white/80">
+                        <div className="mt-auto pt-4 border-t border-black/5">
                           <Link
                             href={`/blog/${post.slug}`}
-                            className="inline-flex items-center gap-1 text-xs font-black text-green-dark hover:text-green-brand uppercase tracking-wider transition-colors group/link"
+                            className="inline-flex items-center gap-1.5 text-xs font-black text-green-brand hover:text-green-dark uppercase tracking-wider transition-colors group/link"
                           >
                             <span>Read More</span>
                             <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" />
@@ -143,15 +152,17 @@ export default async function BlogPage() {
               })}
             </div>
           ) : (
-            <div className="text-center py-20 bg-white rounded-3xl border border-green-dark/10 shadow-md max-w-xl mx-auto">
-              <BookOpen className="w-12 h-12 text-green-brand/45 mx-auto mb-4" />
-              <h2 className="font-heading text-xl font-bold text-green-dark mb-2">No Articles Found</h2>
-              <p className="text-dark/60 text-sm leading-relaxed mb-6">
+            <div className="text-center py-16 sm:py-20 bg-cream rounded-3xl border border-black/[0.06] shadow-sm max-w-xl mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-green-brand/10 text-green-brand flex items-center justify-center mx-auto mb-5">
+                <BookOpen className="w-7 h-7" />
+              </div>
+              <h2 className="font-heading text-xl font-black text-dark mb-2">No Articles Yet</h2>
+              <p className="text-dark/60 text-sm leading-relaxed mb-6 px-6">
                 We are currently crafting some spicy food stories. Please check back soon!
               </p>
               <Link
                 href="/"
-                className="px-6 py-3 bg-green-dark hover:bg-green-mid text-off-white font-bold text-sm uppercase tracking-wider rounded-xl shadow-md inline-block"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-green-brand hover:bg-green-dark text-white font-bold text-xs uppercase tracking-widest rounded-full shadow-lg shadow-green-brand/25 hover:-translate-y-0.5 transition-all"
               >
                 Back to Home
               </Link>

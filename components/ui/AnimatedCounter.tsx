@@ -9,6 +9,10 @@ interface AnimatedCounterProps {
   prefix?: string
   duration?: number // in milliseconds
   label: string
+  /** Tailwind classes for the big number (default: yellow, for dark backgrounds) */
+  valueClassName?: string
+  /** Tailwind classes for the label (default: off-white, for dark backgrounds) */
+  labelClassName?: string
 }
 
 export default function AnimatedCounter({
@@ -17,6 +21,8 @@ export default function AnimatedCounter({
   prefix = '',
   duration = 2000,
   label,
+  valueClassName = 'text-yellow',
+  labelClassName = 'text-off-white/80',
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
@@ -48,7 +54,7 @@ export default function AnimatedCounter({
   return (
     <div ref={ref} className="flex flex-col items-center justify-center text-center p-6">
       <m.div
-        className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-yellow tracking-tight"
+        className={`font-heading text-4xl sm:text-5xl md:text-6xl font-black tracking-tight ${valueClassName}`}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -57,7 +63,7 @@ export default function AnimatedCounter({
         <span>{displayValue.toLocaleString()}</span>
         <span>{suffix}</span>
       </m.div>
-      <span className="text-off-white/80 uppercase text-xs sm:text-sm font-bold tracking-widest mt-2 block">
+      <span className={`uppercase text-xs sm:text-sm font-bold tracking-widest mt-2 block ${labelClassName}`}>
         {label}
       </span>
     </div>

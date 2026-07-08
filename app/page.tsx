@@ -76,7 +76,7 @@ export default async function Home() {
   return (
     <PageTransition>
       <Header />
-      <main id="main-content" className="min-h-screen bg-[#FAFAF0] text-[#0F0F0F] overflow-hidden">
+      <main id="main-content" className="flex-1 bg-cream text-[#0F0F0F] overflow-hidden">
         <HomeClient
           bestsellers={bestsellers}
           categories={categories}

@@ -32,7 +32,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F6F9F6;
+  background: #FAFAF0;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -64,6 +64,29 @@ html {
   .dark-gradient {
     background: linear-gradient(135deg, #229922, #1B851B);
   }
+}
+
+/* ─── Seamless marquee (used by "Countries We Serve") ────────────────────── */
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marqueeLeft 42s linear infinite;
+}
+.animate-marquee-right {
+  animation: marqueeRight 48s linear infinite;
+}
+
+/* Pause both rows when hovering the group */
+.group\/marquee:hover .animate-marquee-left,
+.group\/marquee:hover .animate-marquee-right {
+  animation-play-state: paused;
 }
 
 /* ─── Accessibility: respect reduced motion ──────────────────────────────── */

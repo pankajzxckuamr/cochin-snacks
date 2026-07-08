@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, X, Phone, ArrowRight } from 'lucide-react'
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 
 export default function Header() {
@@ -14,21 +14,12 @@ export default function Header() {
   const pathname = usePathname()
   const { scrollY } = useScroll()
 
-  const hasBg = isScrolled || pathname !== '/'
-
-  // Dynamic link classes
-  const getLinkClassName = (isActive: boolean) => {
-    const base = 'text-sm font-semibold tracking-wide uppercase transition-colors px-2 py-1 rounded focus:outline-none focus-visible:ring-2'
-    if (hasBg) {
-      return `${base} focus-visible:ring-[#FFD600] ${isActive ? 'text-[#FFD600] font-bold' : 'text-white hover:text-[#FFD600]'}`
-    } else {
-      return `${base} focus-visible:ring-green-brand ${isActive ? 'text-green-brand font-bold' : 'text-dark hover:text-green-brand'}`
-    }
-  }
+  // On inner pages (or once scrolled) the floating bar becomes more solid.
+  const solid = isScrolled || pathname !== '/'
 
   // Track scroll position via Framer Motion useScroll
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    setIsScrolled(latest > 80)
+    setIsScrolled(latest > 24)
   })
 
   // Close menus on route change
@@ -48,7 +39,7 @@ export default function Header() {
 
   // Mobile Drawer animation variants
   const sidebarVariants = {
-    hidden: { x: '100%' },
+    hidden: { x: '110%' },
     visible: {
       x: 0,
       transition: {
@@ -59,7 +50,7 @@ export default function Header() {
       },
     },
     exit: {
-      x: '100%',
+      x: '110%',
       transition: {
         type: 'tween' as const,
         duration: 0.25,
@@ -75,123 +66,110 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center transition-all duration-300 w-full ${isScrolled || pathname !== '/'
-          ? 'bg-green-brand backdrop-blur-md shadow-lg border-b border-white/10 h-16 lg:h-[72px]'
-          : 'bg-transparent h-16 lg:h-[72px]'
+      {/* ── Floating "island" navbar ─────────────────────────────────────────── */}
+      <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
+        <m.div
+          initial={{ y: -28, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className={`max-w-7xl mx-auto flex items-center justify-between gap-3 h-14 lg:h-[68px] pl-4 sm:pl-5 pr-2 sm:pr-2.5 rounded-full border transition-all duration-300 ${
+            solid
+              ? 'bg-white/85 backdrop-blur-xl border-black/[0.06] shadow-[0_12px_34px_-14px_rgba(17,17,17,0.28)]'
+              : 'bg-white/55 backdrop-blur-xl border-white/70 shadow-[0_10px_28px_-16px_rgba(17,17,17,0.22)]'
           }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          {/* Mobile Layout (Header) */}
-          <div className="flex lg:hidden items-center justify-between w-full">
-            <Link href="/" className="flex items-center" aria-label="Cochin Snacks Home">
-              <Image
-                src="/logo.png"
-                alt="Cochin Snacks Logo"
-                width={100}
-                height={40}
-                className="object-contain"
-                priority
-              />
-            </Link>
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center shrink-0" aria-label="Cochin Snacks Home">
+            <Image
+              src="/logo-mark.png"
+              alt="Cochin Snacks Logo"
+              width={122}
+              height={100}
+              className="object-contain h-10 sm:h-11 lg:h-12 w-auto"
+              priority
+            />
+          </Link>
 
+          {/* Desktop nav — pill links */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.path
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`px-3.5 py-2 rounded-full text-sm font-semibold tracking-wide transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand ${
+                    isActive
+                      ? 'text-green-brand bg-green-brand/10'
+                      : 'text-dark/70 hover:text-green-brand hover:bg-black/[0.04]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
+            })}
+          </nav>
+
+          {/* Right cluster */}
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href="tel:+919446006447"
+              className="hidden sm:inline-flex items-center gap-2 h-10 lg:h-11 px-4 lg:px-5 bg-green-brand hover:bg-green-dark text-white rounded-full font-bold text-xs uppercase tracking-wider shadow-md shadow-green-brand/30 transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand"
+            >
+              <Phone className="w-3.5 h-3.5 fill-current" />
+              <span className="hidden xl:inline">+91 94460 06447</span>
+              <span className="xl:hidden">Call Us</span>
+            </a>
+
+            {/* Mobile hamburger */}
             <button
               onClick={() => setIsOpen(true)}
-              className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 rounded-lg ${hasBg
-                ? 'text-[#FFD600] hover:text-white focus-visible:ring-yellow'
-                : 'text-green-brand hover:text-green-dark focus-visible:ring-green-brand'
-                }`}
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full text-dark hover:text-green-brand hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand"
               aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
             </button>
           </div>
-
-          {/* Desktop Layout (Flexible Flexbox) */}
-          <div className="hidden lg:flex items-center justify-between w-full">
-            {/* Left - Logo */}
-            <div className="flex items-center flex-shrink-0">
-              <Link href="/" aria-label="Cochin Snacks Home">
-                <Image
-                  src="/logo.png"
-                  alt="Cochin Snacks Logo"
-                  width={100}
-                  height={40}
-                  className="object-contain"
-                  priority
-                />
-              </Link>
-            </div>
-
-            {/* Center - Nav Links */}
-            <nav className="flex items-center gap-6 xl:gap-8">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.path
-
-                return (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className={getLinkClassName(isActive)}
-                  >
-                    {link.name}
-                  </Link>
-                )
-              })}
-            </nav>
-
-            {/* Right - Warm brown contact pill button */}
-            <div className="flex items-center flex-shrink-0">
-              <a
-                href="tel:+919446006447"
-                className="flex items-center gap-2 px-5 py-2.5 bg-[#A65B32] hover:bg-[#8F4A24] text-white rounded-full font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-200"
-              >
-                <Phone className="w-3.5 h-3.5 fill-current" />
-                <span>+91 94460 06447</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-
+        </m.div>
       </header>
 
-      {/* Mobile Drawer (Backdrop & Sidebar) */}
+      {/* ── Mobile Drawer ────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {isOpen && (
           <>
             {/* Backdrop */}
             <m.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-50 bg-black/75 lg:hidden"
+              className="fixed inset-0 z-[60] bg-dark/40 backdrop-blur-sm lg:hidden"
             />
 
-            {/* Sidebar Drawer */}
+            {/* Sidebar Drawer — clean white rounded panel */}
             <m.div
               variants={sidebarVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed right-0 top-0 bottom-0 z-50 w-[80vw] max-w-[320px] bg-green-brand shadow-2xl p-6 flex flex-col lg:hidden"
+              className="fixed right-3 top-3 bottom-3 z-[60] w-[82vw] max-w-[340px] bg-white rounded-3xl shadow-2xl border border-black/5 p-6 flex flex-col lg:hidden"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-6">
+              <div className="flex items-center justify-between border-b border-black/5 pb-5 mb-5">
                 <Link href="/" onClick={() => setIsOpen(false)} aria-label="Cochin Snacks Home">
                   <Image
-                    src="/logo.png"
+                    src="/logo-mark.png"
                     alt="Cochin Snacks Logo"
-                    width={100}
-                    height={40}
-                    className="object-contain"
+                    width={122}
+                    height={100}
+                    className="object-contain h-11 w-auto"
                   />
                 </Link>
 
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-white hover:text-[#FFD600] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600] rounded-lg"
+                  className="w-11 h-11 flex items-center justify-center text-dark/60 hover:text-green-brand hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand rounded-full"
                   aria-label="Close navigation menu"
                 >
                   <X className="w-6 h-6" />
@@ -199,31 +177,41 @@ export default function Header() {
               </div>
 
               {/* Drawer Links */}
-              <nav className="flex flex-col gap-3">
-                {navLinks.map((link) => (
-                  <m.div variants={linkVariants} key={link.name}>
-                    <Link
-                      href={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className="block text-2xl font-bold font-heading text-white hover:text-[#FFD600] py-2 px-3 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD600]"
-                    >
-                      {link.name}
-                    </Link>
-                  </m.div>
-                ))}
+              <nav className="flex flex-col gap-1.5">
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.path
+                  return (
+                    <m.div variants={linkVariants} key={link.name}>
+                      <Link
+                        href={link.path}
+                        onClick={() => setIsOpen(false)}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={`flex items-center justify-between text-lg font-bold font-heading py-2.5 px-4 rounded-2xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand ${
+                          isActive
+                            ? 'text-green-brand bg-green-brand/10'
+                            : 'text-dark hover:text-green-brand hover:bg-black/[0.04]'
+                        }`}
+                      >
+                        {link.name}
+                        {isActive && <ArrowRight className="w-4 h-4" />}
+                      </Link>
+                    </m.div>
+                  )
+                })}
               </nav>
 
-              {/* Drawer Footer info */}
-              <div className="mt-auto pt-6 border-t border-white/10 text-center flex flex-col gap-2.5 text-xs text-white/50 font-mono">
+              {/* Drawer Footer — CTA + contact */}
+              <div className="mt-auto pt-5 flex flex-col gap-4">
                 <a
                   href="tel:+919446006447"
-                  className="hover:text-[#FFD600] transition-colors py-1.5 focus:outline-none focus-visible:underline"
+                  className="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-green-brand hover:bg-green-dark text-white rounded-full font-bold text-sm uppercase tracking-wider shadow-md shadow-green-brand/30 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand"
                 >
-                  +91 94460 06447
+                  <Phone className="w-4 h-4 fill-current" />
+                  Call Us
                 </a>
                 <a
                   href="mailto:export@cochinsnacks.com"
-                  className="hover:text-[#FFD600] transition-colors py-1.5 focus:outline-none focus-visible:underline"
+                  className="text-center text-xs text-dark/50 font-mono hover:text-green-brand transition-colors focus:outline-none focus-visible:underline"
                 >
                   export@cochinsnacks.com
                 </a>
@@ -233,8 +221,8 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Spacing to compensate for fixed header height (except on homepage for banner visual overlay) */}
-      {pathname !== '/' && <div className="h-16 lg:h-[72px]" />}
+      {/* Spacing to compensate for the floating bar (homepage hero handles its own top padding) */}
+      {pathname !== '/' && <div className="h-[76px] lg:h-[96px]" />}
     </>
   )
 }

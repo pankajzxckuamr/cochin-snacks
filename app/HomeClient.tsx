@@ -10,17 +10,23 @@ import {
   ArrowRight,
   CheckCircle,
   MapPin,
-  Phone,
-  Mail,
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  ChefHat,
+  Leaf,
+  Factory,
+  Globe,
+  Award,
+  Mail,
+  Send,
 } from 'lucide-react'
 import FlameIcon from '@/components/ui/FlameIcon'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import DotPattern from '@/components/ui/DotPattern'
+import SectionHeading from '@/components/ui/SectionHeading'
 import ProductCard from '@/components/ui/ProductCard'
-import IngredientMorph from '@/components/animations/IngredientMorph'
 import SteamEffect from '@/components/animations/SteamEffect'
 import RotatingMedallionText from '@/components/animations/RotatingMedallionText'
 
@@ -346,153 +352,15 @@ function FallingChip({ chip, onLand }: { chip: ChipData; onLand: () => void }) {
   )
 }
 
-// ── Countries We Serve Section ─────────────────────────────────────────────────
-const SERVE_COUNTRIES = [
-  { name: 'UK', flag: '🇬🇧' },
-  { name: 'Norway', flag: '🇳🇴' },
-  { name: 'Netherlands', flag: '🇳🇱' },
-  { name: 'Bahrain', flag: '🇧🇭' },
-  { name: 'Qatar', flag: '🇶🇦' },
-  { name: 'UAE', flag: '🇦🇪' },
-  { name: 'Sweden', flag: '🇸🇪' },
-  { name: 'Kuwait', flag: '🇰🇼' },
-  { name: 'Australia', flag: '🇦🇺' },
-  { name: 'Oman', flag: '🇴🇲' },
-  { name: 'Saudi Arabia', flag: '🇸🇦' },
-  { name: 'USA', flag: '🇺🇸' },
-  { name: 'Canada', flag: '🇨🇦' },
-  { name: 'Malta', flag: '🇲🇹' },
-  { name: 'New Zealand', flag: '🇳🇿' },
+// Curated fallback bestsellers shown when the CMS has no data yet.
+const FALLBACK_BESTSELLERS = [
+  { name: 'Banana Chips', category: 'Chips', img: '/products/banana.png', price: 120, rating: 4.9, reviews: 214, hot: true },
+  { name: 'Kerala Mixture', category: 'Mixture', img: '/products/mixture.png', price: 140, rating: 4.8, reviews: 176, hot: true },
+  { name: 'Murukku', category: 'Snacks', img: '/products/murukku.png', price: 110, rating: 4.7, reviews: 132, hot: false },
+  { name: 'Pakkavada', category: 'Snacks', img: '/products/pakkavada.png', price: 130, rating: 4.8, reviews: 158, hot: false },
 ]
 
-function CountriesWeServeSection({ countries }: { countries: Country[] }) {
-  const [count, setCount] = useState(0)
-  const [hasAnimated, setHasAnimated] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  const activeCountries = (countries && countries.length > 0 ? countries : SERVE_COUNTRIES) as Country[]
-
-  const getCountryCode = (flagEmoji: string) => {
-    if (!flagEmoji || flagEmoji.length < 2) return 'in';
-    const code1 = flagEmoji.codePointAt(0);
-    const code2 = flagEmoji.codePointAt(2);
-    if (code1 && code2) {
-      return (String.fromCharCode(code1 - 127397) + String.fromCharCode(code2 - 127397)).toLowerCase();
-    }
-    return 'in';
-  };
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true)
-          let start = 0
-          const end = activeCountries.length
-          const duration = 1800
-          const step = duration / end
-          const timer = setInterval(() => {
-            start += 1
-            setCount(start)
-            if (start >= end) clearInterval(timer)
-          }, step)
-        }
-      },
-      { threshold: 0.3 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [hasAnimated, activeCountries.length])
-
-  return (
-    <section
-      ref={sectionRef}
-      className="bg-white text-dark py-8 sm:py-12 relative overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Headline + animated counter */}
-        <div className="text-center mb-10">
-          <m.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0 }}
-            viewport={{ once: true }}
-            className="text-xs uppercase font-extrabold tracking-widest text-green-brand block mb-3 font-mono"
-          >
-            Global Reach
-          </m.span>
-          <h2 className="font-heading text-3xl sm:text-5xl font-black text-dark mb-4">
-            {"From Cochin To The World".split(" ").map((word, idx, arr) => (
-              <m.span
-                key={idx}
-                className="inline-block"
-                animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, 10] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  times: [0, 0.1, 0.8, 1],
-                  delay: idx * 0.2
-                }}
-              >
-                {word}{idx < arr.length - 1 && "\u00A0"}
-              </m.span>
-            ))}
-          </h2>
-          <m.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            viewport={{ once: true }}
-            className="text-dark/60 text-sm sm:text-base max-w-xl mx-auto mb-8"
-          >
-            Bringing authentic Kerala snacks to families in every corner of the globe.
-          </m.p>
-
-          {/* Big animated counter */}
-          <div className="inline-flex flex-col items-center justify-center bg-green-brand/5 border-2 border-green-brand/20 rounded-3xl px-12 py-6 shadow-sm">
-            <span className="font-heading text-7xl sm:text-8xl font-black text-green-brand tabular-nums leading-none">
-              {count}
-            </span>
-            <span className="text-dark/80 text-sm font-bold uppercase tracking-widest mt-2 font-mono">
-              Countries We Serve
-            </span>
-          </div>
-        </div>
-
-        {/* Country flags marquee */}
-        <div className="relative overflow-hidden w-full max-w-5xl mx-auto">
-          {/* Fade masks for smooth entry/exit */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-          <m.div
-            className="flex gap-4 w-max"
-            animate={{ x: [0, -((activeCountries.length * 126) / 2)] }}
-            transition={{ duration: 25, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
-          >
-            {[...activeCountries, ...activeCountries, ...activeCountries].map((country, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center gap-2 shrink-0 w-[110px] bg-white hover:bg-off-white border border-gray-100 hover:border-green-brand/40 rounded-2xl p-3 shadow-sm transition-all duration-200 cursor-default mx-[2px]"
-              >
-                <div className="w-10 h-10 mb-1 rounded-full overflow-hidden flex items-center justify-center border border-gray-100 shadow-sm bg-white shrink-0">
-                  <img src={`https://flagcdn.com/w80/${getCountryCode(country.flag)}.png`} alt={`${country.name} flag`} className="w-full h-full object-cover" />
-                </div>
-                <span className="text-[11px] font-bold text-dark/70 text-center font-mono tracking-wide leading-tight">
-                  {country.name}
-                </span>
-              </div>
-            ))}
-          </m.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export default function HomeClient({ bestsellers, categories, testimonials, countries }: HomeClientProps) {
+export default function HomeClient({ bestsellers, categories, testimonials }: HomeClientProps) {
   const bestsellersRef = useRef<HTMLDivElement>(null)
 
   const scrollBestsellers = (direction: 'left' | 'right') => {
@@ -585,26 +453,32 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
     {
       title: 'Authentic Kerala Recipes',
       desc: 'Traditional recipes handed down through generations, preserving the true taste of Kerala.',
+      icon: <ChefHat className="w-6 h-6" />,
     },
     {
       title: 'Premium Ingredients',
       desc: 'Finest bananas, tapiocas, spices — sourced directly from South Indian farmers.',
+      icon: <Leaf className="w-6 h-6" />,
     },
     {
       title: 'Hygienic Manufacturing',
       desc: 'State-of-the-art production facility in Ernakulam with world-class hygiene standards.',
+      icon: <Factory className="w-6 h-6" />,
     },
     {
       title: 'Freshness Guaranteed',
       desc: 'No oil reuse. Every batch is fresh, pure and packed at peak quality.',
+      icon: <Sparkles className="w-6 h-6" />,
     },
     {
       title: 'Global Distribution',
       desc: 'Available in 20+ countries — delivered to your door wherever you are.',
+      icon: <Globe className="w-6 h-6" />,
     },
     {
       title: 'Trusted Quality',
       desc: 'Part of Pavithram Group — 75 years of food excellence and consumer trust.',
+      icon: <Award className="w-6 h-6" />,
     },
   ]
 
@@ -612,7 +486,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
     <div className="overflow-hidden">
 
       {/* ────────────────── SECTION 1: HERO (Modern Light Theme) ────────────────── */}
-      <section className="relative min-h-[85vh] flex items-center bg-[#FAFAF0] overflow-hidden pt-20 sm:pt-24 lg:pt-26 pb-8 lg:pb-12">
+      <section className="relative min-h-[85vh] flex items-center bg-cream overflow-hidden pt-20 sm:pt-24 lg:pt-26 pb-8 lg:pb-12">
 
         <ParticleField />
 
@@ -628,6 +502,8 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute -top-20 -left-20 w-[40rem] h-[40rem] bg-yellow/10 rounded-full blur-[100px]" />
           <div className="absolute top-1/4 -right-20 w-[35rem] h-[35rem] bg-green-brand/10 rounded-full blur-[80px]" />
+          <DotPattern className="top-0 left-0 h-full w-1/4" color="#1E6B2E" opacity={0.06} fade="left" />
+          <DotPattern className="top-0 right-0 h-full w-1/4" color="#1E6B2E" opacity={0.06} fade="right" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
@@ -676,9 +552,14 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
             {/* Trust Indicators */}
             <div className="flex items-center gap-6 mt-8 pt-6 border-t border-gray-200/60 w-full max-w-md">
               <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FAFAF0] bg-gray-200 overflow-hidden flex items-center justify-center">
-                    <Image src="/placeholder-product.svg" alt="User" width={40} height={40} className="object-cover scale-150" />
+                {[
+                  '/products/banana.png',
+                  '/products/murukku.png',
+                  '/products/mixture.png',
+                  '/products/pakkavada.png',
+                ].map((src) => (
+                  <div key={src} className="w-10 h-10 rounded-full border-2 border-white bg-cream overflow-hidden flex items-center justify-center shadow-sm">
+                    <Image src={src} alt="Cochin Snacks product" width={40} height={40} className="object-cover w-full h-full" />
                   </div>
                 ))}
               </div>
@@ -716,11 +597,12 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
             {/* Main Hero Image Group */}
             <div className="relative z-20 w-[280px] sm:w-[320px] lg:w-[360px] drop-shadow-2xl rounded-3xl" style={{ transform: 'translateZ(0)' }}>
               <Image
-                src="/placeholder-hero.svg"
-                alt="Kerala Snacks"
+                src="/products/hero-snacks.png"
+                alt="A bowl of assorted authentic Kerala snacks — banana chips, murukku, mixture and pakkavada"
                 width={600}
                 height={600}
-                className="w-full h-auto object-cover rounded-[2rem] hover:scale-105 transition-transform duration-700 ease-out shadow-2xl"
+                priority
+                className="w-full h-auto object-cover rounded-[2rem] hover:scale-105 transition-transform duration-700 ease-out shadow-2xl ring-4 ring-white"
               />
 
               {/* Floating Element 1 */}
@@ -766,7 +648,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
       </section>
 
       {/* ────────────────── SECTION 2: WELCOME (ABOUT US) ────────────────── */}
-      <section ref={aboutSectionRef} className="relative py-8 sm:py-12 bg-gradient-to-b from-white to-[#FAFAF0] overflow-hidden">
+      <section ref={aboutSectionRef} className="relative py-16 sm:py-20 bg-white overflow-hidden">
 
         {/* Decorative Background Element */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[40rem] h-[40rem] bg-green-brand/5 rounded-full blur-[100px] pointer-events-none" />
@@ -778,26 +660,16 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
             <div className="order-2 lg:order-1 flex flex-col items-start">
               <ScrollReveal direction="right">
 
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow/20 rounded-full mb-6">
-                  <Star className="w-4 h-4 text-yellow-dark fill-current" />
-                  <span className="text-xs font-bold text-yellow-dark tracking-widest uppercase font-mono">Our Heritage</span>
-                </div>
-
-                {/* Headline */}
-                <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black text-dark mb-8 tracking-tight leading-[1.15]">
-                  Welcome to <br className="hidden sm:block" />
-                  <span className="text-green-brand relative inline-block mt-2 sm:mt-0">
-                    Cochin Snacks
-                    <svg className="absolute w-full h-3 -bottom-2 left-0 text-yellow/60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                      <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                </h2>
+                <SectionHeading
+                  align="left"
+                  eyebrow="Our Heritage"
+                  title={<>Welcome to <span className="text-green-brand">Cochin Snacks</span></>}
+                  className="mb-6"
+                />
 
                 {/* Body Text */}
-                <div className="text-dark/80 text-base lg:text-lg leading-relaxed flex flex-col gap-6 font-body mb-10">
-                  <p className="font-medium text-dark border-l-4 border-green-brand pl-4">
+                <div className="text-dark/70 text-base lg:text-lg leading-relaxed flex flex-col gap-5 font-body mb-8">
+                  <p className="font-medium text-dark bg-cream border-l-4 border-green-brand rounded-r-2xl pl-5 pr-6 py-4">
                     At Cochin Snacks, a proud venture of Pavithram, we celebrate Kerala's rich culinary heritage through a delightful range of authentic snacks.
                   </p>
                   <p>
@@ -808,12 +680,30 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
                   </p>
                 </div>
 
+                {/* Mini stats strip */}
+                <div className="flex flex-wrap gap-x-10 gap-y-4 mb-8 pb-8 border-b border-black/5 w-full">
+                  {[
+                    { value: '75+', label: 'Years of Legacy' },
+                    { value: '20+', label: 'Countries Served' },
+                    { value: '10k+', label: 'Happy Customers' },
+                  ].map((stat) => (
+                    <div key={stat.label} className="flex flex-col">
+                      <span className="font-heading text-3xl sm:text-4xl font-black text-green-brand leading-none">
+                        {stat.value}
+                      </span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-dark/50 mt-1.5">
+                        {stat.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
                 {/* Action Button */}
                 <Link
                   href="/about"
-                  className="group inline-flex items-center justify-center px-8 py-4 bg-dark hover:bg-green-brand text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-xl hover:-translate-y-1"
+                  className="group inline-flex items-center justify-center px-8 py-4 bg-green-brand hover:bg-green-dark text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-lg shadow-green-brand/25 hover:-translate-y-0.5"
                 >
-                  DISCOVER OUR STORY
+                  Discover Our Story
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
@@ -821,34 +711,35 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
             </div>
 
             {/* Right Col: Modern Image Collage */}
-            <div className="hidden lg:flex order-1 lg:order-2 relative w-full h-[450px] sm:h-[600px] items-center justify-center lg:justify-end">
+            <div className="flex order-1 lg:order-2 relative w-full h-[340px] sm:h-[440px] lg:h-[560px] items-center justify-center lg:justify-end">
               <ScrollReveal direction="left" className="w-full h-full relative">
 
                 {/* Main Large Image */}
-                <div className="absolute top-0 right-0 w-[85%] h-[80%] rounded-[2rem] sm:rounded-tl-[5rem] sm:rounded-br-[5rem] overflow-hidden shadow-2xl z-10 border-4 border-white">
+                <div className="absolute top-0 right-0 w-[82%] h-[78%] rounded-[2.5rem] overflow-hidden shadow-2xl z-10 border-4 border-white bg-white">
                   <Image
-                    src="/placeholder-hero.svg"
-                    alt="Kerala Snacks Tradition"
+                    src="/products/banana.png"
+                    alt="Kerala banana chips"
                     fill
+                    sizes="(max-width: 1024px) 90vw, 45vw"
                     className="object-cover hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-dark/10 hover:bg-transparent transition-colors duration-500 pointer-events-none" />
                 </div>
 
                 {/* Overlapping Small Image */}
-                <div className="absolute bottom-[5%] left-0 w-[55%] sm:w-[45%] h-[45%] rounded-3xl overflow-hidden shadow-2xl z-20 border-8 border-[#FAFAF0]">
+                <div className="absolute bottom-[4%] left-0 w-[48%] h-[44%] rounded-3xl overflow-hidden shadow-2xl z-20 border-[6px] border-white bg-white">
                   <Image
-                    src="/placeholder-product.svg"
-                    alt="Authentic Ingredients"
+                    src="/products/murukku.png"
+                    alt="Traditional murukku"
                     fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover hover:scale-110 transition-transform duration-700"
                   />
                 </div>
 
                 {/* Floating Experience Badge */}
-                <div className="absolute top-1/3 sm:top-1/2 -left-4 sm:-left-8 sm:-translate-y-1/2 bg-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-xl z-30 flex items-center gap-3 sm:gap-4 animate-float" style={{ animationDuration: '4s' }}>
+                <div className="absolute top-[16%] -left-1 sm:left-2 bg-white/90 backdrop-blur-sm px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl shadow-xl border border-black/5 z-30 flex items-center gap-3 animate-float" style={{ animationDuration: '4s' }}>
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-brand/10 flex items-center justify-center text-green-brand">
-                    <span className="font-black text-lg sm:text-xl">20+</span>
+                    <span className="font-black text-base sm:text-lg">20+</span>
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] sm:text-xs font-bold text-dark/50 uppercase tracking-wider">Years of</span>
@@ -862,20 +753,23 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
           </div>
 
           {/* ────────────────── FEATURES ROW (Integrated) ────────────────── */}
-          <div className="mt-8 pt-8 border-t border-dark/5 relative z-20">
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+          <div className="mt-12 sm:mt-16 relative z-20">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {[
-                { title: 'Fresh &\nHygienic', icon: <Sparkles className="w-6 h-6 text-white" /> },
-                { title: 'Premium\nQuality', icon: <Star className="w-6 h-6 text-white" /> },
-                { title: '100% Natural &\nNo Additives', icon: <CheckCircle className="w-6 h-6 text-white" /> },
-                { title: 'Delicious &\nNutritious', icon: <FlameIcon size="sm" color="white" delay={0} /> },
-                { title: 'Authentic\nTaste', icon: <MapPin className="w-6 h-6 text-white" /> }
+                { title: 'Fresh & Hygienic', icon: <Sparkles className="w-5 h-5 text-green-brand" /> },
+                { title: 'Premium Quality', icon: <Star className="w-5 h-5 text-green-brand" /> },
+                { title: '100% Natural', icon: <CheckCircle className="w-5 h-5 text-green-brand" /> },
+                { title: 'Delicious & Nutritious', icon: <FlameIcon size="sm" color="orange" delay={0} /> },
+                { title: 'Authentic Taste', icon: <MapPin className="w-5 h-5 text-green-brand" /> }
               ].map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-4 bg-white/60 backdrop-blur-md rounded-full pr-6 pl-2 py-2 shadow-sm border border-white/50 min-w-[200px] hover:-translate-y-1 transition-transform">
-                  <div className="w-12 h-12 bg-green-brand rounded-full flex items-center justify-center shrink-0 shadow-inner">
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 bg-cream rounded-2xl px-4 py-4 border border-black/[0.06] shadow-sm hover:shadow-md hover:border-green-brand/40 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0 shadow-sm">
                     {feature.icon}
                   </div>
-                  <span className="text-xs sm:text-sm font-bold text-dark whitespace-pre-line leading-tight">
+                  <span className="text-xs sm:text-sm font-bold text-dark leading-tight">
                     {feature.title}
                   </span>
                 </div>
@@ -886,16 +780,13 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
       </section>
 
       {/* ────────────────── SECTION 4: BESTSELLERS ────────────────── */}
-      <section className="bg-off-white py-8 sm:py-12 border-t border-dark/5">
+      <section className="bg-cream py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-green-brand mb-3">
-              Our Best Sellers
-            </h2>
-            <p className="text-dark/60 text-sm sm:text-base">
-              The flavours Kerala loves — now available worldwide.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Customer Favourites"
+            title={<>Our <span className="text-green-brand">Best Sellers</span></>}
+            subtitle="The flavours Kerala loves — now available worldwide."
+          />
 
           {bestsellers && bestsellers.length > 0 ? (
             <div className="relative group/carousel px-4 sm:px-8">
@@ -913,7 +804,7 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
               {/* Scrollable Container */}
               <div
                 ref={bestsellersRef}
-                className="flex overflow-x-auto gap-4 sm:gap-6 scrollbar-hide pb-6 px-1 snap-x snap-mandatory flex-nowrap"
+                className="flex overflow-x-auto gap-4 sm:gap-6 scrollbar-hide pt-4 pb-6 px-1 snap-x snap-mandatory flex-nowrap"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {bestsellers.map((product) => {
@@ -947,331 +838,300 @@ export default function HomeClient({ bestsellers, categories, testimonials, coun
               )}
             </div>
           ) : (
-            <p className="text-center text-dark/40 py-10 italic">No bestseller snacks found.</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+              {FALLBACK_BESTSELLERS.map((p, idx) => (
+                <ScrollReveal key={p.name} direction="up" delay={idx * 0.06}>
+                  <Link
+                    href="/products"
+                    className="group relative flex flex-col h-full bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-[0_22px_46px_-18px_rgba(45,139,45,0.35)] hover:border-green-brand/40 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="relative aspect-square bg-cream overflow-hidden">
+                      <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-green-brand text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 shadow-sm shadow-green-brand/25">
+                        Bestseller
+                      </span>
+                      {p.hot && (
+                        <span className="absolute top-3 right-3 z-10 inline-flex items-center rounded-full bg-flame-orange text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 shadow-sm">
+                          Hot
+                        </span>
+                      )}
+                      <Image
+                        src={p.img}
+                        alt={p.name}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5 p-4 sm:p-5">
+                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-green-brand">
+                        {p.category}
+                      </span>
+                      <h3 className="font-heading font-bold text-sm sm:text-base text-dark leading-tight group-hover:text-green-brand transition-colors">
+                        {p.name}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-xs text-dark/50">
+                        <span className="text-yellow tracking-tight">★★★★★</span>
+                        <span className="font-bold text-dark/70">{p.rating}</span>
+                        <span>({p.reviews})</span>
+                      </div>
+                      <div className="mt-1.5 flex items-center justify-between">
+                        <span className="font-heading font-black text-dark text-lg">₹{p.price}</span>
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-green-brand">
+                          Details <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        </span>
+                      </div>
+                    </div>
+                    {/* bottom accent bar */}
+                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
+                  </Link>
+                </ScrollReveal>
+              ))}
+            </div>
           )}
         </div>
       </section>
 
       {/* ────────────────── SECTION 5: OUR PRODUCTS ────────────────── */}
-      <section className="relative py-8 sm:py-12 overflow-hidden bg-off-white">
-        {/* Curved light green background */}
-        <div className="absolute inset-0 top-[20%] bottom-[20%] bg-green-brand/5" style={{ borderTopRightRadius: '100% 50%', borderBottomLeftRadius: '100% 50%' }}></div>
+      <section className="relative py-16 sm:py-20 overflow-hidden bg-white">
+        {/* Soft ambient background accents */}
+        <div className="absolute -bottom-40 -left-32 w-[36rem] h-[36rem] bg-green-brand/5 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute -top-32 -right-24 w-[28rem] h-[28rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl text-center md:text-left mx-auto md:mx-0">
-              <span className="text-sm font-semibold tracking-wide text-dark/70 block mb-1">Our</span>
-              <h2 className="font-heading text-4xl sm:text-5xl font-black text-dark mb-4 tracking-tight">Products</h2>
-              <p className="text-dark/70 text-sm sm:text-base leading-relaxed">
-                Cochin Snacks offers a delightful range of Chips, Murukku, Pakkavada and Kerala Mixture. Each packed with authentic flavours of Kerala and delivers a perfect balance of sweet and spicy flavours.
-              </p>
-            </div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+            <SectionHeading
+              align="left"
+              eyebrow="Our Range"
+              title={<>Explore Our <span className="text-green-brand">Products</span></>}
+              subtitle="A delightful range of Chips, Murukku, Pakkavada and Kerala Mixture — each packed with authentic flavours and a perfect balance of sweet and spicy."
+              className="mb-0 mx-auto md:mx-0 items-center md:items-start text-center md:text-left"
+            />
             <div className="flex-shrink-0 text-center md:text-right">
-              <Link href="/products" className="inline-flex items-center justify-center px-6 py-2.5 bg-yellow hover:bg-yellow-dark text-white font-bold text-sm tracking-wide rounded-full transition-colors shadow-sm">
-                View All
+              <Link href="/products" className="inline-flex items-center justify-center px-8 py-4 bg-green-brand hover:bg-green-dark text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-lg shadow-green-brand/25 hover:-translate-y-0.5">
+                View All <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>
           </div>
 
-          {/* Carousel / Cards */}
-          <div className="flex items-center gap-4 relative">
-            <button className="hidden md:flex w-10 h-10 items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 hover:bg-gray-50 text-dark transition-colors z-20 shrink-0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
-            </button>
-            <div className="flex overflow-x-auto gap-6 scrollbar-hide flex-1 pb-10 px-4 -mx-4 md:px-0 md:mx-0 snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {[
-                { name: 'Potato Chips', img: '/placeholder-product.svg' },
-                { name: 'Mixture', img: '/placeholder-product.svg' },
-                { name: 'Banana', img: '/placeholder-product.svg' },
-                { name: 'Tapioca', img: '/placeholder-product.svg' }
-              ].map((prod, idx) => (
-                <div key={idx} className="w-[200px] shrink-0 snap-center">
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative mt-16 hover:-translate-y-2 transition-transform duration-300">
-                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 drop-shadow-md">
-                      <Image src={prod.img} alt={prod.name} fill className="object-cover object-top scale-110" />
-                    </div>
-                    <div className="pt-20 pb-2 text-center">
-                      <h3 className="font-bold text-dark">{prod.name}</h3>
-                    </div>
+          {/* Responsive product grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+            {[
+              { name: 'Potato Chips', img: '/products/potato-chips.png' },
+              { name: 'Mixture', img: '/products/mixture.png' },
+              { name: 'Banana', img: '/products/banana.png' },
+              { name: 'Tapioca', img: '/products/tapioca.png' }
+            ].map((prod, idx) => (
+              <ScrollReveal key={prod.name} direction="up" delay={idx * 0.08}>
+                <Link
+                  href="/products"
+                  className="group relative flex flex-col h-full bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-[0_22px_46px_-18px_rgba(45,139,45,0.35)] hover:border-green-brand/40 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="relative aspect-square bg-cream overflow-hidden">
+                    <Image
+                      src={prod.img}
+                      alt={prod.name}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
-                </div>
-              ))}
-            </div>
-            <button className="hidden md:flex w-10 h-10 items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 hover:bg-gray-50 text-dark transition-colors z-20 shrink-0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-            </button>
-          </div>
-
-          {/* Pagination dots */}
-          <div className="flex justify-center gap-2 mt-4 mb-4">
-            <span className="w-2 h-2 rounded-full bg-green-brand"></span>
-            <span className="w-2 h-2 rounded-full bg-gray-300"></span>
-            <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+                  <div className="px-4 py-4 sm:py-5 text-center border-t border-black/5">
+                    <h3 className="font-heading font-bold text-dark group-hover:text-green-brand transition-colors">
+                      {prod.name}
+                    </h3>
+                    <span className="mt-1 inline-flex items-center justify-center gap-1 text-xs font-semibold text-dark/45 group-hover:text-green-brand group-hover:gap-2 transition-all">
+                      View range <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </div>
+                  {/* bottom accent bar */}
+                  <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
+                </Link>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
-
-      {/* ────────────────── SECTION 6: COUNTRIES WE SERVE ────────────────── */}
-      <CountriesWeServeSection countries={countries} />
-
 
       {/* ────────────────── SECTION 7: WHY CHOOSE COCHIN SNACKS ────────────────── */}
-      <section className="bg-white py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-green-brand mb-3">
-              Why Choose Cochin Snacks
-            </h2>
-            <p className="text-dark/60 text-sm sm:text-base">
-              Every bag carries a promise.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feat, idx) => {
-              const isFreshness = feat.title === 'Freshness Guaranteed';
-              const cardContent = (
-                <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:border-green-brand/50 transition-all duration-300 group flex flex-col justify-between h-full`}>
-                  <div>
-                    <span className="w-10 h-10 rounded-full bg-green-brand/10 text-green-brand flex items-center justify-center font-mono font-bold text-sm mb-4">
-                      0{idx + 1}
-                    </span>
-                    <h3 className="font-heading text-lg font-bold text-dark group-hover:text-green-brand transition-colors mb-2">
-                      {feat.title}
-                    </h3>
-                    <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
-                      {feat.desc}
-                    </p>
-                  </div>
-                </div>
-              );
-
-              return (
-                <ScrollReveal key={idx} direction="up" delay={idx * 0.08}>
-                  {isFreshness ? (
-                    <SteamEffect intensity="subtle">
-                      {cardContent}
-                    </SteamEffect>
-                  ) : (
-                    cardContent
-                  )}
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ────────────────── SECTION 8: KERALA SPICE HERITAGE BAND ────────────────── */}
-      <section className="bg-off-white text-dark py-8 sm:py-12 relative overflow-hidden">
-        {/* Floating background elements */}
-        <div className="absolute inset-x-0 top-10 flex justify-center gap-20 pointer-events-none opacity-50">
-          <FlameIcon size="lg" color="red" delay={0.2} />
-          <FlameIcon size="lg" color="orange" delay={0.8} />
-          <FlameIcon size="lg" color="yellow" delay={0.5} />
-        </div>
+      <section className="relative bg-white py-16 sm:py-20 overflow-hidden">
+        {/* Ambient brand glow */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-green-brand/[0.06] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 -left-24 w-80 h-80 bg-yellow/[0.07] rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-8">
-            <h2 className="font-heading text-3xl sm:text-5xl font-black text-green-brand drop-shadow-sm">
-              The Spice Capital of the World
-            </h2>
-            <p className="text-dark/80 text-sm sm:text-base mt-2 max-w-xl mx-auto">
-              Kerala's legendary spice heritage lives in every Cochin Snacks bite.
-            </p>
-          </div>
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
-          <div className="flex justify-center mb-12">
-            <IngredientMorph />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <ScrollReveal direction="up" delay={0.1}>
-              <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm h-full flex flex-col gap-4">
-                <FlameIcon size="sm" color="orange" />
-                <h3 className="font-heading text-lg font-bold text-dark">
-                  Kerala's Agricultural Bounty
-                </h3>
-                <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
-                  Fertile lands nurtured for centuries. Bananas, tapioca, potato, rice, coconut — each ingredient carrying the soul of Kerala.
+            {/* Left · sticky heading + trust strip */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28">
+              <m.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+              >
+                <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-green-brand font-mono mb-4">
+                  <span className="w-8 h-px bg-green-brand/50" /> Why Us
+                </span>
+                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight leading-[1.1]">
+                  Why Choose <span className="text-green-brand">Cochin Snacks</span>
+                </h2>
+                <p className="text-dark/60 text-base sm:text-lg mt-5 leading-relaxed">
+                  Every bag carries a promise — authentic flavour, honest ingredients, and the warmth of Kerala in every crunch.
                 </p>
-              </div>
-            </ScrollReveal>
 
-            {/* Card 2 */}
-            <ScrollReveal direction="up" delay={0.2}>
-              <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm h-full flex flex-col gap-4">
-                <FlameIcon size="sm" color="orange" />
-                <h3 className="font-heading text-lg font-bold text-dark">
-                  A Spice Haven
-                </h3>
-                <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
-                  Cardamom, pepper, clove, cinnamon, turmeric, ginger — the aromatic treasures of the world's original Spice Capital infuse every Cochin Snacks recipe.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            {/* Card 3 */}
-            <ScrollReveal direction="up" delay={0.3}>
-              <SteamEffect intensity="medium">
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm h-full flex flex-col gap-4">
-                  <FlameIcon size="sm" color="orange" />
-                  <h3 className="font-heading text-lg font-bold text-dark">
-                    Tradition Meets Innovation
-                  </h3>
-                  <p className="text-dark/70 text-xs sm:text-sm leading-relaxed">
-                    Classic South Indian recipes. Modernised production. Zero oil reuse. State-of-the-art hygiene. The same unforgettable authentic taste.
-                  </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-cream border border-black/[0.06] px-4 py-2 text-sm font-semibold text-dark/75">
+                    <CheckCircle className="w-4 h-4 text-green-brand" /> 75 years of trust
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-cream border border-black/[0.06] px-4 py-2 text-sm font-semibold text-dark/75">
+                    <Globe className="w-4 h-4 text-green-brand" /> 20+ countries
+                  </span>
                 </div>
-              </SteamEffect>
-            </ScrollReveal>
+              </m.div>
+            </div>
+
+            {/* Right · feature cards */}
+            <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4 sm:gap-5">
+              {features.map((feat, idx) => {
+                const isFreshness = feat.title === 'Freshness Guaranteed';
+                const cardContent = (
+                  <div className="group relative h-full bg-white rounded-2xl border border-black/[0.06] p-6 overflow-hidden hover:border-green-brand/40 hover:shadow-[0_16px_40px_-16px_rgba(45,184,45,0.3)] hover:-translate-y-1 transition-all duration-300">
+                    {/* watermark index */}
+                    <span className="absolute -top-2 right-4 font-mono text-5xl font-black text-black/[0.035] group-hover:text-green-brand/10 transition-colors duration-300 select-none pointer-events-none">
+                      0{idx + 1}
+                    </span>
+                    {/* icon tile */}
+                    <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-green-brand to-green-dark text-white flex items-center justify-center shadow-lg shadow-green-brand/25 mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+                      {feat.icon}
+                    </div>
+                    <h3 className="relative font-heading text-lg font-bold text-dark group-hover:text-green-brand transition-colors mb-2">
+                      {feat.title}
+                    </h3>
+                    <p className="relative text-dark/60 text-sm leading-relaxed">
+                      {feat.desc}
+                    </p>
+                    {/* bottom accent bar */}
+                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
+                  </div>
+                );
+
+                return (
+                  <ScrollReveal key={idx} direction="up" delay={idx * 0.06}>
+                    {isFreshness ? (
+                      <SteamEffect intensity="subtle">{cardContent}</SteamEffect>
+                    ) : (
+                      cardContent
+                    )}
+                  </ScrollReveal>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
-
-
 
 
 
       {/* ────────────────── SECTION 9: NEWSLETTER ────────────────── */}
-      <section className="bg-off-white text-dark py-8 sm:py-12 relative overflow-hidden">
-        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <FlameIcon size="sm" color="orange" />
-            <Sparkles className="w-5 h-5 text-green-brand" />
-            <FlameIcon size="sm" color="orange" />
-          </div>
+      <section className="relative bg-cream py-16 sm:py-24 overflow-hidden">
+        {/* Subtle background patterns */}
+        <DotPattern className="top-0 left-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="left" />
+        <DotPattern className="top-0 right-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="right" />
+        <div className="absolute -top-24 -left-24 w-[32rem] h-[32rem] bg-yellow/10 rounded-full blur-[110px] pointer-events-none" />
+        <div className="absolute -bottom-28 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[110px] pointer-events-none" />
 
-          <h2 className="font-heading text-3xl sm:text-4xl font-black text-green-brand mb-3">
-            Get Snacking Tips & New Flavour Alerts
-          </h2>
-          <p className="text-dark/80 text-sm sm:text-base mb-8">
-            Join the Cochin Snacks community. No spam, just snacks.
-          </p>
-
-          <AnimatePresence mode="wait">
-            {newsletterStatus === 'success' ? (
-              <m.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-col items-center gap-4 bg-white p-8 rounded-3xl border border-gray-100 shadow-sm"
-              >
-                <m.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                  className="w-14 h-14 bg-green-brand text-white rounded-full flex items-center justify-center shadow-md"
-                >
-                  <CheckCircle className="w-8 h-8 text-white fill-current stroke-green-brand" />
-                </m.div>
-                <p className="text-dark font-bold text-base sm:text-lg">
-                  You're in! Welcome to the Cochin Snacks family.
-                </p>
-              </m.div>
-            ) : (
-              <m.form
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleNewsletterSubmit}
-                className="flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto"
-              >
-                <div className="flex-1">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    disabled={newsletterStatus === 'loading'}
-                    required
-                    className="w-full bg-white border border-gray-200 rounded-full py-4 px-6 text-sm text-dark placeholder:text-dark/40 focus:outline-none focus:border-green-brand focus:ring-2 focus:ring-green-brand/25 transition-all text-center sm:text-left shadow-sm"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={newsletterStatus === 'loading'}
-                  className="px-8 py-4 bg-yellow hover:bg-yellow-dark text-white font-black text-sm uppercase tracking-wider rounded-full transition-colors shrink-0 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-dark"
-                >
-                  {newsletterStatus === 'loading' ? 'Joining...' : 'Subscribe'}
-                </button>
-              </m.form>
-            )}
-          </AnimatePresence>
-
-          {newsletterStatus === 'error' && (
-            <p className="text-red-500 text-xs mt-3 font-semibold font-mono">
-              {newsletterMsg}
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* ────────────────── SECTION 10: CONTACT BAND ────────────────── */}
-      <section className="bg-white text-dark py-16 sm:py-24 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl sm:text-4xl font-black text-dark">
-              We'd Love to Hear From You
-            </h2>
-            <p className="text-dark/60 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
-              Get in touch for product enquiries, distributorship opportunities, export partnerships, and bulk orders.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {/* Card 1 */}
-            <div className="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 flex items-start gap-4 hover:border-green-brand/30 transition-all">
-              <MapPin className="w-6 h-6 text-green-brand shrink-0 mt-1" />
-              <div>
-                <h4 className="font-bold text-sm text-dark/50 uppercase tracking-widest mb-1.5 font-mono">Address</h4>
-                <p className="text-dark/80 text-sm leading-relaxed">
-                  Pavithram Snacks, Mullankunnu,<br />
-                  Ponjassery P.O., Ernakulam,<br />
-                  Kerala, India - 683547
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <ScrollReveal direction="up">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* LEFT: copy */}
+              <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+                <span className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-green-brand to-green-dark text-white shadow-lg shadow-green-brand/25 mb-6">
+                  <Mail className="w-7 h-7" />
+                </span>
+                <span className="text-xs font-extrabold uppercase tracking-[0.25em] text-green-brand font-mono mb-3">
+                  Stay in the Loop
+                </span>
+                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight leading-[1.1]">
+                  Get Snacking Tips &amp; <span className="text-green-brand">New Flavour Alerts</span>
+                </h2>
+                <p className="text-dark/60 text-base sm:text-lg mt-4 max-w-md leading-relaxed">
+                  Join the Cochin Snacks community for early access to new flavours, exclusive offers, and snacking inspiration. No spam, just snacks.
                 </p>
               </div>
-            </div>
 
-            {/* Card 2 */}
-            <div className="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 flex items-start gap-4 hover:border-green-brand/30 transition-all">
-              <Phone className="w-6 h-6 text-green-brand shrink-0 mt-1" />
-              <div>
-                <h4 className="font-bold text-sm text-dark/50 uppercase tracking-widest mb-1.5 font-mono">Phone</h4>
-                <a
-                  href="tel:+919446006447"
-                  className="text-dark/80 hover:text-green-brand text-sm font-semibold transition-colors block mt-1 font-mono"
-                >
-                  +91 94460 06447
-                </a>
+              {/* RIGHT: form */}
+              <div className="w-full">
+                <AnimatePresence mode="wait">
+                  {newsletterStatus === 'success' ? (
+                    <m.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-col items-center gap-4 text-center bg-white border border-black/[0.06] rounded-3xl p-8 sm:p-10 shadow-sm"
+                    >
+                      <m.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                        className="w-16 h-16 bg-green-brand text-white rounded-full flex items-center justify-center shadow-lg shadow-green-brand/30"
+                      >
+                        <CheckCircle className="w-9 h-9" />
+                      </m.div>
+                      <p className="text-dark font-bold text-lg">
+                        You're in! Welcome to the Cochin Snacks family.
+                      </p>
+                    </m.div>
+                  ) : (
+                    <m.form
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onSubmit={handleNewsletterSubmit}
+                      className="bg-white border border-black/[0.06] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col gap-4"
+                    >
+                      <label htmlFor="newsletter-email" className="text-sm font-bold text-dark/80">
+                        Enter your email to get started
+                      </label>
+                      <div className="relative">
+                        <Mail className="w-5 h-5 text-dark/30 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <input
+                          id="newsletter-email"
+                          type="email"
+                          placeholder="you@example.com"
+                          value={newsletterEmail}
+                          onChange={(e) => setNewsletterEmail(e.target.value)}
+                          disabled={newsletterStatus === 'loading'}
+                          required
+                          className="w-full bg-cream rounded-2xl py-3.5 pl-12 pr-4 text-sm text-dark placeholder:text-dark/40 focus:outline-none border border-black/[0.08] focus:border-green-brand focus:ring-2 focus:ring-green-brand/20 focus:bg-white transition-all"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={newsletterStatus === 'loading'}
+                        className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-brand hover:bg-green-dark text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-lg shadow-green-brand/25 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-brand focus:ring-offset-2 disabled:opacity-70 disabled:translate-y-0"
+                      >
+                        {newsletterStatus === 'loading' ? 'Joining...' : 'Subscribe'}
+                        <Send className="w-4 h-4" />
+                      </button>
+
+                      {newsletterStatus === 'error' ? (
+                        <p className="text-flame-red text-xs font-semibold font-mono text-center">
+                          {newsletterMsg}
+                        </p>
+                      ) : (
+                        <p className="flex items-center justify-center gap-1.5 text-dark/50 text-xs">
+                          <CheckCircle className="w-3.5 h-3.5 text-green-brand" />
+                          We respect your privacy. Unsubscribe anytime.
+                        </p>
+                      )}
+                    </m.form>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
-
-            {/* Card 3 */}
-            <div className="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 flex items-start gap-4 hover:border-green-brand/30 transition-all">
-              <Mail className="w-6 h-6 text-green-brand shrink-0 mt-1" />
-              <div>
-                <h4 className="font-bold text-sm text-dark/50 uppercase tracking-widest mb-1.5 font-mono">Email</h4>
-                <a
-                  href="mailto:export@cochinsnacks.com"
-                  className="text-dark/80 hover:text-green-brand text-sm font-semibold transition-colors block mt-1 font-mono"
-                >
-                  export@cochinsnacks.com
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-1.5 px-8 py-4 bg-yellow text-white hover:bg-yellow-dark font-black text-sm uppercase tracking-wider rounded-xl shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow"
-            >
-              <span>Send Us a Message</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 

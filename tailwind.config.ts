@@ -26,6 +26,7 @@ const config: Config = {
         },
         dark:       "#111111",
         "off-white": "#F6F9F6",
+        cream:      "#FAFAF0",
       },
       fontFamily: {
         heading: ["var(--font-playfair)", "serif"],
