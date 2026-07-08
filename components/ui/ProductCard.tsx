@@ -2,9 +2,8 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { urlFor } from '@/lib/sanity/client'
-import ScrollReveal from './ScrollReveal'
 import styles from './ProductCard.module.css'
 
 interface Product {
@@ -17,144 +16,107 @@ interface Product {
     slug: string
   }
   packSize?: string
-  mrp?: number
   isHot?: boolean
   isBestseller?: boolean
   images?: any[]
   /** Direct image path used by the local fallback catalogue. */
   img?: string
-  purchaseLinks?: { platformName: string; url: string }[]
 }
 
 interface ProductCardProps {
   product: Product
+  /** Stagger delay index for CSS reveal (default 0). */
+  index?: number
+  /** Eager-load image for above-the-fold cards. */
+  priority?: boolean
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
-  const router = useRouter()
-  
-  // Safe extraction of slug string
-  const slugStr = typeof product.slug === 'string'
-    ? product.slug
-    : product.slug?.current || ''
-  
+function ProductCard({ product, index = 0, priority = false }: ProductCardProps) {
+  const slugStr =
+    typeof product.slug === 'string'
+      ? product.slug
+      : product.slug?.current || ''
+
   const fallbackUrl = '/default-snack.svg'
   const mainImage = product.images?.[0]
   const imageUrl = product.img
     ? product.img
     : mainImage
-      ? urlFor(mainImage).width(400).format('webp').url() || fallbackUrl
+      ? urlFor(mainImage).width(360).height(360).format('webp').quality(75).url() || fallbackUrl
       : fallbackUrl
 
-  // Stable mock rating based on product ID
-  const ratingData = React.useMemo(() => {
-    let hash = 0
-    const str = product._id || ''
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash)
-    }
-    const absHash = Math.abs(hash)
-    const score = 4.0 + (absHash % 11) / 10 // 4.0 to 5.0
-    const count = 30 + (absHash % 170) // 30 to 200 reviews
-    return { score, count }
-  }, [product._id])
-
-  const stars = ratingData.score >= 4.5 ? '★★★★★' : '★★★★☆'
-
-  const handleCardClick = () => {
-    router.push(`/products/${slugStr}`)
+  // Stable mock rating from product id (no recompute on parent re-renders via memo)
+  let hash = 0
+  const str = product._id || ''
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
   }
+  const absHash = Math.abs(hash)
+  const score = 4.0 + (absHash % 11) / 10
+  const count = 30 + (absHash % 170)
+  const stars = score >= 4.5 ? '★★★★★' : '★★★★☆'
+
+  const subtitle =
+    product.packSize ||
+    product.description ||
+    'Authentic Kerala snack'
+
+  // Cap stagger so late cards still appear quickly
+  const delayMs = Math.min(index, 12) * 45
 
   return (
-    <ScrollReveal direction="up">
-      <div 
-        onClick={handleCardClick} 
-        className={styles.productCard}
-      >
-        {/* Badges */}
-        {product.isBestseller && (
-          <span className={`${styles.badge} ${styles.new}`}>
-            Bestseller
-          </span>
-        )}
-        {product.isHot && (
-          <span className={`${styles.badge} ${styles.sale}`} style={{ left: 'auto', right: '16px' }}>
-            Hot
-          </span>
-        )}
+    <Link
+      href={`/products/${slugStr}`}
+      className={`${styles.productCard} ${styles.reveal}`}
+      style={{ animationDelay: `${delayMs}ms` }}
+      aria-label={`View ${product.title}`}
+    >
+      {product.isBestseller && (
+        <span className={`${styles.badge} ${styles.new}`}>Bestseller</span>
+      )}
+      {product.isHot && !product.isBestseller && (
+        <span className={`${styles.badge} ${styles.sale}`}>Hot</span>
+      )}
 
-        {/* Image Container */}
-        <div className={styles.cardImage}>
-          <Image
-            src={imageUrl}
-            alt={product.title}
-            width={400}
-            height={400}
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className={styles.image}
-          />
+      <div className={styles.cardImage}>
+        <Image
+          src={imageUrl}
+          alt={product.title}
+          width={360}
+          height={360}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          className={styles.image}
+          priority={priority}
+        />
+      </div>
+
+      <div className={styles.cardContent}>
+        <div className={styles.metaRow}>
+          {product.category?.title ? (
+            <span className={styles.categoryTag}>{product.category.title}</span>
+          ) : (
+            <span />
+          )}
+          <div className={styles.rating}>
+            <span className={styles.stars} aria-hidden>
+              {stars}
+            </span>
+            <span className={styles.count}>({count})</span>
+          </div>
         </div>
 
-        {/* Body Content */}
-        <div className={styles.cardContent}>
-          {/* Category + Rating row */}
-          <div className={styles.metaRow}>
-            {product.category?.title && (
-              <span className={styles.categoryTag}>
-                {product.category.title}
-              </span>
-            )}
-            <div className={styles.rating}>
-              <span className={styles.stars}>{stars}</span>
-              <span className={styles.count}>({ratingData.count})</span>
-            </div>
-          </div>
+        <h3 className={styles.title} title={product.title}>
+          {product.title}
+        </h3>
 
-          {/* Title */}
-          <h3 className={styles.title} title={product.title}>
-            {product.title}
-          </h3>
+        <p className={styles.description}>{subtitle}</p>
 
-          {/* Description */}
-          {product.description && (
-            <p className={styles.description}>
-              {product.description}
-            </p>
-          )}
-
-          {/* Purchase Platform Links */}
-          {product.purchaseLinks && product.purchaseLinks.length > 0 && (
-            <div className={styles.platformSection}>
-              <span className={styles.platformLabel}>Available on</span>
-              {product.purchaseLinks.slice(0, 2).map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className={styles.platformLink}
-                >
-                  {link.platformName}
-                </a>
-              ))}
-            </div>
-          )}
-
-          {/* Footer (single CTA only) */}
-          <div className={styles.cardFooter}>
-            <button 
-              onClick={(e) => {
-                e.stopPropagation()
-                router.push(`/products/${slugStr}`)
-              }}
-              className={styles.actionBtn}
-            >
-              Enquire
-            </button>
-          </div>
+        <div className={styles.cardFooter}>
+          <span className={styles.actionBtn}>Enquire</span>
         </div>
       </div>
-    </ScrollReveal>
+    </Link>
   )
 }
+
+export default React.memo(ProductCard)

@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { Search, SlidersHorizontal, RefreshCw, X } from 'lucide-react'
+import { useState, useMemo, startTransition } from 'react'
+import { useSearchParams, usePathname } from 'next/navigation'
+import { Search, RefreshCw, X, SlidersHorizontal } from 'lucide-react'
 import ProductCard from '@/components/ui/ProductCard'
 
 interface Product {
@@ -10,7 +10,6 @@ interface Product {
   title: string
   slug: string
   category: {
-    _id: string
     title: string
     slug: string
   }
@@ -18,7 +17,6 @@ interface Product {
   packSize?: string
   isHot: boolean
   isBestseller: boolean
-  isAvailable: boolean
   images?: any[]
 }
 
@@ -35,64 +33,51 @@ interface ProductCatalogProps {
 }
 
 export default function ProductCatalog({ initialProducts, categories }: ProductCatalogProps) {
-  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState<string>('default')
-  const [showFiltersMobile, setShowFiltersMobile] = useState(false)
-
-  // Read active category from URL (?category=[slug]) initially, then manage locally for speed
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all')
 
-  // Update category slug in search parameters without full page reload
   const handleCategoryChange = (slug: string) => {
-    setActiveCategory(slug)
-    
-    // Update URL silently without triggering Next.js server requests
+    startTransition(() => setActiveCategory(slug))
+
     const params = new URLSearchParams(window.location.search)
     if (slug === 'all') {
       params.delete('category')
     } else {
       params.set('category', slug)
     }
-    
+
     const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname
     window.history.replaceState(null, '', newUrl)
   }
 
-  // Reset all filters
   const resetFilters = () => {
-    setSearch('')
-    setSortBy('default')
-    setActiveCategory('all')
+    startTransition(() => {
+      setSearch('')
+      setSortBy('default')
+      setActiveCategory('all')
+    })
     window.history.replaceState(null, '', pathname)
   }
 
-  // Filtered and sorted products list
   const filteredProducts = useMemo(() => {
     const normalize = (value?: string) => (value ?? '').toLowerCase().trim()
     const searchQuery = normalize(search)
 
     return initialProducts
       .filter((p) => {
-        // Search by title only (as requested)
-        const normalizedTitle = normalize(p.title)
         const matchSearch =
-          searchQuery.length === 0 || normalizedTitle.includes(searchQuery)
-
-        // Category matching
+          searchQuery.length === 0 || normalize(p.title).includes(searchQuery)
         const matchCategory =
           activeCategory === 'all' || p.category?.slug === activeCategory
-
         return matchSearch && matchCategory
       })
       .sort((a, b) => {
         if (sortBy === 'name-asc') return a.title.localeCompare(b.title)
         if (sortBy === 'name-desc') return b.title.localeCompare(a.title)
-
-        // Default: bestsellers first, then alphabetically
         if (a.isBestseller && !b.isBestseller) return -1
         if (!a.isBestseller && b.isBestseller) return 1
         return a.title.localeCompare(b.title)
@@ -103,11 +88,9 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
 
   return (
     <div className="w-full bg-white">
-      {/* 1. STICKY FILTER BAR — frosted light */}
-      <div className="sticky top-[76px] lg:top-[96px] z-30 bg-white/85 backdrop-blur-xl border-y border-black/[0.06] py-4">
+      {/* Sticky filter bar */}
+      <div className="sticky top-[76px] lg:top-[96px] z-30 bg-white/90 backdrop-blur-xl border-y border-black/[0.06] py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-
-          {/* Categories list horizontal row */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none w-full md:w-auto">
             <button
               onClick={() => handleCategoryChange('all')}
@@ -134,7 +117,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
             ))}
           </div>
 
-          {/* Quick controls (Search input & Sorters) */}
           <div className="flex gap-2 w-full md:w-auto justify-end">
             <div className="relative flex-1 md:w-60">
               <Search className="w-4 h-4 text-dark/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -166,19 +148,20 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               <option value="name-desc">Name: Z-A</option>
             </select>
           </div>
-
         </div>
       </div>
 
-      {/* 2. PRODUCT GRID SECTION */}
+      {/* Product grid */}
       <section className="bg-white py-12 min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* Stats Bar */}
           <div className="flex justify-between items-center mb-8">
-            <span className="text-xs sm:text-sm text-dark/50 font-bold uppercase tracking-wider font-mono">
-              Showing <span className="text-green-brand">{filteredProducts.length}</span> authentic snacks
-            </span>
+            <p className="text-sm sm:text-base text-dark/55 font-medium">
+              Showing{' '}
+              <span className="font-heading font-black text-green-brand">
+                {filteredProducts.length}
+              </span>{' '}
+              authentic snacks
+            </p>
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
@@ -190,13 +173,15 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
             )}
           </div>
 
-          {/* Grid list with AnimatePresence */}
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-              {filteredProducts.map((p) => (
-                <div key={p._id}>
-                  <ProductCard product={p} />
-                </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 items-stretch">
+              {filteredProducts.map((p, idx) => (
+                <ProductCard
+                  key={`${activeCategory}-${sortBy}-${p._id}`}
+                  product={p}
+                  index={idx}
+                  priority={idx < 5}
+                />
               ))}
             </div>
           ) : (
@@ -206,7 +191,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               </div>
               <h3 className="font-heading text-xl font-black text-dark mb-2">No snacks found</h3>
               <p className="text-dark/60 text-sm leading-relaxed mb-6 px-6">
-                We couldn't find any snacks matching your filter. Try adjusting or resetting.
+                We couldn&apos;t find any snacks matching your filter. Try adjusting or resetting.
               </p>
               <button
                 onClick={resetFilters}
@@ -216,7 +201,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               </button>
             </div>
           )}
-
         </div>
       </section>
     </div>

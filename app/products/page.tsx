@@ -14,17 +14,13 @@ interface Product {
   title: string
   slug: string
   category: {
-    _id: string
     title: string
     slug: string
   }
   description?: string
   packSize?: string
-  mrp: number
-  spiceLevel: number
   isHot: boolean
   isBestseller: boolean
-  isAvailable: boolean
   images?: any[]
 }
 
@@ -35,7 +31,7 @@ interface Category {
   tagline?: string
 }
 
-export const revalidate = 60 // ISR revalidation every 60 seconds
+export const revalidate = 300 // ISR — 5 minutes; catalogue rarely changes minute-to-minute
 
 export async function generateMetadata() {
   return generateSeoMetadata({
@@ -72,17 +68,17 @@ export default async function ProductsPage() {
               <span className="flex h-2 w-2 rounded-full bg-flame-orange" />
               <span className="text-xs font-bold text-green-dark tracking-widest uppercase font-mono">Our Range</span>
             </span>
-            <h1 className="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-[1.05] max-w-3xl">
+            <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] max-w-3xl">
               Our Cochin <span className="text-green-brand">Snacks</span>
             </h1>
-            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed">
+            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed font-medium">
               Explore authentic Kerala varieties — fried in 100% pure oil, packed fresh, and loved across 20+ countries.
             </p>
           </div>
         </section>
 
         {/* Dynamic Catalog */}
-        <Suspense fallback={<div className="py-20 text-center font-bold">Loading snacks...</div>}>
+        <Suspense fallback={<div className="py-20 text-center text-dark/50 font-medium">Loading snacks...</div>}>
           <ProductCatalog initialProducts={products} categories={categories} />
         </Suspense>
       </main>

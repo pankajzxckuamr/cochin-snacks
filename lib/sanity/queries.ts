@@ -8,10 +8,6 @@ export const ALL_CATEGORIES_QUERY = groq`
     title,
     "slug": slug.current,
     tagline,
-    catalogueTagline,
-    description,
-    bannerImage { asset, alt },
-    displayOrder,
   }
 `
 
@@ -35,15 +31,12 @@ export const ALL_PRODUCTS_QUERY = groq`
     _id,
     title,
     "slug": slug.current,
-    "category": category->{ _id, title, "slug": slug.current },
+    "category": category->{ title, "slug": slug.current },
     description,
     packSize,
-    mrp,
     isHot,
     isBestseller,
-    isAvailable,
-    images[] { asset, alt },
-    purchaseLinks[] { platformName, url },
+    "images": images[0...1] { asset, alt },
   }
 `
 

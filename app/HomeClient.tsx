@@ -789,53 +789,40 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
           />
 
           {bestsellers && bestsellers.length > 0 ? (
-            <div className="relative group/carousel px-4 sm:px-8">
-              {/* Left Arrow Button */}
+            <div className="relative">
               {bestsellers.length > 4 && (
-                <button
-                  onClick={() => scrollBestsellers('left')}
-                  className="absolute -left-2 sm:left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
-                  aria-label="Previous best sellers"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
+                <>
+                  <button
+                    onClick={() => scrollBestsellers('left')}
+                    className="absolute -left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
+                    aria-label="Previous best sellers"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => scrollBestsellers('right')}
+                    className="absolute -right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
+                    aria-label="Next best sellers"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
               )}
 
-              {/* Scrollable Container */}
               <div
                 ref={bestsellersRef}
-                className="flex overflow-x-auto gap-4 sm:gap-6 scrollbar-hide pt-4 pb-6 px-1 snap-x snap-mandatory flex-nowrap"
+                className="flex overflow-x-auto gap-4 sm:gap-5 scrollbar-hide pt-2 pb-4 snap-x snap-mandatory flex-nowrap"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {bestsellers.map((product) => {
-                  const card = <ProductCard key={product._id} product={product} />;
-                  const cardWrapped = product.title === 'Banana Chips' ? (
-                    <SteamEffect key={product._id} intensity="subtle">
-                      {card}
-                    </SteamEffect>
-                  ) : card;
-
-                  return (
-                    <div
-                      key={product._id}
-                      className="w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] shrink-0 snap-start"
-                    >
-                      {cardWrapped}
-                    </div>
-                  );
-                })}
+                {bestsellers.map((product) => (
+                  <div
+                    key={product._id}
+                    className="w-[calc(50%-8px)] sm:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] shrink-0 snap-start"
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
               </div>
-
-              {/* Right Arrow Button */}
-              {bestsellers.length > 4 && (
-                <button
-                  onClick={() => scrollBestsellers('right')}
-                  className="absolute -right-2 sm:right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
-                  aria-label="Next best sellers"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              )}
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
@@ -914,66 +901,66 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
           </div>
 
           {/* One-row modern listing with patterned green cards */}
-          <div className="relative -mx-4 sm:-mx-6 lg:mx-0">
-            <div
-              className="flex gap-4 sm:gap-5 overflow-x-auto px-4 sm:px-6 lg:px-0 pb-3 snap-x snap-mandatory scrollbar-none"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {[
-                { name: 'Potato Chips', img: '/products/potato-chips.png', href: '/products?category=chips' },
-                { name: 'Mixture', img: '/products/mixture.png', href: '/products?category=mixture' },
-                { name: 'Banana', img: '/products/banana.png', href: '/products?category=banana' },
-                { name: 'Tapioca', img: '/products/tapioca.png', href: '/products?category=tapioca' },
-                { name: 'Murukku', img: '/products/murukku.png', href: '/products?category=murukku' },
-                { name: 'Pakkavada', img: '/products/pakkavada.png', href: '/products?category=pakkavada' },
-              ].map((prod) => (
-                <Link
-                  key={prod.name}
-                  href={prod.href}
-                  aria-label={`Explore ${prod.name}`}
-                  className="group relative snap-start shrink-0 w-[176px] sm:w-[200px] aspect-[3/4] rounded-[1.35rem] overflow-hidden bg-gradient-to-br from-green-brand via-green-brand to-green-dark shadow-[0_14px_34px_-16px_rgba(30,107,46,0.6)] hover:shadow-[0_22px_44px_-16px_rgba(30,107,46,0.75)] hover:-translate-y-1.5 transition-all duration-300"
-                >
-                  {/* Internal modern patterns */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 opacity-[0.14] pointer-events-none"
-                    style={{
-                      backgroundImage:
-                        'radial-gradient(circle, #fff 1.1px, transparent 1.1px)',
-                      backgroundSize: '16px 16px',
-                    }}
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 opacity-[0.1] pointer-events-none"
-                    style={{
-                      backgroundImage:
-                        'repeating-linear-gradient(135deg, #fff 0, #fff 1px, transparent 1px, transparent 12px)',
-                    }}
-                  />
-                  <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full border border-white/15 pointer-events-none" />
-                  <div className="absolute -bottom-12 -left-8 w-40 h-40 rounded-full border border-white/10 pointer-events-none" />
-                  <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+          <div
+            className="flex gap-4 sm:gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {[
+              { name: 'Potato Chips', img: '/products/potato-chips.png', href: '/products?category=chips' },
+              { name: 'Mixture', img: '/products/mixture.png', href: '/products?category=mixture' },
+              { name: 'Banana', img: '/products/banana.png', href: '/products?category=banana' },
+              { name: 'Tapioca', img: '/products/tapioca.png', href: '/products?category=tapioca' },
+              { name: 'Murukku', img: '/products/murukku.png', href: '/products?category=murukku' },
+              { name: 'Pakkavada', img: '/products/pakkavada.png', href: '/products?category=pakkavada' },
+            ].map((prod) => (
+              <Link
+                key={prod.name}
+                href={prod.href}
+                aria-label={`Explore ${prod.name}`}
+                className="group relative snap-start shrink-0 w-[176px] sm:w-[200px] aspect-[3/4] rounded-[1.35rem] overflow-hidden bg-gradient-to-br from-green-brand via-green-brand to-green-dark shadow-[0_14px_34px_-16px_rgba(30,107,46,0.6)] hover:shadow-[0_22px_44px_-16px_rgba(30,107,46,0.75)] hover:-translate-y-1.5 transition-all duration-300"
+              >
+                {/* Internal modern patterns */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-[0.14] pointer-events-none z-[1]"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(circle, #fff 1.1px, transparent 1.1px)',
+                    backgroundSize: '16px 16px',
+                  }}
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-[0.1] pointer-events-none z-[1]"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(135deg, #fff 0, #fff 1px, transparent 1px, transparent 12px)',
+                  }}
+                />
+                <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full border border-white/15 pointer-events-none z-[1]" />
+                <div className="absolute -bottom-12 -left-8 w-40 h-40 rounded-full border border-white/10 pointer-events-none z-[1]" />
 
-                  {/* Product image fills the card */}
-                  <div className="absolute inset-3 rounded-[1.05rem] overflow-hidden bg-white/10 border border-white/15">
-                    <Image
-                      src={prod.img}
-                      alt={prod.name}
-                      fill
-                      sizes="200px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-green-dark/55 via-transparent to-transparent" />
-                  </div>
+                {/* Product image — flush, no nested image container */}
+                <Image
+                  src={prod.img}
+                  alt={prod.name}
+                  fill
+                  sizes="200px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-green-dark/75 via-green-dark/15 to-transparent z-[1]" />
 
-                  {/* Floating arrow CTA only */}
-                  <span className="absolute bottom-5 right-5 z-10 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white text-green-brand shadow-lg group-hover:bg-yellow group-hover:text-green-dark group-hover:scale-105 transition-all duration-300">
+                {/* Name + arrow */}
+                <div className="absolute inset-x-0 bottom-0 z-10 p-4 flex items-end justify-between gap-2">
+                  <h3 className="font-heading font-bold text-white text-sm sm:text-base leading-snug drop-shadow-sm line-clamp-2 pr-1">
+                    {prod.name}
+                  </h3>
+                  <span className="inline-flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-white text-green-brand shadow-lg group-hover:bg-yellow group-hover:text-green-dark group-hover:scale-105 transition-all duration-300">
                     <ArrowRight className="w-4 h-4" />
                   </span>
-                </Link>
-              ))}
-            </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
