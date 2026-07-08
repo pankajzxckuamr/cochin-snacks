@@ -27,6 +27,7 @@ import ScrollReveal from '@/components/ui/ScrollReveal'
 import DotPattern from '@/components/ui/DotPattern'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ProductCard from '@/components/ui/ProductCard'
+import homeStyles from '@/components/ui/HomeCard.module.css'
 import SteamEffect from '@/components/animations/SteamEffect'
 import RotatingMedallionText from '@/components/animations/RotatingMedallionText'
 
@@ -141,6 +142,7 @@ interface Product {
     slug: string
   }
   packSize?: string
+  description?: string
   mrp: number
   spiceLevel: number
   isHot: boolean
@@ -354,10 +356,10 @@ function FallingChip({ chip, onLand }: { chip: ChipData; onLand: () => void }) {
 
 // Curated fallback bestsellers shown when the CMS has no data yet.
 const FALLBACK_BESTSELLERS = [
-  { name: 'Banana Chips', category: 'Chips', img: '/products/banana.png', price: 120, rating: 4.9, reviews: 214, hot: true },
-  { name: 'Kerala Mixture', category: 'Mixture', img: '/products/mixture.png', price: 140, rating: 4.8, reviews: 176, hot: true },
-  { name: 'Murukku', category: 'Snacks', img: '/products/murukku.png', price: 110, rating: 4.7, reviews: 132, hot: false },
-  { name: 'Pakkavada', category: 'Snacks', img: '/products/pakkavada.png', price: 130, rating: 4.8, reviews: 158, hot: false },
+  { name: 'Banana Chips', category: 'Chips', img: '/products/banana.png', description: 'Sweet, golden banana chips fried fresh in pure coconut oil.', hot: true },
+  { name: 'Kerala Mixture', category: 'Mixture', img: '/products/mixture.png', description: 'A crunchy savoury blend of nuts, lentils and Kerala spices.', hot: true },
+  { name: 'Murukku', category: 'Snacks', img: '/products/murukku.png', description: 'Traditional spiral snack with a light, crispy bite.', hot: false },
+  { name: 'Pakkavada', category: 'Snacks', img: '/products/pakkavada.png', description: 'Ribbon-shaped fritters with a bold, spiced crunch.', hot: false },
 ]
 
 export default function HomeClient({ bestsellers, categories, testimonials }: HomeClientProps) {
@@ -367,7 +369,7 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
     if (bestsellersRef.current) {
       const container = bestsellersRef.current
       const cardWidth = container.firstElementChild?.clientWidth || 280
-      const gap = 24 // gap-6 is 24px
+      const gap = 20 // gap-5
       const scrollAmount = direction === 'left' ? -(cardWidth + gap) : (cardWidth + gap)
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' })
     }
@@ -789,7 +791,7 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
           />
 
           {bestsellers && bestsellers.length > 0 ? (
-            <div className="relative">
+            <div className="relative mt-2">
               {bestsellers.length > 4 && (
                 <>
                   <button
@@ -811,67 +813,38 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
 
               <div
                 ref={bestsellersRef}
-                className="flex overflow-x-auto gap-4 sm:gap-5 scrollbar-hide pt-2 pb-4 snap-x snap-mandatory flex-nowrap"
+                className="flex overflow-x-auto gap-4 sm:gap-5 scrollbar-hide pt-2 pb-4 snap-x snap-mandatory flex-nowrap -mx-1 px-1"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {bestsellers.map((product) => (
-                  <div
-                    key={product._id}
-                    className="w-[calc(50%-8px)] sm:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] shrink-0 snap-start"
-                  >
-                    <ProductCard product={product} />
+                {bestsellers.map((product, idx) => (
+                  <div key={product._id} className={`${homeStyles.carouselItem} snap-start`}>
+                    <ProductCard product={product} variant="home" priority={idx < 4} />
                   </div>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+            <div
+              className="flex overflow-x-auto gap-4 sm:gap-5 scrollbar-hide pt-2 pb-4 snap-x snap-mandatory flex-nowrap -mx-1 px-1"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
               {FALLBACK_BESTSELLERS.map((p, idx) => (
-                <ScrollReveal key={p.name} direction="up" delay={idx * 0.06}>
-                  <Link
-                    href="/products"
-                    className="group relative flex flex-col h-full bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-[0_22px_46px_-18px_rgba(45,139,45,0.35)] hover:border-green-brand/40 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
-                  >
-                    <div className="relative aspect-square bg-cream overflow-hidden">
-                      <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-green-brand text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 shadow-sm shadow-green-brand/25">
-                        Bestseller
-                      </span>
-                      {p.hot && (
-                        <span className="absolute top-3 right-3 z-10 inline-flex items-center rounded-full bg-flame-orange text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 shadow-sm">
-                          Hot
-                        </span>
-                      )}
-                      <Image
-                        src={p.img}
-                        alt={p.name}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5 p-4 sm:p-5">
-                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-green-brand">
-                        {p.category}
-                      </span>
-                      <h3 className="font-heading font-bold text-sm sm:text-base text-dark leading-tight group-hover:text-green-brand transition-colors">
-                        {p.name}
-                      </h3>
-                      <div className="flex items-center gap-1.5 text-xs text-dark/50">
-                        <span className="text-yellow tracking-tight">★★★★★</span>
-                        <span className="font-bold text-dark/70">{p.rating}</span>
-                        <span>({p.reviews})</span>
-                      </div>
-                      <div className="mt-1.5 flex items-center justify-between">
-                        <span className="font-heading font-black text-dark text-lg">₹{p.price}</span>
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-green-brand">
-                          Details <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                        </span>
-                      </div>
-                    </div>
-                    {/* bottom accent bar */}
-                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
-                  </Link>
-                </ScrollReveal>
+                <div key={p.name} className={`${homeStyles.carouselItem} snap-start`}>
+                  <ProductCard
+                    variant="home"
+                    priority={idx < 4}
+                    product={{
+                      _id: `fallback-${idx}`,
+                      title: p.name,
+                      slug: 'products',
+                      description: p.description,
+                      category: { title: p.category, slug: 'snacks' },
+                      isHot: p.hot,
+                      isBestseller: true,
+                      img: p.img,
+                    }}
+                  />
+                </div>
               ))}
             </div>
           )}
@@ -919,7 +892,6 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
                 aria-label={`Explore ${prod.name}`}
                 className="group relative snap-start shrink-0 w-[176px] sm:w-[200px] aspect-[3/4] rounded-[1.35rem] overflow-hidden bg-gradient-to-br from-green-brand via-green-brand to-green-dark shadow-[0_14px_34px_-16px_rgba(30,107,46,0.6)] hover:shadow-[0_22px_44px_-16px_rgba(30,107,46,0.75)] hover:-translate-y-1.5 transition-all duration-300"
               >
-                {/* Internal modern patterns */}
                 <div
                   aria-hidden
                   className="absolute inset-0 opacity-[0.14] pointer-events-none z-[1]"
@@ -940,7 +912,6 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
                 <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full border border-white/15 pointer-events-none z-[1]" />
                 <div className="absolute -bottom-12 -left-8 w-40 h-40 rounded-full border border-white/10 pointer-events-none z-[1]" />
 
-                {/* Product image — flush, no nested image container */}
                 <Image
                   src={prod.img}
                   alt={prod.name}
@@ -950,7 +921,6 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-green-dark/75 via-green-dark/15 to-transparent z-[1]" />
 
-                {/* Name + arrow */}
                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 flex items-end justify-between gap-2">
                   <h3 className="font-heading font-bold text-white text-sm sm:text-base leading-snug drop-shadow-sm line-clamp-2 pr-1">
                     {prod.name}

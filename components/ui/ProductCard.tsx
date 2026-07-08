@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity/client'
 import styles from './ProductCard.module.css'
+import homeStyles from './HomeCard.module.css'
 
 interface Product {
   _id: string
@@ -29,9 +30,11 @@ interface ProductCardProps {
   index?: number
   /** Eager-load image for above-the-fold cards. */
   priority?: boolean
+  /** Use compact home-carousel sizing (fixed height). */
+  variant?: 'default' | 'home'
 }
 
-function ProductCard({ product, priority = false }: ProductCardProps) {
+function ProductCard({ product, priority = false, variant = 'default' }: ProductCardProps) {
   const slugStr =
     typeof product.slug === 'string'
       ? product.slug
@@ -58,10 +61,12 @@ function ProductCard({ product, priority = false }: ProductCardProps) {
   const subtitle =
     product.description || product.packSize || 'Authentic Kerala snack'
 
+  const isHome = variant === 'home'
+
   return (
     <Link
       href={`/products/${slugStr}`}
-      className={styles.productCard}
+      className={isHome ? homeStyles.card : styles.productCard}
       aria-label={`View ${product.title}`}
     >
       {product.isBestseller && (
@@ -71,7 +76,7 @@ function ProductCard({ product, priority = false }: ProductCardProps) {
         <span className={`${styles.badge} ${styles.sale}`}>Hot</span>
       )}
 
-      <div className={styles.cardImage}>
+      <div className={isHome ? homeStyles.imageWrap : styles.cardImage}>
         <Image
           src={imageUrl}
           alt={product.title}
@@ -83,7 +88,7 @@ function ProductCard({ product, priority = false }: ProductCardProps) {
         />
       </div>
 
-      <div className={styles.cardContent}>
+      <div className={isHome ? homeStyles.body : styles.cardContent}>
         <div className={styles.metaRow}>
           {product.category?.title ? (
             <span className={styles.categoryTag}>{product.category.title}</span>
@@ -102,10 +107,10 @@ function ProductCard({ product, priority = false }: ProductCardProps) {
           {product.title}
         </h3>
 
-        <p className={styles.description}>{subtitle}</p>
+        <p className={isHome ? homeStyles.description : styles.description}>{subtitle}</p>
 
         <div className={styles.cardFooter}>
-          <span className={styles.actionBtn}>Enquiry Price</span>
+          <span className={isHome ? homeStyles.cta : styles.actionBtn}>Enquiry Price</span>
         </div>
       </div>
     </Link>

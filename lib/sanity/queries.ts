@@ -93,6 +93,7 @@ export const BESTSELLER_PRODUCTS_QUERY = groq`
     title,
     "slug": slug.current,
     "category": category->{ _id, title, "slug": slug.current },
+    description,
     packSize,
     mrp,
     isHot,

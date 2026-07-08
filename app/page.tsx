@@ -65,6 +65,7 @@ export default async function Home() {
       slug: p.category?.slug || 'snacks',
     },
     packSize: p.packSize,
+    description: p.description,
     mrp: p.mrp || 0,
     spiceLevel: p.spiceLevel || 0,
     isHot: !!p.isHot,
