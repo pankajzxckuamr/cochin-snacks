@@ -7,7 +7,9 @@ import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import DotPattern from '@/components/ui/DotPattern'
 import { MapPin, Phone, Mail, Globe, CheckCircle, User, Tag, MessageSquare, Send } from 'lucide-react'
-import { m, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence, type Variants } from 'framer-motion'
+
+const EASE_OUT: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94]
 
 const contactCards = [
   {
@@ -61,12 +63,16 @@ const contactCards = [
   },
 ]
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: {
+      delay: i * 0.08,
+      duration: 0.5,
+      ease: EASE_OUT,
+    },
   }),
 }
 
@@ -387,7 +393,7 @@ export default function ContactClient() {
               initial={{ opacity: 0, y: 30, scale: 0.98 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.6, ease: EASE_OUT }}
               className="relative w-full h-[320px] sm:h-[440px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-24px_rgba(30,107,46,0.45)] border border-black/[0.06]"
             >
               <iframe

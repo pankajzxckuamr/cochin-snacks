@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /studio
+
+# Host
+Host: https://cochinsnacks.com
+
+# Sitemaps
+Sitemap: https://cochinsnacks.com/sitemap.xml
