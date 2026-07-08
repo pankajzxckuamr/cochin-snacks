@@ -872,12 +872,13 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
               </Link>
             </div>
           </div>
+        </div>
 
-          {/* One-row modern listing with patterned green cards */}
-          <div
-            className="flex gap-4 sm:gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-none"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+        {/* One-row modern listing with patterned green cards */}
+        <div
+          className="relative z-10 flex gap-4 sm:gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-none px-4 sm:px-6 lg:px-8"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
             {[
               { name: 'Potato Chips', img: '/products/potato-chips.png', href: '/products?category=chips' },
               { name: 'Mixture', img: '/products/mixture.png', href: '/products?category=mixture' },
@@ -931,7 +932,6 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
                 </div>
               </Link>
             ))}
-          </div>
         </div>
       </section>
 
@@ -942,15 +942,16 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
         <div className="absolute bottom-0 -left-24 w-80 h-80 bg-yellow/[0.07] rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="flex flex-col gap-10 sm:gap-12">
 
-            {/* Left · sticky heading + trust strip */}
-            <div className="lg:col-span-4 lg:sticky lg:top-28">
+            {/* Top · heading + trust strip */}
+            <div className="max-w-3xl mx-auto text-center">
               <m.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true, margin: '-80px' }}
+                className="flex flex-col items-center"
               >
                 <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-green-brand font-mono mb-4">
                   <span className="w-8 h-px bg-green-brand/50" /> Why Us
@@ -958,11 +959,11 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
                 <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight leading-[1.1]">
                   Why Choose <span className="text-green-brand">Cochin Snacks</span>
                 </h2>
-                <p className="text-dark/60 text-base sm:text-lg mt-5 leading-relaxed">
+                <p className="text-dark/60 text-base sm:text-lg mt-5 leading-relaxed max-w-2xl">
                   Every bag carries a promise — authentic flavour, honest ingredients, and the warmth of Kerala in every crunch.
                 </p>
 
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-cream border border-black/[0.06] px-4 py-2 text-sm font-semibold text-dark/75">
                     <CheckCircle className="w-4 h-4 text-green-brand" /> 75 years of trust
                   </span>
@@ -973,8 +974,8 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
               </m.div>
             </div>
 
-            {/* Right · feature cards */}
-            <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4 sm:gap-5">
+            {/* Bottom · feature cards */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {features.map((feat, idx) => {
                 const isFreshness = feat.title === 'Freshness Guaranteed';
                 const cardContent = (
