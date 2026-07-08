@@ -27,6 +27,50 @@ export default function Header() {
     setIsOpen(false)
   }, [pathname])
 
+  // Auto-reveal each page section on scroll.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('main section:not([data-no-auto-reveal])')
+    )
+    if (sections.length === 0) return
+
+    // Home has sticky/interactive sections that don't play well with
+    // transform-based auto-reveal wrappers.
+    if (pathname === '/') {
+      sections.forEach((section) => {
+        section.classList.remove('auto-reveal-section', 'is-visible')
+      })
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    )
+
+    sections.forEach((section, idx) => {
+      section.classList.add('auto-reveal-section')
+      if (idx === 0) {
+        section.classList.add('is-visible')
+      } else {
+        section.classList.remove('is-visible')
+      }
+      observer.observe(section)
+    })
+
+    return () => observer.disconnect()
+  }, [pathname])
+
   // Navigation config
   const navLinks = [
     { name: 'Home', path: '/' },

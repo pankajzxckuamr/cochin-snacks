@@ -89,11 +89,30 @@ html {
   animation-play-state: paused;
 }
 
+/* ─── Global section reveal on scroll ────────────────────────────────────── */
+.auto-reveal-section {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+.auto-reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ─── Accessibility: respect reduced motion ──────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
+  }
+  .auto-reveal-section {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

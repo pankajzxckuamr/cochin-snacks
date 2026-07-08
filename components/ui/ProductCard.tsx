@@ -30,14 +30,6 @@ interface ProductCardProps {
   product: Product
 }
 
-const getPlatformIcon = (platformName: string) => {
-  const name = platformName.toLowerCase()
-  if (name.includes('amazon')) return '🛍️'
-  if (name.includes('flipkart')) return '📦'
-  if (name.includes('swiggy') || name.includes('instamart') || name.includes('blinkit')) return '🛒'
-  return '🔗'
-}
-
 export default function ProductCard({ product }: ProductCardProps) {
   const router = useRouter()
   
@@ -68,10 +60,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   }, [product._id])
 
   const stars = ratingData.score >= 4.5 ? '★★★★★' : '★★★★☆'
-
-  const mrp = product.mrp ?? 0
-  const hasPrice = mrp > 0
-  const originalPrice = hasPrice ? Math.round(mrp * 1.25) : 0
 
   const handleCardClick = () => {
     router.push(`/products/${slugStr}`)
@@ -138,41 +126,23 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.purchaseLinks && product.purchaseLinks.length > 0 && (
             <div className={styles.platformSection}>
               <span className={styles.platformLabel}>Available on</span>
-              {product.purchaseLinks.map((link, idx) => {
-                const icon = getPlatformIcon(link.platformName)
-                return (
-                  <a
-                    key={idx}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className={styles.platformLink}
-                  >
-                    <span className={styles.platIcon}>{icon}</span> {link.platformName}
-                  </a>
-                )
-              })}
+              {product.purchaseLinks.slice(0, 2).map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className={styles.platformLink}
+                >
+                  {link.platformName}
+                </a>
+              ))}
             </div>
           )}
 
-          {/* Footer (Price & Action) */}
+          {/* Footer (single CTA only) */}
           <div className={styles.cardFooter}>
-            <div className={styles.price}>
-              {hasPrice ? (
-                <>
-                  <span className={styles.current}>₹{product.mrp}</span>
-                  {product.isBestseller && (
-                    <span className={styles.original}>₹{originalPrice}</span>
-                  )}
-                </>
-              ) : (
-                <span className={styles.current} style={{ fontSize: '0.85rem', color: '#6b6b6b' }}>
-                  Price on request
-                </span>
-              )}
-            </div>
-            
             <button 
               onClick={(e) => {
                 e.stopPropagation()
@@ -180,13 +150,10 @@ export default function ProductCard({ product }: ProductCardProps) {
               }}
               className={styles.actionBtn}
             >
-              {hasPrice ? 'Details' : 'Enquire'}
+              Enquire
             </button>
           </div>
         </div>
-
-        {/* Tagline */}
-        <div className={styles.tagline}>Snack it… love it…</div>
       </div>
     </ScrollReveal>
   )
