@@ -978,23 +978,48 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
               {features.map((feat, idx) => {
                 const isFreshness = feat.title === 'Freshness Guaranteed';
                 const cardContent = (
-                  <div className="group relative h-full bg-white rounded-2xl border border-black/[0.06] p-6 overflow-hidden hover:border-green-brand/40 hover:shadow-[0_16px_40px_-16px_rgba(45,184,45,0.3)] hover:-translate-y-1 transition-all duration-300">
-                    {/* watermark index */}
-                    <span className="absolute -top-2 right-4 font-mono text-5xl font-black text-black/[0.035] group-hover:text-green-brand/10 transition-colors duration-300 select-none pointer-events-none">
-                      0{idx + 1}
-                    </span>
-                    {/* icon tile */}
-                    <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-green-brand to-green-dark text-white flex items-center justify-center shadow-lg shadow-green-brand/25 mb-5 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
-                      {feat.icon}
+                  <div className="group relative h-full rounded-3xl p-[1px] bg-gradient-to-br from-green-brand/25 via-yellow/10 to-transparent hover:from-green-brand/35 hover:via-yellow/15 transition-colors duration-300">
+                    <div className="relative h-full bg-white/90 backdrop-blur-sm rounded-3xl border border-black/[0.06] p-6 overflow-hidden shadow-sm group-hover:shadow-[0_18px_48px_-22px_rgba(45,184,45,0.35)] group-hover:-translate-y-1 transition-all duration-300">
+                      {/* subtle pattern + glow */}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 opacity-[0.55] pointer-events-none"
+                        style={{
+                          backgroundImage:
+                            'radial-gradient(circle at 1px 1px, rgba(30,107,46,0.06) 1px, transparent 0)',
+                          backgroundSize: '22px 22px',
+                        }}
+                      />
+                      <div aria-hidden className="absolute -top-24 -right-24 w-64 h-64 bg-green-brand/10 rounded-full blur-3xl pointer-events-none" />
+                      <div aria-hidden className="absolute -bottom-24 -left-24 w-56 h-56 bg-yellow/10 rounded-full blur-3xl pointer-events-none" />
+
+                      {/* watermark index */}
+                      <span className="absolute -top-2 right-5 font-mono text-5xl font-black text-black/[0.03] group-hover:text-green-brand/12 transition-colors duration-300 select-none pointer-events-none">
+                        0{idx + 1}
+                      </span>
+
+                      {/* icon tile + label */}
+                      <div className="relative flex items-center gap-4 mb-4">
+                        <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-green-brand to-green-dark text-white flex items-center justify-center shadow-lg shadow-green-brand/25 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
+                          {feat.icon}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-green-brand/80 font-mono">
+                            Promise
+                          </span>
+                          <h3 className="font-heading text-lg font-black text-dark tracking-tight leading-snug group-hover:text-green-brand transition-colors">
+                            {feat.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <p className="relative text-dark/60 text-sm leading-relaxed font-medium">
+                        {feat.desc}
+                      </p>
+
+                      {/* bottom accent bar */}
+                      <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand via-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
                     </div>
-                    <h3 className="relative font-heading text-lg font-bold text-dark group-hover:text-green-brand transition-colors mb-2">
-                      {feat.title}
-                    </h3>
-                    <p className="relative text-dark/60 text-sm leading-relaxed">
-                      {feat.desc}
-                    </p>
-                    {/* bottom accent bar */}
-                    <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
                   </div>
                 );
 
