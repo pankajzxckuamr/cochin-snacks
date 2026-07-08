@@ -97,12 +97,18 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Body Content */}
         <div className={styles.cardContent}>
-          {/* Category Tag */}
-          {product.category?.title && (
-            <span className={styles.categoryTag}>
-              {product.category.title}
-            </span>
-          )}
+          {/* Category + Rating row */}
+          <div className={styles.metaRow}>
+            {product.category?.title && (
+              <span className={styles.categoryTag}>
+                {product.category.title}
+              </span>
+            )}
+            <div className={styles.rating}>
+              <span className={styles.stars}>{stars}</span>
+              <span className={styles.count}>({ratingData.count})</span>
+            </div>
+          </div>
 
           {/* Title */}
           <h3 className={styles.title} title={product.title}>
@@ -115,12 +121,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.description}
             </p>
           )}
-
-          {/* Rating */}
-          <div className={styles.rating}>
-            <span className={styles.stars}>{stars}</span>
-            <span className={styles.count}>({ratingData.count})</span>
-          </div>
 
           {/* Purchase Platform Links */}
           {product.purchaseLinks && product.purchaseLinks.length > 0 && (

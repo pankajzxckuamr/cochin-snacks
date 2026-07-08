@@ -913,41 +913,67 @@ export default function HomeClient({ bestsellers, categories, testimonials }: Ho
             </div>
           </div>
 
-          {/* Responsive product grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
-            {[
-              { name: 'Potato Chips', img: '/products/potato-chips.png' },
-              { name: 'Mixture', img: '/products/mixture.png' },
-              { name: 'Banana', img: '/products/banana.png' },
-              { name: 'Tapioca', img: '/products/tapioca.png' }
-            ].map((prod, idx) => (
-              <ScrollReveal key={prod.name} direction="up" delay={idx * 0.08}>
+          {/* One-row modern listing with patterned green cards */}
+          <div className="relative -mx-4 sm:-mx-6 lg:mx-0">
+            <div
+              className="flex gap-4 sm:gap-5 overflow-x-auto px-4 sm:px-6 lg:px-0 pb-3 snap-x snap-mandatory scrollbar-none"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {[
+                { name: 'Potato Chips', img: '/products/potato-chips.png', href: '/products?category=chips' },
+                { name: 'Mixture', img: '/products/mixture.png', href: '/products?category=mixture' },
+                { name: 'Banana', img: '/products/banana.png', href: '/products?category=banana' },
+                { name: 'Tapioca', img: '/products/tapioca.png', href: '/products?category=tapioca' },
+                { name: 'Murukku', img: '/products/murukku.png', href: '/products?category=murukku' },
+                { name: 'Pakkavada', img: '/products/pakkavada.png', href: '/products?category=pakkavada' },
+              ].map((prod) => (
                 <Link
-                  href="/products"
-                  className="group relative flex flex-col h-full bg-white rounded-3xl border border-black/[0.06] shadow-sm hover:shadow-[0_22px_46px_-18px_rgba(45,139,45,0.35)] hover:border-green-brand/40 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+                  key={prod.name}
+                  href={prod.href}
+                  aria-label={`Explore ${prod.name}`}
+                  className="group relative snap-start shrink-0 w-[176px] sm:w-[200px] aspect-[3/4] rounded-[1.35rem] overflow-hidden bg-gradient-to-br from-green-brand via-green-brand to-green-dark shadow-[0_14px_34px_-16px_rgba(30,107,46,0.6)] hover:shadow-[0_22px_44px_-16px_rgba(30,107,46,0.75)] hover:-translate-y-1.5 transition-all duration-300"
                 >
-                  <div className="relative aspect-square bg-cream overflow-hidden">
+                  {/* Internal modern patterns */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 opacity-[0.14] pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        'radial-gradient(circle, #fff 1.1px, transparent 1.1px)',
+                      backgroundSize: '16px 16px',
+                    }}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 opacity-[0.1] pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        'repeating-linear-gradient(135deg, #fff 0, #fff 1px, transparent 1px, transparent 12px)',
+                    }}
+                  />
+                  <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full border border-white/15 pointer-events-none" />
+                  <div className="absolute -bottom-12 -left-8 w-40 h-40 rounded-full border border-white/10 pointer-events-none" />
+                  <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+
+                  {/* Product image fills the card */}
+                  <div className="absolute inset-3 rounded-[1.05rem] overflow-hidden bg-white/10 border border-white/15">
                     <Image
                       src={prod.img}
                       alt={prod.name}
                       fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
+                      sizes="200px"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-green-dark/55 via-transparent to-transparent" />
                   </div>
-                  <div className="px-4 py-4 sm:py-5 text-center border-t border-black/5">
-                    <h3 className="font-heading font-bold text-dark group-hover:text-green-brand transition-colors">
-                      {prod.name}
-                    </h3>
-                    <span className="mt-1 inline-flex items-center justify-center gap-1 text-xs font-semibold text-dark/45 group-hover:text-green-brand group-hover:gap-2 transition-all">
-                      View range <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                  {/* bottom accent bar */}
-                  <span className="absolute left-0 bottom-0 h-1 w-0 bg-gradient-to-r from-green-brand to-yellow group-hover:w-full transition-all duration-500 rounded-full" />
+
+                  {/* Floating arrow CTA only */}
+                  <span className="absolute bottom-5 right-5 z-10 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white text-green-brand shadow-lg group-hover:bg-yellow group-hover:text-green-dark group-hover:scale-105 transition-all duration-300">
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
                 </Link>
-              </ScrollReveal>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
