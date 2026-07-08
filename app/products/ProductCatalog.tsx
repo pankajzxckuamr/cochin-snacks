@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { m, AnimatePresence } from 'framer-motion'
 import { Search, SlidersHorizontal, RefreshCw, X } from 'lucide-react'
 import ProductCard from '@/components/ui/ProductCard'
 
@@ -73,13 +72,15 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
 
   // Filtered and sorted products list
   const filteredProducts = useMemo(() => {
+    const normalize = (value?: string) => (value ?? '').toLowerCase().trim()
+    const searchQuery = normalize(search)
+
     return initialProducts
       .filter((p) => {
-        // Search text matching
+        // Search by title only (as requested)
+        const normalizedTitle = normalize(p.title)
         const matchSearch =
-          p.title.toLowerCase().includes(search.toLowerCase()) ||
-          (p.description?.toLowerCase().includes(search.toLowerCase()) ?? false) ||
-          (p.category?.title?.toLowerCase().includes(search.toLowerCase()) ?? false)
+          searchQuery.length === 0 || normalizedTitle.includes(searchQuery)
 
         // Category matching
         const matchCategory =
@@ -191,25 +192,13 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
 
           {/* Grid list with AnimatePresence */}
           {filteredProducts.length > 0 ? (
-            <m.div
-              layout
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6"
-            >
-              <AnimatePresence>
-                {filteredProducts.map((p, idx) => (
-                  <m.div
-                    key={p._id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                  >
-                    <ProductCard product={p} />
-                  </m.div>
-                ))}
-              </AnimatePresence>
-            </m.div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+              {filteredProducts.map((p) => (
+                <div key={p._id}>
+                  <ProductCard product={p} />
+                </div>
+              ))}
+            </div>
           ) : (
             <div className="text-center py-16 sm:py-20 bg-cream rounded-3xl border border-black/[0.06] max-w-md mx-auto shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-green-brand/10 text-green-brand flex items-center justify-center mx-auto mb-5">
