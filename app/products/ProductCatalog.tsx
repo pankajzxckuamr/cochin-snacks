@@ -151,9 +151,18 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
         </div>
       </div>
 
-      {/* Product grid */}
-      <section className="bg-white py-12 min-h-[60vh]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Product grid — cream canvas so white cards pop */}
+      <section className="relative bg-cream py-12 min-h-[60vh] overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 1px 1px, rgba(30,107,46,0.07) 1px, transparent 0)',
+            backgroundSize: '22px 22px',
+          }}
+        />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex justify-between items-center mb-8">
             <p className="text-sm sm:text-base text-dark/55 font-medium">
               Showing{' '}
@@ -174,7 +183,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
           </div>
 
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 items-stretch">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 items-stretch">
               {filteredProducts.map((p, idx) => (
                 <ProductCard
                   key={p._id}
@@ -184,7 +193,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 sm:py-20 bg-cream rounded-3xl border border-black/[0.06] max-w-md mx-auto shadow-sm">
+            <div className="text-center py-16 sm:py-20 bg-white rounded-3xl border border-black/[0.06] max-w-md mx-auto shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-green-brand/10 text-green-brand flex items-center justify-center mx-auto mb-5">
                 <SlidersHorizontal className="w-7 h-7" />
               </div>

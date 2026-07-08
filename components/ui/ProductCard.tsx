@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { urlFor } from '@/lib/sanity/client'
 import styles from './ProductCard.module.css'
 import homeStyles from './HomeCard.module.css'
@@ -103,14 +104,27 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
           </div>
         </div>
 
-        <h3 className={styles.title} title={product.title}>
-          {product.title}
-        </h3>
-
-        <p className={isHome ? homeStyles.description : styles.description}>{subtitle}</p>
+        {isHome ? (
+          <>
+            <h3 className={styles.title} title={product.title}>
+              {product.title}
+            </h3>
+            <p className={homeStyles.description}>{subtitle}</p>
+          </>
+        ) : (
+          <div className={styles.textBlock}>
+            <h3 className={styles.title} title={product.title}>
+              {product.title}
+            </h3>
+            <p className={styles.description}>{subtitle}</p>
+          </div>
+        )}
 
         <div className={styles.cardFooter}>
-          <span className={isHome ? homeStyles.cta : styles.actionBtn}>Enquiry Price</span>
+          <span className={isHome ? homeStyles.cta : styles.actionBtn}>
+            Enquiry Price
+            {!isHome && <ArrowRight className={styles.actionIcon} aria-hidden />}
+          </span>
         </div>
       </div>
     </Link>
