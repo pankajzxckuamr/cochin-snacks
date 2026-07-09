@@ -183,12 +183,12 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
           </div>
 
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 items-stretch">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 items-stretch">
               {filteredProducts.map((p, idx) => (
                 <ProductCard
                   key={p._id}
                   product={p}
-                  priority={idx < 5}
+                  priority={idx < 4}
                 />
               ))}
             </div>
