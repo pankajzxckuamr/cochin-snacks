@@ -208,7 +208,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <Header />
 
-      <main id="main-content" className="flex-1 bg-[#FAFAF0] text-dark pb-24">
+      <main id="main-content" className="flex-1 bg-cream text-dark pb-24">
         
         {/* HERO IMAGE SECTION (1200x500 context) */}
         <section className="relative w-full max-w-7xl mx-auto px-4 pt-6">

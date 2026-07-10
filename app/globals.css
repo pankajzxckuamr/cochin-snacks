@@ -2,6 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Site-wide background image ─────────────────────────────────────────── */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #fafaf0;
+  background-image: url('/cochin-snacks.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Very light veil — keeps text readable without hiding the pattern */
+.site-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 250, 240, 0.06) 0%,
+    rgba(250, 250, 240, 0.12) 55%,
+    rgba(250, 250, 240, 0.18) 100%
+  );
+}
+
+/* Main shell stays clear so the artwork shows through */
+main#main-content.bg-white,
+main#main-content.bg-cream {
+  background-color: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Sections get a soft tint, not a solid fill */
+section.bg-cream {
+  background-color: rgba(250, 250, 240, 0.2) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+section.bg-white {
+  background-color: rgba(255, 255, 255, 0.38) !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+@media (max-width: 768px) {
+  .site-bg {
+    background-position: center top;
+  }
+}
+
 /* ─── Smooth scrolling & Responsive Base Font ──────────────────────────────── */
 html {
   scroll-behavior: smooth;

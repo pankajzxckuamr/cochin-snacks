@@ -118,8 +118,8 @@ export default function Header() {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className={`max-w-7xl mx-auto flex items-center justify-between gap-3 h-14 lg:h-[68px] pl-4 sm:pl-5 pr-2 sm:pr-2.5 rounded-full border transition-all duration-300 ${
             solid
-              ? 'bg-white/85 backdrop-blur-xl border-black/[0.06] shadow-[0_12px_34px_-14px_rgba(17,17,17,0.28)]'
-              : 'bg-white/55 backdrop-blur-xl border-white/70 shadow-[0_10px_28px_-16px_rgba(17,17,17,0.22)]'
+              ? 'bg-white/65 backdrop-blur-lg border-black/[0.06] shadow-[0_12px_34px_-14px_rgba(17,17,17,0.28)]'
+              : 'bg-white/35 backdrop-blur-lg border-white/70 shadow-[0_10px_28px_-16px_rgba(17,17,17,0.22)]'
           }`}
         >
           {/* Logo */}

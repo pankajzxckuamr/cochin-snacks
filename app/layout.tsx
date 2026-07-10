@@ -120,9 +120,11 @@ export default function RootLayout({
         `}} />
       </head>
       <body
-        className="font-body antialiased"
-        style={{ backgroundColor: "#FAFAF0", color: "#0F0F0F" }}
+        className="font-body antialiased min-h-screen"
+        style={{ color: "#0F0F0F" }}
       >
+        <div className="site-bg" aria-hidden="true" />
+
         {/* Skip to Content Link (A11y) */}
         <a
           href="#main-content"

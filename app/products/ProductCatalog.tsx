@@ -87,9 +87,9 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
   const hasActiveFilters = search || activeCategory !== 'all' || sortBy !== 'default'
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full">
       {/* Sticky filter bar */}
-      <div className="sticky top-[76px] lg:top-[96px] z-30 bg-white/90 backdrop-blur-xl border-y border-black/[0.06] py-4">
+      <div className="sticky top-[76px] lg:top-[96px] z-30 bg-white/50 backdrop-blur-md border-y border-black/[0.06] py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none w-full md:w-auto">
             <button
@@ -155,7 +155,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
       <section className="relative bg-cream py-12 min-h-[60vh] overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
           style={{
             backgroundImage:
               'radial-gradient(circle at 1px 1px, rgba(30,107,46,0.07) 1px, transparent 0)',
