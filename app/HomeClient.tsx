@@ -231,14 +231,14 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
                 <>
                   <button
                     onClick={() => scrollBestsellers('left')}
-                    className="absolute -left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
+                    className="absolute -left-4 sm:-left-6 lg:-left-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
                     aria-label="Previous best sellers"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => scrollBestsellers('right')}
-                    className="absolute -right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
+                    className="absolute -right-4 sm:-right-6 lg:-right-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-dark shadow-md border border-gray-100 hover:bg-green-brand hover:text-white flex items-center justify-center transition-all z-20"
                     aria-label="Next best sellers"
                   >
                     <ChevronRight className="w-5 h-5" />

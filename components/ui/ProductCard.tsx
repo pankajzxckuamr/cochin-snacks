@@ -64,10 +64,81 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
 
   const isHome = variant === 'home'
 
+  if (isHome) {
+    return (
+      <Link
+        href={`/products/${slugStr}`}
+        className={homeStyles.card}
+        aria-label={`View ${product.title}`}
+      >
+        {/* Top Image Section */}
+        <div className={homeStyles.imageWrap}>
+          {product.isBestseller && (
+            <span className={homeStyles.badge}>
+              <span className={homeStyles.badgeStar}>★</span> Bestseller
+            </span>
+          )}
+          {product.isHot && !product.isBestseller && (
+            <span className={`${homeStyles.badge} ${homeStyles.badgeHot}`}>
+              <span className={homeStyles.badgeFire}>🔥</span> Hot Pick
+            </span>
+          )}
+          <Image
+            src={imageUrl}
+            alt={product.title}
+            width={360}
+            height={360}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            className={homeStyles.image}
+            priority={priority}
+          />
+        </div>
+
+        {/* Bottom Content Section */}
+        <div className={homeStyles.body}>
+          <h3 className={homeStyles.title} title={product.title}>
+            {product.title}
+          </h3>
+
+          <div className={homeStyles.metaGrid}>
+            <div className={homeStyles.metaLeft}>
+              <span className={homeStyles.category}>{product.category?.title || 'Kerala Special'}</span>
+              <span className={homeStyles.tagline}>Fried in Pure Oil</span>
+            </div>
+            
+            <div className={homeStyles.metaDivider} />
+            
+            <div className={homeStyles.metaRight}>
+              <span className={homeStyles.metricValue}>{product.packSize || '250g'}</span>
+              <span className={homeStyles.metricLabel}>Pack Size</span>
+            </div>
+            
+            <div className={homeStyles.metaDivider} />
+            
+            <div className={homeStyles.metaRight}>
+              <span className={homeStyles.metricValue}>★ {score.toFixed(1)}</span>
+              <span className={homeStyles.metricLabel}>Rating</span>
+            </div>
+          </div>
+
+          <div className={homeStyles.horizontalDivider} />
+
+          <div className={homeStyles.footer}>
+            <span className={homeStyles.footerText}>By Cochin Snacks</span>
+            <span className={homeStyles.enquiryBtn}>
+              Enquiry Price
+              <ArrowRight className={homeStyles.actionIcon} aria-hidden />
+            </span>
+          </div>
+        </div>
+      </Link>
+    )
+  }
+
   return (
     <Link
       href={`/products/${slugStr}`}
-      className={isHome ? homeStyles.card : styles.productCard}
+      className={styles.productCard}
       aria-label={`View ${product.title}`}
     >
       {product.isBestseller && (
@@ -77,7 +148,7 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
         <span className={`${styles.badge} ${styles.sale}`}>Hot</span>
       )}
 
-      <div className={isHome ? homeStyles.imageWrap : styles.cardImage}>
+      <div className={styles.cardImage}>
         <Image
           src={imageUrl}
           alt={product.title}
@@ -89,7 +160,7 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
         />
       </div>
 
-      <div className={isHome ? homeStyles.body : styles.cardContent}>
+      <div className={styles.cardContent}>
         <div className={styles.metaRow}>
           {product.category?.title ? (
             <span className={styles.categoryTag}>{product.category.title}</span>
@@ -104,23 +175,17 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
           </div>
         </div>
 
-        {isHome ? (
-          <h3 className={homeStyles.title} title={product.title}>
+        <div className={styles.textBlock}>
+          <h3 className={styles.title} title={product.title}>
             {product.title}
           </h3>
-        ) : (
-          <div className={styles.textBlock}>
-            <h3 className={styles.title} title={product.title}>
-              {product.title}
-            </h3>
-            <p className={styles.description}>{subtitle}</p>
-          </div>
-        )}
+          <p className={styles.description}>{subtitle}</p>
+        </div>
 
         <div className={styles.cardFooter}>
-          <span className={isHome ? homeStyles.cta : styles.actionBtn}>
+          <span className={styles.actionBtn}>
             Enquiry Price
-            <ArrowRight className={isHome ? homeStyles.actionIcon : styles.actionIcon} aria-hidden />
+            <ArrowRight className={styles.actionIcon} aria-hidden />
           </span>
         </div>
       </div>
