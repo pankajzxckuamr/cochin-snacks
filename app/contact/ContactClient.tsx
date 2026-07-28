@@ -65,7 +65,7 @@ export default function ContactClient() {
       <main id="main-content" className="flex-1 bg-white text-dark">
 
         {/* HERO */}
-        <section className="relative bg-cream overflow-hidden py-14 sm:py-20">
+        <section className="relative bg-cream overflow-hidden pt-14 pb-4 sm:pt-20 sm:pb-6">
           <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
           <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
@@ -92,7 +92,7 @@ export default function ContactClient() {
         </section>
 
         {/* CONTACT CONTENT */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16 sm:pt-6 sm:pb-20">
           <div className="max-w-2xl mx-auto w-full">
             <ScrollReveal direction="up">
               <AnimatePresence mode="wait">
