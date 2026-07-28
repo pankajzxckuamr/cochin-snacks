@@ -110,18 +110,15 @@ export default function Header() {
 
   return (
     <>
-      {/* ── Floating "island" navbar ─────────────────────────────────────────── */}
-      <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-4 pt-3 sm:pt-4">
-        <m.div
-          initial={{ y: -28, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className={`max-w-7xl mx-auto flex items-center justify-between gap-3 h-14 lg:h-[68px] pl-4 sm:pl-5 pr-2 sm:pr-2.5 rounded-full border-2 transition-all duration-300 ${
-            solid
-              ? 'bg-white/65 backdrop-blur-lg border-green-brand/25 shadow-[0_12px_34px_-14px_rgba(17,17,17,0.28)]'
-              : 'bg-white/35 backdrop-blur-lg border-green-brand/15 shadow-[0_10px_28px_-16px_rgba(17,17,17,0.22)]'
-          }`}
-        >
+      {/* ── Docked Full-Width Navbar ─────────────────────────────────────────── */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 w-full border-b-4 transition-all duration-300 ${
+          solid
+            ? 'bg-white/95 backdrop-blur-md border-green-brand shadow-sm'
+            : 'bg-white/80 backdrop-blur-md border-green-brand/60'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 h-16 lg:h-20 px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0" aria-label="Cochin Snacks Home">
             <Image
@@ -143,10 +140,10 @@ export default function Header() {
                   key={link.path}
                   href={link.path}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`px-3.5 py-2 rounded-full text-sm font-semibold tracking-wide transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand ${
+                  className={`px-3.5 py-2 text-sm font-semibold tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand nav-link-premium ${
                     isActive
-                      ? 'text-green-brand bg-green-brand/10'
-                      : 'text-dark/70 hover:text-green-brand hover:bg-black/[0.04]'
+                      ? 'text-green-brand active'
+                      : 'text-dark/70 hover:text-green-brand'
                   }`}
                 >
                   {link.name}
@@ -175,7 +172,7 @@ export default function Header() {
               <Menu className="w-5 h-5" />
             </button>
           </div>
-        </m.div>
+        </div>
       </header>
 
       {/* ── Mobile Drawer ────────────────────────────────────────────────────── */}
@@ -265,8 +262,8 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Spacing to compensate for the floating bar (homepage hero handles its own top padding) */}
-      {pathname !== '/' && <div className="h-[76px] lg:h-[96px]" />}
+      {/* Spacing to compensate for the docked navbar (homepage handles its own top padding) */}
+      {pathname !== '/' && <div className="h-16 lg:h-20" />}
     </>
   )
 }
