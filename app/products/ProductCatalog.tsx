@@ -3,6 +3,7 @@
 import { useState, useMemo, startTransition } from 'react'
 import { useSearchParams, usePathname } from 'next/navigation'
 import { Search, RefreshCw, X, SlidersHorizontal } from 'lucide-react'
+import { m, AnimatePresence } from 'framer-motion'
 import ProductCard from '@/components/ui/ProductCard'
 
 interface Product {
@@ -37,7 +38,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
   const searchParams = useSearchParams()
 
   const [search, setSearch] = useState('')
-  const [sortBy, setSortBy] = useState<string>('default')
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all')
 
   const handleCategoryChange = (slug: string) => {
@@ -57,7 +57,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
   const resetFilters = () => {
     startTransition(() => {
       setSearch('')
-      setSortBy('default')
       setActiveCategory('all')
     })
     window.history.replaceState(null, '', pathname)
@@ -76,28 +75,26 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
         return matchSearch && matchCategory
       })
       .sort((a, b) => {
-        if (sortBy === 'name-asc') return a.title.localeCompare(b.title)
-        if (sortBy === 'name-desc') return b.title.localeCompare(a.title)
         if (a.isBestseller && !b.isBestseller) return -1
         if (!a.isBestseller && b.isBestseller) return 1
         return a.title.localeCompare(b.title)
       })
-  }, [initialProducts, search, activeCategory, sortBy])
+  }, [initialProducts, search, activeCategory])
 
-  const hasActiveFilters = search || activeCategory !== 'all' || sortBy !== 'default'
+  const hasActiveFilters = search || activeCategory !== 'all'
 
   return (
     <div className="w-full">
       {/* Sticky filter bar */}
-      <div className="sticky top-[64px] lg:top-[80px] z-30 bg-[#F2F7F2]/95 backdrop-blur-md border-y border-black/[0.05] pt-6 pb-4 sm:pt-8 sm:pb-5 shadow-sm">
+      <div className="sticky top-[64px] lg:top-[80px] z-30 bg-green-brand/95 backdrop-blur-md border-y border-white/[0.08] pt-6 pb-4 sm:pt-8 sm:pb-5 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none w-full md:w-auto">
             <button
               onClick={() => handleCategoryChange('all')}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-green-brand/30 ${
+              className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-white/30 ${
                 activeCategory === 'all'
-                  ? 'bg-green-brand text-white shadow-sm shadow-green-brand/25'
-                  : 'bg-cream text-dark/70 border border-black/[0.06] hover:border-green-brand/40 hover:text-green-brand'
+                  ? 'bg-white text-green-brand shadow-md font-extrabold'
+                  : 'bg-white/10 text-white/90 border border-white/20 hover:bg-white/20 hover:text-white'
               }`}
             >
               All Snacks
@@ -106,10 +103,10 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
               <button
                 key={cat.slug}
                 onClick={() => handleCategoryChange(cat.slug)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-green-brand/30 ${
+                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-white/30 ${
                   activeCategory === cat.slug
-                    ? 'bg-green-brand text-white shadow-sm shadow-green-brand/25'
-                    : 'bg-cream text-dark/70 border border-black/[0.06] hover:border-green-brand/40 hover:text-green-brand'
+                    ? 'bg-white text-green-brand shadow-md font-extrabold'
+                    : 'bg-white/10 text-white/90 border border-white/20 hover:bg-white/20 hover:text-white'
                 }`}
               >
                 {cat.title}
@@ -125,7 +122,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
                 placeholder="Search snacks..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-cream border border-black/[0.06] rounded-full py-2.5 pl-10 pr-9 text-sm text-dark placeholder:text-dark/40 focus:outline-none focus:border-green-brand focus:ring-2 focus:ring-green-brand/20 transition-all"
+                className="w-full bg-white border border-black/[0.06] rounded-full py-2.5 pl-10 pr-9 text-sm text-dark placeholder:text-dark/40 focus:outline-none focus:border-green-brand focus:ring-2 focus:ring-green-brand/20 transition-all"
               />
               {search && (
                 <button
@@ -137,16 +134,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
                 </button>
               )}
             </div>
-
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-cream border border-black/[0.06] rounded-full py-2.5 px-4 text-sm text-dark font-semibold focus:outline-none focus:border-green-brand focus:ring-2 focus:ring-green-brand/20 transition-all cursor-pointer"
-            >
-              <option value="default">Popularity</option>
-              <option value="name-asc">Name: A-Z</option>
-              <option value="name-desc">Name: Z-A</option>
-            </select>
           </div>
         </div>
       </div>
@@ -165,15 +152,29 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 items-stretch">
-              {filteredProducts.map((p, idx) => (
-                <ProductCard
-                  key={p._id}
-                  product={p}
-                  priority={idx < 4}
-                />
-              ))}
-            </div>
+            <m.div
+              layout
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 items-stretch"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredProducts.map((p) => (
+                  <m.div
+                    layout
+                    key={p._id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.25, ease: 'easeInOut' }}
+                    className="flex"
+                  >
+                    <ProductCard
+                      product={p}
+                      priority={false}
+                    />
+                  </m.div>
+                ))}
+              </AnimatePresence>
+            </m.div>
           ) : (
             <div className="text-center py-16 sm:py-20 bg-white rounded-3xl border border-black/[0.06] max-w-md mx-auto shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-green-brand/10 text-green-brand flex items-center justify-center mx-auto mb-5">
