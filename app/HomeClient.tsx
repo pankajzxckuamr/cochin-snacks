@@ -134,7 +134,18 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-            {/* Left Col: Narrative Content */}
+            {/* Left Col: Simple clean image */}
+            <div className="relative w-full h-[300px] sm:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-gray-100">
+              <Image
+                src="/products/banana.png"
+                alt="Kerala banana chips"
+                fill
+                sizes="(max-width: 1024px) 90vw, 45vw"
+                className="object-cover"
+              />
+            </div>
+
+            {/* Right Col: Narrative Content */}
             <div className="flex flex-col items-start">
               <SectionHeading
                 align="left"
@@ -142,13 +153,8 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
                 className="mb-6"
               />
 
-              <div className="text-dark/70 text-base leading-relaxed flex flex-col gap-4 font-body mb-8">
-                <p className="font-medium text-dark bg-cream border-l-4 border-green-brand rounded-r-xl pl-4 pr-4 py-3">
-                  At Cochin Snacks, a proud venture of Pavithram, we celebrate Kerala's culinary legacy through a premium range of authentic snacks.
-                </p>
-                <p>
-                  From the timeless crunch of banana chips to traditional mixture and murukku, our snacks are made using authentic recipes and high-quality ingredients. We strive to deliver the authentic taste of South India to your home, preserving purity and flavor in every batch.
-                </p>
+              <div className="text-dark/70 text-base sm:text-lg leading-relaxed mb-6 font-medium max-w-xl">
+                A proud venture of Pavithram, Cochin Snacks celebrates Kerala's culinary legacy with premium snacks crafted from time-tested recipes and pure ingredients.
               </div>
 
               {/* Stats strip */}
@@ -175,17 +181,6 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
               >
                 Discover Our Story <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
-            </div>
-
-            {/* Right Col: Simple clean image */}
-            <div className="relative w-full h-[300px] sm:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-gray-100">
-              <Image
-                src="/products/banana.png"
-                alt="Kerala banana chips"
-                fill
-                sizes="(max-width: 1024px) 90vw, 45vw"
-                className="object-cover"
-              />
             </div>
 
           </div>
