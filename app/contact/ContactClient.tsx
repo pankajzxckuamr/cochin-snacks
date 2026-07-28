@@ -137,15 +137,6 @@ export default function ContactClient() {
           <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-            <m.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-green-brand/10 mb-6"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-flame-orange animate-pulse" />
-              <span className="text-xs font-bold text-green-dark tracking-widest uppercase font-mono">Contact Us</span>
-            </m.span>
             <m.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

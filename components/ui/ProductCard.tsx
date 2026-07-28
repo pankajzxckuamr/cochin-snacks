@@ -105,12 +105,9 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
         </div>
 
         {isHome ? (
-          <>
-            <h3 className={styles.title} title={product.title}>
-              {product.title}
-            </h3>
-            <p className={homeStyles.description}>{subtitle}</p>
-          </>
+          <h3 className={homeStyles.title} title={product.title}>
+            {product.title}
+          </h3>
         ) : (
           <div className={styles.textBlock}>
             <h3 className={styles.title} title={product.title}>
@@ -123,7 +120,7 @@ function ProductCard({ product, priority = false, variant = 'default' }: Product
         <div className={styles.cardFooter}>
           <span className={isHome ? homeStyles.cta : styles.actionBtn}>
             Enquiry Price
-            {!isHome && <ArrowRight className={styles.actionIcon} aria-hidden />}
+            <ArrowRight className={isHome ? homeStyles.actionIcon : styles.actionIcon} aria-hidden />
           </span>
         </div>
       </div>

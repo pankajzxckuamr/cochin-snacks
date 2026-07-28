@@ -88,10 +88,6 @@ export default function PartnersClient() {
           <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-green-brand/10 mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-flame-orange" />
-              <span className="text-xs font-bold text-green-dark tracking-widest uppercase font-mono">B2B &amp; Export Partnerships</span>
-            </span>
             <h1 className="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-[1.05] max-w-3xl">
               Grow With <span className="text-green-brand">Cochin Snacks</span>
             </h1>
@@ -107,8 +103,7 @@ export default function PartnersClient() {
           <div className="absolute bottom-0 -left-24 w-80 h-80 bg-yellow/[0.07] rounded-full blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <SectionHeading
-              eyebrow="Partnership Benefits"
+             <SectionHeading
               title={<>Why Partner <span className="text-green-brand">With Us?</span></>}
               subtitle="Join our expanding global network and bring the authentic taste of Kerala to more customers around the world."
             />
