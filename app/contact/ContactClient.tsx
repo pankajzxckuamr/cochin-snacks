@@ -6,75 +6,10 @@ import Footer from '@/components/Footer'
 import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import DotPattern from '@/components/ui/DotPattern'
-import { MapPin, Phone, Mail, Globe, CheckCircle, User, Tag, MessageSquare, Send } from 'lucide-react'
-import { m, AnimatePresence, type Variants } from 'framer-motion'
+import { CheckCircle, User, Tag, MessageSquare, Send, Mail } from 'lucide-react'
+import { m, AnimatePresence } from 'framer-motion'
 
 const EASE_OUT: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94]
-
-const contactCards = [
-  {
-    icon: MapPin,
-    label: 'Address',
-    content: (
-      <p className="text-dark/75 text-sm sm:text-base font-medium leading-relaxed">
-        Pavithram Snacks, Mullankunnu,<br />
-        Ponjassery P.O., Ernakulam,<br />
-        Kerala, India - 683547
-      </p>
-    ),
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    content: (
-      <a
-        href="tel:+919446006447"
-        className="text-dark/80 hover:text-green-brand text-sm sm:text-base font-semibold transition-colors"
-      >
-        +91 94460 06447
-      </a>
-    ),
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    content: (
-      <a
-        href="mailto:export@cochinsnacks.com"
-        className="text-dark/80 hover:text-green-brand text-sm sm:text-base font-semibold transition-colors break-all"
-      >
-        export@cochinsnacks.com
-      </a>
-    ),
-  },
-  {
-    icon: Globe,
-    label: 'Website',
-    content: (
-      <a
-        href="https://www.cochinsnacks.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-dark/80 hover:text-green-brand text-sm sm:text-base font-semibold transition-colors"
-      >
-        www.cochinsnacks.com
-      </a>
-    ),
-  },
-]
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.08,
-      duration: 0.5,
-      ease: EASE_OUT,
-    },
-  }),
-}
 
 export default function ContactClient() {
   const [formData, setFormData] = useState({
@@ -158,52 +93,9 @@ export default function ContactClient() {
 
         {/* CONTACT CONTENT */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-
-            {/* Left — info cards */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
-              <ScrollReveal direction="left">
-                <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-green-brand font-mono mb-3 block">
-                  Reach Us
-                </span>
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight leading-[1.1] mb-8">
-                  Contact <span className="text-green-brand">Information</span>
-                </h2>
-              </ScrollReveal>
-
-              <div className="flex flex-col gap-4">
-                {contactCards.map((card, idx) => {
-                  const Icon = card.icon
-                  return (
-                    <m.div
-                      key={card.label}
-                      custom={idx}
-                      variants={fadeUp}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, margin: '-40px' }}
-                      whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                      className="flex gap-4 items-start group bg-cream border border-black/[0.06] rounded-2xl p-5 hover:border-green-brand/40 hover:shadow-[0_14px_34px_-16px_rgba(45,139,45,0.35)] transition-colors duration-300"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-brand to-green-dark text-white shadow-lg shadow-green-brand/25 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h4 className="font-heading font-bold text-sm text-dark mb-1.5">
-                          {card.label}
-                        </h4>
-                        {card.content}
-                      </div>
-                    </m.div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Right — form */}
-            <div className="lg:col-span-7">
-              <ScrollReveal direction="right">
-                <AnimatePresence mode="wait">
+          <div className="max-w-2xl mx-auto w-full">
+            <ScrollReveal direction="up">
+              <AnimatePresence mode="wait">
                   {status === 'success' ? (
                     <m.div
                       key="success"
@@ -356,48 +248,6 @@ export default function ContactClient() {
                   )}
                 </AnimatePresence>
               </ScrollReveal>
-            </div>
-          </div>
-        </section>
-
-        {/* MAP */}
-        <section className="bg-cream relative overflow-hidden">
-          <DotPattern className="top-0 left-0 h-full w-1/4" color="#1E6B2E" opacity={0.06} fade="left" />
-          <DotPattern className="top-0 right-0 h-full w-1/4" color="#1E6B2E" opacity={0.06} fade="right" />
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
-            <ScrollReveal direction="up">
-              <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-                <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-green-brand font-mono mb-3 block">
-                  Find Us
-                </span>
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight leading-[1.1]">
-                  Our <span className="text-green-brand">Kerala Home</span>
-                </h2>
-                <p className="text-dark/55 text-sm sm:text-base font-medium mt-4 leading-relaxed">
-                  Visit our facility in Ernakulam — where every batch is crafted with care.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <m.div
-              initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, ease: EASE_OUT }}
-              className="relative w-full h-[320px] sm:h-[440px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-24px_rgba(30,107,46,0.45)] border border-black/[0.06]"
-            >
-              <iframe
-                src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=Pavithram%20Snacks,%20Ernakulam,%20Kerala,%20India&t=&z=14&ie=UTF8&iwloc=B&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Cochin Snacks Manufacturing Facility Location Map"
-              />
-            </m.div>
           </div>
         </section>
 
