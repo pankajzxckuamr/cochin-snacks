@@ -192,22 +192,22 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
 
           {/* Features Row */}
           <div className="mt-12 sm:mt-16">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
               {[
-                { title: 'Fresh & Hygienic', icon: <Sparkles className="w-4 h-4 text-green-brand" /> },
-                { title: 'Premium Quality', icon: <Star className="w-4 h-4 text-green-brand" /> },
-                { title: '100% Natural', icon: <CheckCircle className="w-4 h-4 text-green-brand" /> },
-                { title: 'Delicious Taste', icon: <FlameIcon size="sm" color="orange" delay={0} /> },
-                { title: 'Authentic Recipes', icon: <MapPin className="w-4 h-4 text-green-brand" /> }
+                { title: 'Fresh & Hygienic', icon: <Sparkles className="w-5 h-5" /> },
+                { title: 'Premium Quality', icon: <Award className="w-5 h-5" /> },
+                { title: '100% Natural', icon: <Leaf className="w-5 h-5" /> },
+                { title: 'Delicious Taste', icon: <ChefHat className="w-5 h-5" /> },
+                { title: 'Authentic Recipes', icon: <MapPin className="w-5 h-5" /> }
               ].map((feature, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 bg-cream rounded-xl px-4 py-3 border border-black/[0.06] shadow-sm"
+                  className="group flex flex-col items-center justify-center p-5 bg-white rounded-2xl shadow-sm border border-black/[0.02] hover:-translate-y-1 hover:shadow-md transition-all duration-300"
                 >
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                  <div className="w-11 h-11 bg-green-brand/10 text-green-brand rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                     {feature.icon}
                   </div>
-                  <span className="text-xs font-bold text-dark leading-tight">
+                  <span className="text-xs sm:text-sm font-bold text-dark text-center leading-tight">
                     {feature.title}
                   </span>
                 </div>

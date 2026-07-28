@@ -89,7 +89,7 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
   return (
     <div className="w-full">
       {/* Sticky filter bar */}
-      <div className="sticky top-[76px] lg:top-[96px] z-30 bg-white/50 backdrop-blur-md border-y border-black/[0.06] py-4">
+      <div className="sticky top-[64px] lg:top-[80px] z-30 bg-[#F2F7F2]/95 backdrop-blur-md border-y border-black/[0.05] pt-6 pb-4 sm:pt-8 sm:pb-5 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none w-full md:w-auto">
             <button
@@ -163,24 +163,6 @@ export default function ProductCatalog({ initialProducts, categories }: ProductC
           }}
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex justify-between items-center mb-8">
-            <p className="text-sm sm:text-base text-dark/55 font-medium">
-              Showing{' '}
-              <span className="font-heading font-black text-green-brand">
-                {filteredProducts.length}
-              </span>{' '}
-              authentic snacks
-            </p>
-            {hasActiveFilters && (
-              <button
-                onClick={resetFilters}
-                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-green-brand hover:text-green-dark transition-colors"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-                <span>Reset Filters</span>
-              </button>
-            )}
-          </div>
 
           {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 items-stretch">

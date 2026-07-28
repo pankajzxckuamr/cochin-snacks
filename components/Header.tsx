@@ -142,8 +142,8 @@ export default function Header() {
                   aria-current={isActive ? 'page' : undefined}
                   className={`px-3.5 py-2 text-sm font-semibold tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-green-brand nav-link-premium ${
                     isActive
-                      ? 'text-green-brand active'
-                      : 'text-dark/70 hover:text-green-brand'
+                      ? 'text-[#1B851B] active'
+                      : 'text-dark/70 hover:text-[#1B851B]'
                   }`}
                 >
                   {link.name}

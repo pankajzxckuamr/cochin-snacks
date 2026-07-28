@@ -56,22 +56,7 @@ export default async function ProductsPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main id="main-content" className="flex-1 bg-white text-dark">
-        {/* Hero — modern cream banner (matches About/Home) */}
-        <section className="relative bg-cream overflow-hidden py-14 sm:py-20">
-          <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
-          <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
-          <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-            <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] max-w-3xl">
-              Our Cochin <span className="text-green-brand">Snacks</span>
-            </h1>
-            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed font-medium">
-              Explore authentic Kerala varieties — fried in 100% pure oil, packed fresh, and loved across 20+ countries.
-            </p>
-          </div>
-        </section>
 
         {/* Dynamic Catalog */}
         <Suspense fallback={<div className="py-20 text-center text-dark/50 font-medium">Loading snacks...</div>}>

@@ -6,10 +6,9 @@
     min-height: 388px;
     max-height: 388px;
     background: #ffffff; /* Crisp white background for high contrast against cream page bg */
-    border-radius: 24px; /* Generous 24px round corners */
+    border-radius: 16px; /* 16px corners to match Categories and Why Choose Us cards */
     overflow: hidden;
-    border: 1px solid rgba(45, 184, 45, 0.15); /* Soft brand-green outline */
-    box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 10px 35px -10px rgba(0, 0, 0, 0.08); /* Modern soft drop shadow */
     cursor: pointer;
     position: relative;
     display: flex;
@@ -18,16 +17,14 @@
     color: #1a1a1a; /* Dark charcoal text for readability */
     transition:
         transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        border-color 0.3s ease;
+        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 
-        0 24px 48px -15px rgba(0, 0, 0, 0.08),
-        0 0 20px rgba(45, 184, 45, 0.08); /* Organic brand-green halo glow */
-    border-color: rgba(45, 184, 45, 0.4);
+        0 20px 40px -15px rgba(0, 0, 0, 0.1),
+        0 0 24px rgba(45, 184, 45, 0.08); /* Organic brand-green halo glow */
 }
 
 .imageWrap {
@@ -43,7 +40,7 @@
 .image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Fill container completely */
     display: block;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -52,13 +49,14 @@
     transform: scale(1.05);
 }
 
-/* Sleek solid-colored rectangular tags */
+/* Sleek transparent pill badges */
 .badge {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: #1B851B; /* Brand Green */
-    color: #ffffff;
+    background: #EAF5EB; /* Soft Green Tint */
+    color: #1B851B; /* Green for Bestseller */
+    border: 1px solid rgba(27, 133, 27, 0.18); /* Matching green outline */
     font-size: 0.62rem;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -66,23 +64,15 @@
     padding: 0.28rem 0.6rem;
     border-radius: 6px;
     z-index: 4;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 .badgeHot {
-    background: #ea580c; /* Flame Orange */
-}
-
-.badgeStar {
-    color: #ffd600; /* Bright Yellow */
-    font-size: 0.7rem;
-}
-
-.badgeFire {
-    font-size: 0.7rem;
+    background: #FDF2E9; /* Soft Orange Tint */
+    color: #ea580c; /* Orange for Hot Pick */
+    border-color: rgba(234, 88, 12, 0.18); /* Matching orange outline */
 }
 
 .body {
@@ -234,7 +224,7 @@
     .card {
         min-height: 330px;
         max-height: 330px;
-        border-radius: 18px;
+        border-radius: 12px;
     }
 
     .imageWrap {
