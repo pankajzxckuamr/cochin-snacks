@@ -36,12 +36,18 @@ export default function GlobalReachSection({ bg = 'cream', countTo = 20 }: Globa
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center">
-          <SectionHeading
-            eyebrow="Global Reach"
-            title={<>From Cochin To <span className="text-green-brand">The World</span></>}
-            subtitle="Bringing authentic Kerala snacks to families in every corner of the globe."
-            className="mb-10"
-          />
+          <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+              style={{
+                WebkitTextStroke: '2px #ffffff',
+                fontFamily: 'Impact, "Arial Black", sans-serif',
+                filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+              }}
+            >
+              Global Reach
+            </h2>
+          </div>
 
           {/* Big animated counter — modern card */}
           <m.div

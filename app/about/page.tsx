@@ -102,9 +102,6 @@ export default function AboutPage() {
               >
                 75 Years Legacy
               </h2>
-              <p className="text-dark/60 text-base sm:text-lg mt-4 leading-relaxed">
-                From a trusted Kerala food house to a global snack brand.
-              </p>
             </div>
 
             <div className="relative">
@@ -186,8 +183,11 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 5. MANUFACTURING — light band */}
-        <section className="bg-cream py-16 sm:py-20 relative overflow-hidden">
+        {/* 4.5 GLOBAL REACH — cream (counter + flag marquee) */}
+        <GlobalReachSection bg="cream" />
+
+        {/* 5. MANUFACTURING — white band */}
+        <section className="bg-white py-16 sm:py-20 relative overflow-hidden">
           <div className="absolute -top-24 -left-24 w-[32rem] h-[32rem] bg-green-brand/[0.07] rounded-full blur-[110px] pointer-events-none" />
           <div className="absolute -bottom-28 -right-24 w-[32rem] h-[32rem] bg-yellow/10 rounded-full blur-[110px] pointer-events-none" />
           <DotPattern className="top-0 left-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="left" />
@@ -205,9 +205,6 @@ export default function AboutPage() {
               >
                 Our Kitchen
               </h2>
-              <p className="text-dark/60 text-base sm:text-lg mt-4 leading-relaxed">
-                Based in Ernakulam, our modern facility keeps everything clean and quality-checked — at every step of the way.
-              </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
@@ -230,8 +227,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 6. FOUNDER'S MESSAGE — white */}
-        <section className="bg-white py-16 sm:py-20 relative overflow-hidden">
+        {/* 6. FOUNDER'S MESSAGE — cream */}
+        <section className="bg-cream py-16 sm:py-20 relative overflow-hidden">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <ScrollReveal direction="fade">
               <span className="block font-heading text-green-brand text-6xl font-black leading-none mb-4">“</span>
@@ -254,9 +251,6 @@ export default function AboutPage() {
             </ScrollReveal>
           </div>
         </section>
-
-        {/* 7. GLOBAL REACH — cream (counter + flag marquee) */}
-        <GlobalReachSection bg="cream" />
 
       </main>
 
