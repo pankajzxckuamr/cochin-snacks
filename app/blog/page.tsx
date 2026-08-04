@@ -43,24 +43,31 @@ export default async function BlogPage() {
 
       <main id="main-content" className="flex-1 bg-white text-dark">
         {/* Hero — modern cream banner (matches About/Products) */}
-        <section className="relative bg-cream overflow-hidden py-14 sm:py-20">
+        <section className="relative bg-cream overflow-hidden pt-24 pb-12 sm:pt-28 sm:pb-14">
           <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
           <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
           <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-            <h1 className="font-heading text-4xl sm:text-6xl font-black tracking-tight leading-[1.05] max-w-3xl">
-              Cochin Food &amp; <span className="text-green-brand">Spice Blog</span>
+            <h1 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+              style={{
+                WebkitTextStroke: '2px #ffffff',
+                fontFamily: 'Impact, "Arial Black", sans-serif',
+                filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+              }}
+            >
+              Cochin Blog
             </h1>
-            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed">
-              Traditional recipes, spice guides, and the stories behind South Indian flavours — straight from our kitchen in Kerala.
+            <p className="text-dark/60 text-sm sm:text-base max-w-xl mt-4 leading-relaxed">
+              Traditional recipes and spice stories from our kitchen in Kerala.
             </p>
           </div>
         </section>
 
         {/* Blog Posts Grid */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 sm:pt-10 sm:pb-20">
           {posts && posts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post, idx) => {
