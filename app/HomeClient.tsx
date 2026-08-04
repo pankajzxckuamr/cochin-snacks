@@ -431,58 +431,61 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center max-w-5xl mx-auto">
             
-            {/* Left Column Satellite Cards (Col span 4) */}
-            <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+            {/* Left Column Showcase Features (Col span 3) */}
+            <div className="lg:col-span-3 flex flex-col gap-12 sm:gap-16 w-full items-center">
               {[
-                { title: 'Fresh & Hygienic', desc: 'Prepared under strict quality and sanitation guidelines.', icon: <Sparkles className="w-5 h-5" /> },
-                { title: 'Premium Quality', desc: 'Crafted using only A-grade ingredients and oil.', icon: <Award className="w-5 h-5" /> },
+                { title: 'Fresh & Hygienic', desc: 'Prepared under strict guidelines.', icon: <Sparkles className="w-8 h-8" /> },
+                { title: 'Premium Quality', desc: 'Crafted with premium ingredients.', icon: <Award className="w-8 h-8" /> },
               ].map((feature, idx) => (
                 <div
                   key={idx}
-                  className="group flex flex-row lg:flex-row-reverse items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left lg:text-right"
+                  className="group flex flex-col items-center text-center select-none"
                 >
-                  <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F3F7F3] text-green-brand flex items-center justify-center border-2 border-green-brand/10 shadow-sm group-hover:bg-green-brand group-hover:text-white group-hover:border-green-brand group-hover:shadow-[0_8px_25px_rgba(27,133,27,0.15)] group-hover:scale-105 transition-all duration-300">
                     {feature.icon}
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-dark">{feature.title}</span>
-                    <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                  <div className="flex flex-col items-center mt-4 max-w-[240px]">
+                    <span className="text-base sm:text-lg font-extrabold text-dark leading-snug">{feature.title}</span>
+                    <span className="text-xs sm:text-sm text-dark/55 mt-1.5 leading-relaxed">{feature.desc}</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Center Column: Rotating Dummy Showcase Image (Col span 4) */}
-            <div className="lg:col-span-4 flex justify-center py-4 w-full">
-              <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500 bg-[#F3F7F3] shadow-green-brand/5">
+            {/* Center Column: Blended Mockup Image (Col span 6) */}
+            <div className="lg:col-span-6 flex justify-center py-4 w-full">
+              <div className="relative w-72 h-[380px] sm:w-[350px] sm:h-[480px] rounded-[2.5rem] overflow-hidden select-none">
                 <Image
                   src="/products/hero-snacks.png"
                   alt="Authentic Cochin Snacks"
                   fill
-                  sizes="(max-width: 1024px) 250px, 300px"
+                  sizes="(max-width: 1024px) 280px, 400px"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                {/* Four-sided gradient overlays to blend the image seamlessly into the white background */}
+                <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+                <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+                <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white to-transparent pointer-events-none z-10" />
               </div>
             </div>
 
-            {/* Right Column Satellite Cards (Col span 4) */}
-            <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+            {/* Right Column Showcase Features (Col span 3) */}
+            <div className="lg:col-span-3 flex flex-col gap-10 sm:gap-12 w-full items-center">
               {[
-                { title: '100% Natural', desc: 'No artificial preservatives, colors or chemical additives.', icon: <Leaf className="w-5 h-5" /> },
-                { title: 'Delicious Taste', desc: 'Uncompromised traditional Kerala flavour in every bite.', icon: <ChefHat className="w-5 h-5" /> },
-                { title: 'Authentic Recipes', desc: 'Handed down through families for decades.', icon: <MapPin className="w-5 h-5" /> }
+                { title: '100% Natural', desc: 'No artificial preservatives.', icon: <Leaf className="w-8 h-8" /> },
+                { title: 'Delicious Taste', desc: 'Uncompromised traditional Kerala flavour.', icon: <ChefHat className="w-8 h-8" /> }
               ].map((feature, idx) => (
                 <div
                   key={idx}
-                  className="group flex flex-row items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left"
+                  className="group flex flex-col items-center text-center select-none"
                 >
-                  <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F3F7F3] text-green-brand flex items-center justify-center border-2 border-green-brand/10 shadow-sm group-hover:bg-green-brand group-hover:text-white group-hover:border-green-brand group-hover:shadow-[0_8px_25px_rgba(27,133,27,0.15)] group-hover:scale-105 transition-all duration-300">
                     {feature.icon}
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-dark">{feature.title}</span>
-                    <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                  <div className="flex flex-col items-center mt-4 max-w-[240px]">
+                    <span className="text-base sm:text-lg font-extrabold text-dark leading-snug">{feature.title}</span>
+                    <span className="text-xs sm:text-sm text-dark/55 mt-1.5 leading-relaxed">{feature.desc}</span>
                   </div>
                 </div>
               ))}
