@@ -551,6 +551,55 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
         </div>
       </section>
 
+      {/* ────────────────── SECTION 6: OVERLAPPING RIBBON TAPES ────────────────── */}
+      <section className="relative h-[280px] sm:h-[340px] bg-white overflow-hidden flex items-center justify-center">
+
+        {/* Tape 1 (Green Tape): Angled at -5deg */}
+        <div 
+          className="absolute w-[160%] h-14 sm:h-16 bg-green-brand flex items-center shadow-[0_6px_20px_rgba(0,0,0,0.15)] origin-center z-10 select-none pointer-events-none overflow-hidden"
+          style={{
+            transform: 'rotate(-5deg) translateY(-15px)',
+          }}
+        >
+          <div 
+            className="flex items-center gap-12 whitespace-nowrap text-white font-black uppercase tracking-widest text-lg sm:text-xl shrink-0"
+            style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}
+          >
+            {Array(15).fill("COCHIN SNACKS • THE FLAVOURS KERALA LOVES • ").map((txt, i) => (
+              <span key={i} className="shrink-0">{txt}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Tape 2 (Beige Tape): Angled at 4deg */}
+        <div 
+          className="absolute w-[160%] h-14 sm:h-16 bg-[#f4f1e6] flex items-center shadow-[0_6px_20px_rgba(0,0,0,0.12)] origin-center z-20 select-none pointer-events-none overflow-hidden"
+          style={{
+            transform: 'rotate(4deg) translateY(15px)',
+          }}
+        >
+          <div 
+            className="flex items-center gap-12 whitespace-nowrap text-[#1B851B] font-black uppercase tracking-widest text-lg sm:text-xl shrink-0"
+            style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}
+          >
+            {Array(15).fill("SNACK IT... LOVE IT... • AUTHENTIC KERALA FLAVOUR • ").map((txt, i) => (
+              <span key={i} className="shrink-0">{txt}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Brand Stamp/Badge at the intersection center */}
+        <div className="absolute w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-green-brand z-30 select-none pointer-events-none">
+          <Image
+            src="/logo-mark.png"
+            alt="Cochin Snacks Logo Seal"
+            width={36}
+            height={36}
+            className="object-contain"
+          />
+        </div>
+      </section>
+
     </div>
   )
 }
