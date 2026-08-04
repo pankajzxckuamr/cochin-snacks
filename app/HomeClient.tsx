@@ -151,7 +151,7 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
       <section className="relative pt-16 lg:pt-20 pb-16 sm:pb-20 bg-white">
         
         {/* Full-width screen-edge Visual Hero Carousel */}
-        <div className="relative w-full h-[360px] sm:h-[500px] lg:h-[620px] overflow-hidden group bg-[#F2F7F2] mb-12 sm:mb-16">
+        <div className="relative w-full h-[360px] sm:h-[500px] lg:h-[620px] overflow-hidden group bg-[#F2F7F2]">
           <AnimatePresence mode="wait">
             <m.div
               key={currentSlide}
@@ -206,6 +206,83 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
               />
             ))}
           </div>
+        </div>
+
+        {/* Cochin Snacks Infinite Repeating Text Marquee Strip */}
+        <div 
+          className="w-full py-3.5 sm:py-4 overflow-hidden whitespace-nowrap flex select-none relative z-10 border-y-2 border-green-brand/20 shadow-sm mb-12 sm:mb-16 bg-green-brand"
+          style={{
+            backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px)',
+            backgroundSize: '28px 28px'
+          }}
+        >
+          <m.div
+            animate={{ x: ["0%", "-100%"] }}
+            transition={{
+              ease: "linear",
+              duration: 40,
+              repeat: Infinity,
+            }}
+            className="flex items-center gap-12 px-6 shrink-0"
+          >
+            {Array(15).fill("Cochin Snacks").map((text, idx) => (
+              <div key={idx} className="flex items-center gap-12">
+                <span 
+                  className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-[#1B851B] select-none shrink-0"
+                  style={{
+                    WebkitTextStroke: '2px #ffffff',
+                    fontFamily: 'Impact, "Arial Black", sans-serif',
+                    filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.18))'
+                  }}
+                >
+                  {text}
+                </span>
+                <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden p-0.5">
+                  <Image
+                    src="/logo-mark.png"
+                    alt="Cochin Snacks Logo"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-contain select-none"
+                  />
+                </div>
+              </div>
+            ))}
+          </m.div>
+          <m.div
+            animate={{ x: ["0%", "-100%"] }}
+            transition={{
+              ease: "linear",
+              duration: 40,
+              repeat: Infinity,
+            }}
+            className="flex items-center gap-12 px-6 shrink-0"
+            aria-hidden="true"
+          >
+            {Array(15).fill("Cochin Snacks").map((text, idx) => (
+              <div key={idx} className="flex items-center gap-12">
+                <span 
+                  className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-[#1B851B] select-none shrink-0"
+                  style={{
+                    WebkitTextStroke: '2px #ffffff',
+                    fontFamily: 'Impact, "Arial Black", sans-serif',
+                    filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.18))'
+                  }}
+                >
+                  {text}
+                </span>
+                <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden p-0.5">
+                  <Image
+                    src="/logo-mark.png"
+                    alt="Cochin Snacks Logo"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-contain select-none"
+                  />
+                </div>
+              </div>
+            ))}
+          </m.div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -333,10 +410,21 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
       {/* ────────────────── SECTION 4: BESTSELLERS ────────────────── */}
       <section className="bg-cream py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            title={<>Our <span className="text-green-brand">Best Sellers</span></>}
-            subtitle="The flavours Kerala loves — now available worldwide."
-          />
+          <div className="text-center mx-auto items-center flex flex-col max-w-2xl mb-12 sm:mb-16">
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+              style={{
+                WebkitTextStroke: '2px #ffffff',
+                fontFamily: 'Impact, "Arial Black", sans-serif',
+                filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+              }}
+            >
+              Our Best Sellers
+            </h2>
+            <p className="text-dark/60 text-base sm:text-lg mt-4 leading-relaxed">
+              The flavours Kerala loves — now available worldwide.
+            </p>
+          </div>
 
           {bestsellers && bestsellers.length > 0 ? (
             <div className="relative mt-2">
@@ -403,12 +491,18 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
       <section className="relative py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-            <SectionHeading
-              align="left"
-              title={<>Explore Our <span className="text-green-brand">Categories</span></>}
-              subtitle="Browse through our authentic collection of chips, mixtures, and traditional snacks."
-              className="mb-0 mx-auto md:mx-0 items-center md:items-start text-center md:text-left"
-            />
+            <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-2xl">
+              <h2 
+                className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+                style={{
+                  WebkitTextStroke: '2px #ffffff',
+                  fontFamily: 'Impact, "Arial Black", sans-serif',
+                  filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+                }}
+              >
+                Explore Our Categories
+              </h2>
+            </div>
             <div className="flex-shrink-0 text-center md:text-right">
               <Link href="/products" className="inline-flex items-center justify-center px-6 py-3 bg-green-brand hover:bg-green-dark text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-md">
                 View All <ArrowRight className="ml-2 w-4 h-4" />
@@ -456,13 +550,17 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
       <section className="relative bg-cream py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-dark tracking-tight">
-              Why Choose <span className="text-green-brand">Cochin Snacks</span>
+          <div className="max-w-3xl mx-auto text-center mb-12 flex flex-col items-center">
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+              style={{
+                WebkitTextStroke: '2px #ffffff',
+                fontFamily: 'Impact, "Arial Black", sans-serif',
+                filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+              }}
+            >
+              Why Choose Cochin Snacks
             </h2>
-            <p className="text-dark/60 text-base sm:text-lg mt-4 max-w-2xl mx-auto">
-              Every bag carries a promise — authentic flavour, honest ingredients, and the warmth of Kerala in every crunch.
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
