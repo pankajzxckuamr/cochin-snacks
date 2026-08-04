@@ -300,13 +300,6 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
               <div className="text-dark/70 text-base sm:text-lg leading-relaxed mb-6 font-medium">
                 A proud venture of Pavithram, Cochin Snacks celebrates Kerala's culinary legacy with premium snacks crafted from time-tested recipes and pure ingredients.
               </div>
-
-              <Link
-                href="/about"
-                className="inline-flex items-center justify-center px-6 py-3 bg-green-brand hover:bg-green-dark text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-md"
-              >
-                Discover Our Story <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
             </div>
 
             {/* Right Col: Stats Grid */}
@@ -330,79 +323,14 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
             </div>
           </div>
 
-          {/* Showcase Section: Center image surrounded by satellite KPI cards with custom patterns */}
-          <div className="mt-16 lg:mt-24 flex flex-col items-center relative w-full py-8 lg:py-12 overflow-hidden">
-            {/* Subtle background radial dot pattern layer */}
-            <div 
-              className="absolute inset-0 pointer-events-none opacity-70" 
-              style={{
-                backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(27, 133, 27, 0.08) 1.5px, transparent 0)',
-                backgroundSize: '24px 24px',
-                maskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)'
-              }}
-            />
-
-            <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center max-w-5xl mx-auto relative z-10">
-              
-              {/* Left Column Satellite Cards (Col span 4) */}
-              <div className="lg:col-span-4 flex flex-col gap-6 w-full">
-                {[
-                  { title: 'Fresh & Hygienic', desc: 'Prepared under strict quality and sanitation guidelines.', icon: <Sparkles className="w-5 h-5" /> },
-                  { title: 'Premium Quality', desc: 'Crafted using only A-grade ingredients and oil.', icon: <Award className="w-5 h-5" /> },
-                ].map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="group flex flex-row lg:flex-row-reverse items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left lg:text-right"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
-                      {feature.icon}
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-dark">{feature.title}</span>
-                      <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Center Column: Rotating Dummy Showcase Image (Col span 4) */}
-              <div className="lg:col-span-4 flex justify-center py-4 w-full">
-                <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500 bg-[#F3F7F3] shadow-green-brand/5">
-                  <Image
-                    src="/products/hero-snacks.png"
-                    alt="Authentic Cochin Snacks"
-                    fill
-                    sizes="(max-width: 1024px) 250px, 300px"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-                </div>
-              </div>
-
-              {/* Right Column Satellite Cards (Col span 4) */}
-              <div className="lg:col-span-4 flex flex-col gap-6 w-full">
-                {[
-                  { title: '100% Natural', desc: 'No artificial preservatives, colors or chemical additives.', icon: <Leaf className="w-5 h-5" /> },
-                  { title: 'Delicious Taste', desc: 'Uncompromised traditional Kerala flavour in every bite.', icon: <ChefHat className="w-5 h-5" /> },
-                  { title: 'Authentic Recipes', desc: 'Handed down through families for decades.', icon: <MapPin className="w-5 h-5" /> }
-                ].map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="group flex flex-row items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
-                      {feature.icon}
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-dark">{feature.title}</span>
-                      <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-            </div>
+          {/* Center-aligned Discover Our Story Button */}
+          <div className="flex justify-center mt-10">
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center px-6 py-3 bg-green-brand hover:bg-green-dark text-white font-bold text-sm tracking-wide rounded-full transition-all shadow-md"
+            >
+              Discover Our Story <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -487,6 +415,83 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
         </div>
       </section>
 
+      {/* ────────────────── SECTION 4.5: KPI SHOWCASE ────────────────── */}
+      <section className="relative py-16 sm:py-20 bg-white overflow-hidden">
+        {/* Subtle background radial dot pattern layer */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-70" 
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(27, 133, 27, 0.08) 1.5px, transparent 0)',
+            backgroundSize: '24px 24px',
+            maskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)'
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center max-w-5xl mx-auto">
+            
+            {/* Left Column Satellite Cards (Col span 4) */}
+            <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+              {[
+                { title: 'Fresh & Hygienic', desc: 'Prepared under strict quality and sanitation guidelines.', icon: <Sparkles className="w-5 h-5" /> },
+                { title: 'Premium Quality', desc: 'Crafted using only A-grade ingredients and oil.', icon: <Award className="w-5 h-5" /> },
+              ].map((feature, idx) => (
+                <div
+                  key={idx}
+                  className="group flex flex-row lg:flex-row-reverse items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left lg:text-right"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                    {feature.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-dark">{feature.title}</span>
+                    <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Center Column: Rotating Dummy Showcase Image (Col span 4) */}
+            <div className="lg:col-span-4 flex justify-center py-4 w-full">
+              <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500 bg-[#F3F7F3] shadow-green-brand/5">
+                <Image
+                  src="/products/hero-snacks.png"
+                  alt="Authentic Cochin Snacks"
+                  fill
+                  sizes="(max-width: 1024px) 250px, 300px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Right Column Satellite Cards (Col span 4) */}
+            <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+              {[
+                { title: '100% Natural', desc: 'No artificial preservatives, colors or chemical additives.', icon: <Leaf className="w-5 h-5" /> },
+                { title: 'Delicious Taste', desc: 'Uncompromised traditional Kerala flavour in every bite.', icon: <ChefHat className="w-5 h-5" /> },
+                { title: 'Authentic Recipes', desc: 'Handed down through families for decades.', icon: <MapPin className="w-5 h-5" /> }
+              ].map((feature, idx) => (
+                <div
+                  key={idx}
+                  className="group flex flex-row items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                    {feature.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-dark">{feature.title}</span>
+                    <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ────────────────── SECTION 5: EXPLORE CATEGORIES ────────────────── */}
       <section className="relative py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -545,44 +550,6 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
           </div>
         </div>
       </section>
-
-      {/* ────────────────── SECTION 7: WHY CHOOSE COCHIN SNACKS ────────────────── */}
-      <section className="relative bg-cream py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="max-w-3xl mx-auto text-center mb-12 flex flex-col items-center">
-            <h2 
-              className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
-              style={{
-                WebkitTextStroke: '2px #ffffff',
-                fontFamily: 'Impact, "Arial Black", sans-serif',
-                filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
-              }}
-            >
-              Why Choose Cochin Snacks
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feat, idx) => (
-              <div key={idx} className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm flex flex-col items-start">
-                <div className="w-10 h-10 rounded-xl bg-green-brand text-white flex items-center justify-center mb-4 shrink-0 shadow-sm">
-                  {feat.icon}
-                </div>
-                <h3 className="font-heading text-lg font-bold text-dark mb-2">
-                  {feat.title}
-                </h3>
-                <p className="text-dark/60 text-sm leading-relaxed">
-                  {feat.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-
 
     </div>
   )
