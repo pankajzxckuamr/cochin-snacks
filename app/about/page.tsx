@@ -42,44 +42,24 @@ export default function AboutPage() {
 
       <main id="main-content" className="flex-1 bg-cream text-dark overflow-hidden">
 
-        {/* 1. HERO — modern light banner */}
-        <section className="relative bg-cream overflow-hidden py-16 sm:py-24">
-          <div className="absolute -top-24 -left-24 w-[36rem] h-[36rem] bg-yellow/10 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-32 -right-24 w-[32rem] h-[32rem] bg-green-brand/10 rounded-full blur-[100px] pointer-events-none" />
-          <DotPattern className="top-0 left-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="left" />
-          <DotPattern className="top-0 right-0 h-full w-1/3" color="#1E6B2E" opacity={0.08} fade="right" />
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-            <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] max-w-4xl">
-              Born in Kerala.{' '}
-              <span className="text-green-brand">Loved Worldwide.</span>
-            </h1>
-            <p className="text-dark/60 text-base sm:text-lg max-w-2xl mt-6 leading-relaxed">
-              Preserving the authentic crunch of Kerala — from our home in Ernakulam to snack lovers in 20+ countries.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <Link href="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-green-brand hover:bg-green-dark text-white font-bold text-sm rounded-full shadow-lg shadow-green-brand/25 transition-all hover:-translate-y-0.5">
-                Explore Snacks <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link href="/contact" className="inline-flex items-center px-8 py-4 bg-white border-2 border-gray-100 hover:border-green-brand hover:text-green-brand text-dark font-bold text-sm rounded-full shadow-sm transition-all">
-                Get in Touch
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* 2. COMPANY OVERVIEW — white */}
-        <section className="bg-white py-16 sm:py-20">
+        <section className="bg-white pt-24 pb-16 sm:pt-28 sm:pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="flex flex-col items-start">
                 <ScrollReveal direction="right">
-                  <SectionHeading
-                    align="left"
-                    eyebrow="Overview"
-                    title={<>Sharing the Real <span className="text-green-brand">Taste of Kerala</span></>}
-                    className="mb-6"
-                  />
+                  <div className="flex flex-col items-start mb-6">
+                    <h2 
+                      className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+                      style={{
+                        WebkitTextStroke: '2px #ffffff',
+                        fontFamily: 'Impact, "Arial Black", sans-serif',
+                        filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+                      }}
+                    >
+                      Taste of Kerala
+                    </h2>
+                  </div>
                   <div className="text-dark/70 text-base lg:text-lg leading-relaxed flex flex-col gap-5 mb-8">
                     <p className="font-medium text-dark bg-cream border-l-4 border-green-brand rounded-r-2xl pl-5 pr-6 py-4">
                       Cochin Snacks is all about sharing the real taste of Kerala with everyone — not just in India, but everywhere.
@@ -111,11 +91,21 @@ export default function AboutPage() {
         {/* 3. HISTORY TIMELINE — cream */}
         <section className="bg-cream py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              eyebrow="Our Journey"
-              title={<>75 Years in <span className="text-green-brand">the Making</span></>}
-              subtitle="From a trusted Kerala food house to a global snack brand."
-            />
+            <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+              <h2 
+                className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+                style={{
+                  WebkitTextStroke: '2px #ffffff',
+                  fontFamily: 'Impact, "Arial Black", sans-serif',
+                  filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+                }}
+              >
+                75 Years Legacy
+              </h2>
+              <p className="text-dark/60 text-base sm:text-lg mt-4 leading-relaxed">
+                From a trusted Kerala food house to a global snack brand.
+              </p>
+            </div>
 
             <div className="relative">
               {/* Horizontal connector line (desktop) */}
@@ -153,10 +143,18 @@ export default function AboutPage() {
         {/* 4. VISION & MISSION — white */}
         <section className="bg-white py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              eyebrow="What Drives Us"
-              title={<>Our Vision & <span className="text-green-brand">Mission</span></>}
-            />
+            <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+              <h2 
+                className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+                style={{
+                  WebkitTextStroke: '2px #ffffff',
+                  fontFamily: 'Impact, "Arial Black", sans-serif',
+                  filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+                }}
+              >
+                Our Vision & Mission
+              </h2>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {[
                 {
@@ -196,11 +194,21 @@ export default function AboutPage() {
           <DotPattern className="top-0 right-0 h-full w-1/4" color="#1E6B2E" opacity={0.07} fade="right" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <SectionHeading
-              eyebrow="How We Make It"
-              title={<>World-Class Manufacturing <span className="text-green-brand">in Kerala</span></>}
-              subtitle="Based in Ernakulam, our modern facility keeps everything clean and quality-checked — at every step of the way."
-            />
+            <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+              <h2 
+                className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-[#1B851B] select-none leading-none py-2"
+                style={{
+                  WebkitTextStroke: '2px #ffffff',
+                  fontFamily: 'Impact, "Arial Black", sans-serif',
+                  filter: 'drop-shadow(2px 2.5px 0px rgba(0,0,0,0.18))'
+                }}
+              >
+                Our Kitchen
+              </h2>
+              <p className="text-dark/60 text-base sm:text-lg mt-4 leading-relaxed">
+                Based in Ernakulam, our modern facility keeps everything clean and quality-checked — at every step of the way.
+              </p>
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
               {processSteps.map((step, idx) => (
