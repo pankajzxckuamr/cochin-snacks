@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { m, AnimatePresence } from 'framer-motion'
 import {
   ChevronLeft,
   ChevronRight,
@@ -81,6 +82,23 @@ const FALLBACK_BESTSELLERS = [
 export default function HomeClient({ bestsellers }: HomeClientProps) {
   const bestsellersRef = useRef<HTMLDivElement>(null)
 
+  const carouselImages = useMemo(() => [
+    { src: '/products/banana.png', alt: 'Kerala Banana Chips' },
+    { src: '/products/tapioca.png', alt: 'Tapioca Chips' },
+    { src: '/products/mixture.png', alt: 'Spicy Kerala Mixture' },
+    { src: '/products/murukku.png', alt: 'Crunchy Murukku' },
+    { src: '/products/potato-chips.png', alt: 'Spiced Potato Chips' },
+  ], [])
+
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [carouselImages.length])
+
   const scrollBestsellers = (direction: 'left' | 'right') => {
     if (bestsellersRef.current) {
       const container = bestsellersRef.current
@@ -130,49 +148,80 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
     <div className="overflow-hidden">
 
       {/* ────────────────── SECTION 2: WELCOME (ABOUT US) ────────────────── */}
-      <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-            {/* Left Col: Simple clean image */}
-            <div className="relative w-full h-[300px] sm:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-gray-100">
+      <section className="relative pt-16 lg:pt-20 pb-16 sm:pb-20 bg-white">
+        
+        {/* Full-width screen-edge Visual Hero Carousel */}
+        <div className="relative w-full h-[360px] sm:h-[500px] lg:h-[620px] overflow-hidden group bg-[#F2F7F2] mb-12 sm:mb-16">
+          <AnimatePresence mode="wait">
+            <m.div
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="absolute inset-0 w-full h-full"
+            >
               <Image
-                src="/products/banana.png"
-                alt="Kerala banana chips"
+                src={carouselImages[currentSlide].src}
+                alt={carouselImages[currentSlide].alt}
                 fill
-                sizes="(max-width: 1024px) 90vw, 45vw"
-                className="object-cover"
+                sizes="100vw"
+                className="object-cover select-none"
+                priority
               />
-            </div>
+              {/* Subtle vignette gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/15 pointer-events-none" />
+            </m.div>
+          </AnimatePresence>
 
-            {/* Right Col: Narrative Content */}
-            <div className="flex flex-col items-start">
+          {/* Navigation Arrows */}
+          <button
+            type="button"
+            onClick={() => setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length)}
+            className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-dark flex items-center justify-center shadow-md hover:scale-105 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 duration-200"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setCurrentSlide((prev) => (prev + 1) % carouselImages.length)}
+            className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-dark flex items-center justify-center shadow-md hover:scale-105 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 duration-200"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Indicator Dots */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-10">
+            {carouselImages.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentSlide === idx ? 'w-6 bg-white shadow-sm' : 'w-2 bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Narrative Content & Stats Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            {/* Left Col: Narrative */}
+            <div className="lg:col-span-7 flex flex-col items-start">
               <SectionHeading
                 align="left"
                 title={<>Welcome to <span className="text-green-brand">Cochin Snacks</span></>}
-                className="mb-6"
+                className="mb-5"
               />
 
-              <div className="text-dark/70 text-base sm:text-lg leading-relaxed mb-6 font-medium max-w-xl">
+              <div className="text-dark/70 text-base sm:text-lg leading-relaxed mb-6 font-medium">
                 A proud venture of Pavithram, Cochin Snacks celebrates Kerala's culinary legacy with premium snacks crafted from time-tested recipes and pure ingredients.
-              </div>
-
-              {/* Stats strip */}
-              <div className="flex flex-wrap gap-8 mb-6 pb-6 border-b border-black/5 w-full">
-                {[
-                  { value: '75+', label: 'Years of Legacy' },
-                  { value: '20+', label: 'Countries Served' },
-                  { value: '10k+', label: 'Happy Customers' },
-                ].map((stat) => (
-                  <div key={stat.label} className="flex flex-col">
-                    <span className="font-heading text-2xl sm:text-3xl font-black text-green-brand leading-none">
-                      {stat.value}
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-dark/50 mt-1">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
               </div>
 
               <Link
@@ -183,30 +232,99 @@ export default function HomeClient({ bestsellers }: HomeClientProps) {
               </Link>
             </div>
 
+            {/* Right Col: Stats Grid */}
+            <div className="lg:col-span-5 w-full pt-2 lg:pt-6">
+              <div className="grid grid-cols-3 gap-6 pb-6 border-b border-black/5 w-full">
+                {[
+                  { value: '75+', label: 'Years of Legacy' },
+                  { value: '20+', label: 'Countries Served' },
+                  { value: '10k+', label: 'Happy Customers' },
+                ].map((stat) => (
+                  <div key={stat.label} className="flex flex-col items-center text-center">
+                    <span className="font-heading text-3xl sm:text-4xl font-black text-green-brand leading-none">
+                      {stat.value}
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-dark/50 mt-2">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Features Row */}
-          <div className="mt-12 sm:mt-16">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
-              {[
-                { title: 'Fresh & Hygienic', icon: <Sparkles className="w-5 h-5" /> },
-                { title: 'Premium Quality', icon: <Award className="w-5 h-5" /> },
-                { title: '100% Natural', icon: <Leaf className="w-5 h-5" /> },
-                { title: 'Delicious Taste', icon: <ChefHat className="w-5 h-5" /> },
-                { title: 'Authentic Recipes', icon: <MapPin className="w-5 h-5" /> }
-              ].map((feature, idx) => (
-                <div
-                  key={idx}
-                  className="group flex flex-col items-center justify-center p-5 bg-white rounded-2xl shadow-sm border border-black/[0.02] hover:-translate-y-1 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="w-11 h-11 bg-green-brand/10 text-green-brand rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
+          {/* Showcase Section: Center image surrounded by satellite KPI cards with custom patterns */}
+          <div className="mt-16 lg:mt-24 flex flex-col items-center relative w-full py-8 lg:py-12 overflow-hidden">
+            {/* Subtle background radial dot pattern layer */}
+            <div 
+              className="absolute inset-0 pointer-events-none opacity-70" 
+              style={{
+                backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(27, 133, 27, 0.08) 1.5px, transparent 0)',
+                backgroundSize: '24px 24px',
+                maskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)',
+                WebkitMaskImage: 'radial-gradient(circle at center, black 65%, transparent 100%)'
+              }}
+            />
+
+            <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center max-w-5xl mx-auto relative z-10">
+              
+              {/* Left Column Satellite Cards (Col span 4) */}
+              <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+                {[
+                  { title: 'Fresh & Hygienic', desc: 'Prepared under strict quality and sanitation guidelines.', icon: <Sparkles className="w-5 h-5" /> },
+                  { title: 'Premium Quality', desc: 'Crafted using only A-grade ingredients and oil.', icon: <Award className="w-5 h-5" /> },
+                ].map((feature, idx) => (
+                  <div
+                    key={idx}
+                    className="group flex flex-row lg:flex-row-reverse items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left lg:text-right"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                      {feature.icon}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-dark">{feature.title}</span>
+                      <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                    </div>
                   </div>
-                  <span className="text-xs sm:text-sm font-bold text-dark text-center leading-tight">
-                    {feature.title}
-                  </span>
+                ))}
+              </div>
+
+              {/* Center Column: Rotating Dummy Showcase Image (Col span 4) */}
+              <div className="lg:col-span-4 flex justify-center py-4 w-full">
+                <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500 bg-[#F3F7F3] shadow-green-brand/5">
+                  <Image
+                    src="/products/hero-snacks.png"
+                    alt="Authentic Cochin Snacks"
+                    fill
+                    sizes="(max-width: 1024px) 250px, 300px"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                 </div>
-              ))}
+              </div>
+
+              {/* Right Column Satellite Cards (Col span 4) */}
+              <div className="lg:col-span-4 flex flex-col gap-6 w-full">
+                {[
+                  { title: '100% Natural', desc: 'No artificial preservatives, colors or chemical additives.', icon: <Leaf className="w-5 h-5" /> },
+                  { title: 'Delicious Taste', desc: 'Uncompromised traditional Kerala flavour in every bite.', icon: <ChefHat className="w-5 h-5" /> },
+                  { title: 'Authentic Recipes', desc: 'Handed down through families for decades.', icon: <MapPin className="w-5 h-5" /> }
+                ].map((feature, idx) => (
+                  <div
+                    key={idx}
+                    className="group flex flex-row items-start gap-4 p-5 bg-[#F3F7F3] border border-green-brand/[0.08] hover:bg-white rounded-2xl shadow-sm hover:shadow-[0_8px_30px_rgba(27,133,27,0.08)] hover:border-green-brand/20 transition-all duration-300 text-left"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-white text-green-brand flex items-center justify-center shrink-0 border border-green-brand/15 group-hover:bg-green-brand/10 transition-colors duration-300">
+                      {feature.icon}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-dark">{feature.title}</span>
+                      <span className="text-xs text-dark/50 mt-1 leading-normal">{feature.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
         </div>
